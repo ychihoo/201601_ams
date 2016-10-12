@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/js1.4/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js1.4/themes/icon.css" />
+    <script type="text/javascript" src="/static/js1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js1.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/js1.4/locale/easyui-lang-zh_CN.js"></script>
+    <script  type="text/javascript" src="/static/js/viewlayer.js"></script>
+    <script  type="text/javascript" src="/static/js/datagrid.js" ></script>
+
+</head>
+<body>
+<div style="margin-bottom:20px">
+                部门：<input name="fdept" id="fdept" class="easyui-combotree">
+            </div>
+<script>
+    function load_dept(){
+    $('#fdept').combotree({
+        url:'/assets/mod/dept/',
+    });
+}
+</script>
+</body>
+</html>
