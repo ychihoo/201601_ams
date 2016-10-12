@@ -1,0 +1,1 @@
+C:\Users\Administrator>mysqldump --default-character-set=gbk  -uroot -p ams > 20160926ams_gbk.sql
