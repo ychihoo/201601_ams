@@ -1,0 +1,191 @@
+{% extends "assets/assets_base.html" %}
+{% block stylesheet %}
+    <style type="text/css">
+    #input{
+        width: 800px;
+        margin: 0 auto;
+        height: 300px;
+    }
+    #input ul ,ul li{
+        text-align:right;
+        list-style: none;
+        padding-top: 15px;
+        padding-right: 50px;
+    }
+    input, select{
+        width: 200px;
+    }
+    ul{
+        width: 800px;
+    }
+    li{
+        float: left;
+        width: 300px;;
+    }
+    ol li{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        list-style: none;
+        text-align: center;
+        margin: 0 auto;
+    }
+    div#gg{
+        margin:0 auto;
+    }
+    </style>
+{% endblock %}
+{% block body %}
+<div style="margin:0 auto;width: 900px;">
+<div class="easyui-panel" id="gg" title="资产录入" style="font-size: 14px;" data-options="width:1000">
+<form method="post" action=""  id="form" class="easyui-form" enctype="multipart/form-data" >{% csrf_token %}
+    <div id="input">
+    <ul>
+        <li><span>资产编号：</span><input type="text" class="easyui-textbox" data-options="required:true" name="id" id="id"></li>
+        <li><span>资产名称：</span><input type="text" class="easyui-textbox" data-options="required:true" name="name" id="name"></li>
+    </ul>
+    <ul>
+        <li><span>资产品牌：</span><select type="text" class="easyui-combobox" data-options="required:true,panelHeight:'auto',editable:false" name="brand" id="brand">
+                        {% for b in brand %}
+                              <option value="{{ b.brand_name}}">{{ b.brand_name }}</option>
+                          {% endfor %}
+            </select>
+        </li>
+        <li><span>资产型号：</span><input type="text" class="easyui-textbox" data-options="required:true" name="model" id="model"></li>
+    </ul>
+    <ul>
+        <li><span>产品序列号：</span><input type="text" class="easyui-textbox"   name="sn" id="sn"></li>
+        <li><span>资产分类：</span><input type="text" class="easyui-textbox"   name="class" id="class"></li>
+    </ul>
+    <ul>
+        <li><span>资产配置：</span><input type="text" class="easyui-textbox" name="configuration" id="configuration"></li>
+        <li><span>资产类别：</span><input type="text" class="easyui-textbox" name="category" id="category"></li>
+    </ul>
+
+    <ul>
+        <li><span>资产数量：</span><input type="text" class="easyui-numberbox" data-options="value:1,min:1,max:100"   name="quantity" id="quantity" ></li>
+        <li><span>购买单价：</span><input type="text" class="easyui-numberbox" data-options="value:0,min:0,max:999999" precision="2" name="price" id="price"></li>
+    </ul>
+    <ul>
+        <li><span>购买日期：</span><input type="text" class="easyui-datebox" name="buydate" data-options="editable:false" ></li>
+        <li><span>质保期：</span><input type="text" class="easyui-numberbox" data-options="value:0,min:0,max:10" id="num" name="period" ></li>
+    </ul>
+    <ul>
+        <li><span>供应商：</span><select class="easyui-combobox" name="provider" data-options="panelHeight:'auto',editable:false">
+                          {% for pro in provider %}
+                              <option value="{{ pro.pro_name}}">{{ pro.pro_name }}</option>
+                          {% endfor %}
+
+        </select></li>
+        <li><span>是否贴标：</span><select class="easyui-combobox" name="islabel" data-options="panelHeight:'auto',editable:false" >
+                    <option value="0" selected>是</option>
+                    <option value="1">否</option>
+                    </select></li>
+    </ul>
+    <ul>
+        <li><span>是否涉密：</span><select class="easyui-combobox" name="issec" data-options="panelHeight:'auto',editable:false" >
+                    <option value="0" >是</option>
+                    <option value="1" selected>否</option>
+                    </select></li>
+        <li><span>存放位置：</span><input type="text" class="easyui-textbox" name="location" id="location"></li>
+    </ul>
+    <ul>
+        <li><span>备注：</span><input type="text" class="easyui-textbox" name="comment" id="comment"></li>
+        <li>使用期限：<input class="easyui-numberbox" data-options="value:0,min:0,max:10" type="text" name="deadline" id="deadline"  ></li>
+    </ul>
+    <ul>
+        <li>发票凭证：<input class="easyui-filebox" type="text" name="billpic" id="billpic" data-options="buttonText:'请选择'" ></li>
+        <li>电子实物：<input class="easyui-filebox" type="text" name="pic" id="pic" data-options="buttonText:'请选择'" ></li>
+    </ul>
+    <ol >
+        <li><span><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width: 80px;height:30px;text-align: center">保存</a></span></li>
+        <li><span><a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:window.location.reload();" style="width: 80px;height:30px;text-align: center">重置</a></span></li>
+    </ol>
+    </div>
+
+</form>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    valid_max_length('id',15);
+    valid_max_length('name',15);
+    valid_max_length('model',15);
+    valid_max_length('location',15);
+    valid_max_length('comment',20);
+    valid_max_length('sn',20);
+    valid_max_length('class',10);
+    valid_max_length('category',10);
+    valid_max_length('configuration',30);
+    valid_input_id('id');
+})
+function submitForm(){
+    $('#form').form('submit',{
+        url:".",
+        onSubmit:function(){
+            if(parseInt(isPicture($('#billpic').filebox('getValue'))) < 1 || parseInt(isPicture($('#pic').filebox('getValue'))) <1 ){
+                $.messager.alert("提示","文件类型不合法,只能是jpg、gif、bmp、png类型！","warning");
+                return false;
+            }
+            if ($('#deadline').numberbox('getValue')==""){
+                $('#deadline').numberbox('setValue',0);
+            }
+            if ($('#quantity').numberbox('getValue')==""){
+                $('#quantity').numberbox('setValue',1);
+            }
+            if ($('#price').numberbox('getValue')==""){
+                $('#price').numberbox('setValue',0);
+            }
+            if ($('#num').numberbox('getValue')==""){
+                $('#num').numberbox('setValue',0);
+            }
+            return $(this).form('enableValidation').form('validate');
+        },
+        success: function(data) {
+            $.messager.alert("提示2",data,"info", function () {
+                 window.location.reload();
+            });
+        },
+    });}
+
+function closeForm(){
+    $('#ff').form('clear');
+}
+
+//日期格式转换
+function dateformatter(date){
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+	return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+}
+
+function dateparser(s){
+    if (!s) return new Date();
+    var ss = (s.split('-'));
+    var y = parseInt(ss[0],10);
+    var m = parseInt(ss[1],10);
+    var d = parseInt(ss[2],10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+    	return new Date(y,m-1,d);
+    } else {
+    	return new Date();
+    }
+}
+
+function valid_input_id(vid)
+{
+    var v = "#"+vid;
+    $(v).textbox({
+        onChange: function(n, o){
+            var reg=/^[0-9a-zA-Z]+[0-9a-zA-Z.-_#]+$/;
+            if (!reg.test(n)){
+                $.messager.alert("提示","资产编号由首个字符为数字或字母、下划线、小数点、#、-组成",'warning')
+                $(v).textbox('clear');
+            }
+        }
+    })
+
+}
+
+</script>
+{% endblock %}

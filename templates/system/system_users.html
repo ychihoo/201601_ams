@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+        body {
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        input[type="text"] {
+            width:150px;
+        }
+        .middle {
+            margin: 0 0 auto;
+        }
+        .up{
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+        .div-page ul{
+            clear: both;
+            width: 740px;
+        }
+        .div-page li{
+            float: left;
+            list-style: none;
+            padding-left: 15px;
+            list-style: none;
+            padding-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="div-page">
+    <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
+    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;" data-options="collapsible:true">
+        <div style="float: left">
+            <ul>
+                <li>部门：<input class="easyui-textbox" type="text" name="dept" id="dept" maxlength="20"></li>
+                <li>登录名：<input class="easyui-textbox" type="text" name="account" id="account" maxlength="20"></li>
+                <li>状态：<select class="easyui-combobox"  name="status" id="status" maxlength="20" data-options="panelHeight:'auto',width:150,editable:false">
+                        <option value="-1">-----全部选择-----</option>
+                        <option value="0">启用</option>
+                            <option value="1">禁用</option>
+                        </select>
+                </li>
+                <li ><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton" style="width: 80px;height: 25px"></li>
+            </ul>
+            <ul>
+                <li><a id="addUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">增加用户</a></li>
+                <li><a id="disUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">禁用账户</a></li>
+                <li><a id="enUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">启用账户</a></li>
+                <li><a id="resetPwdBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">密码重置</a></li>
+                <li><a id="chRoleBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">信息编辑</a></li>
+                <li><a id="delUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">账号删除</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
+        <table id="user_dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px" >
+        </table>
+    </div>
+</div>
+<div id="addForm" class="easyui-dialog" title="添加用户" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="add" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
+    {% csrf_token %}
+            <div style="margin-bottom:20px;">
+                登录名：<input class="easyui-textbox" name="faccount"  id="faccount"  data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                姓名：<input class="easyui-textbox" name="fusername"  id="fusername" data-options="required:true" >
+            </div>
+            <div style="margin-bottom:20px">
+                密码：<input class="easyui-textbox" type="password" name="fpwd"  id="fpwd" data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                确认密码：<input  class="easyui-textbox" type="password" name="fpwd2" id="fpwd2" data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                部门：<input class="easyui-combotree" name="fdept" id="fdept">
+            </div>
+            <div style="margin-bottom:20px;">
+                职位：<select class="easyui-combobox" name="fposition"  id="fposition" data-options="panelHeight:'auto',width:150,editable:false">
+                {% for p in pos %}
+                <option value="{{ p.p_name }}">{{ p.p_name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div style="margin-bottom:20px">
+                角色：<select class="easyui-combobox" name="frole" id="frole" data-options="panelHeight:'auto',width:150,editable:false">
+                {% for r in role %}
+                <option value="{{ r.id }}">{{ r.r_name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div style="margin-bottom:20px">
+                手机：<input class="easyui-textbox" name="ftel" id="ftel" data-options="required:true" >
+            </div>
+            <div style="margin-bottom:20px">
+                邮箱：<input class="easyui-textbox easyui-validatebox"  name="fmail" id="fmail" data-options="required:true,validType:'email'">
+            </div>
+            <div style="margin-bottom:20px; line-height: 30px; text-align: center">
+               <input type="checkbox" name="floginChPwd" id="floginChPwd" value="0" style="width:15px;height: 15px;"><span style="line-height: 15px">下次登录更改密码</span>
+            </div>
+
+        <div style="text-align:right;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+    </div>
+    </form>
+</div>
+<script>
+
+$(function() {
+    loadUserTable();
+    $("#ok").click(function () {
+        load_ajax();
+    });
+    load_ajax();
+    $("#addUserBtn").click(function () {
+        get_checked();
+        load_dept2();
+    });
+    valid_max_length('faccount',20);
+    valid_max_length('fusername',10);
+    valid_max_length('fpwd',20);
+    valid_max_length('fpwd2',20);
+    valid_max_length('ftel',11);
+    valid_max_length('fmail',30);
+});
+
+
+//加载表数据
+function load_ajax() {
+    var str = {
+    dept:$("#dept").val(),
+    account: $("#account").val(),
+    status:$("#status").combobox('getValue'),
+    }
+    $.ajax({
+        type: "get",
+        url: "/system/user_man/ajax/",
+        data:str,
+        success: function (data) {
+            $('#user_dg').datagrid('loadData', data);
+            if (data.total == '0') {
+                $.messager.alert('提示', '没有检索到您要的数据！', 'info');
+            }
+        },
+        error : function() {
+            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+        }
+    });
+}
+
+function get_checked(){
+    var checkedRow = $('#user_dg').datagrid('getChecked');
+    if(checkedRow.length == "0"){
+        $.messager.alert("提示", "请选择！", "warning");
+    }
+    else{
+        $('#addForm').dialog('open');
+    }
+}
+
+// 提交数据
+function submitForm(){
+    $('#add').form('submit',{
+        url:"/assets/scrap/post/",
+        onSubmit:function(){
+            valid_mobile('ftel');
+            return $(this).form('enableValidation').form('validate');
+        },
+        success: function(data) {
+            $.messager.alert("提示",data,"info");
+            clearForm();
+            closeForm();
+            load_ajax();
+        },
+        error: function () {
+            $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');
+
+        }
+    });
+}
+
+
+function load_dept2(){
+    $('#fdept').combotree({
+        method:'get',
+        url:'/assets/mod/dept/',
+        required:true
+    });
+
+}
+
+// 关闭弹窗
+function closeForm(){
+    $('#addForm').dialog('close');
+}
+
+// 清除窗口数据
+function clearForm(){
+		$('#add').form('clear');
+}
+</script>
+</body>
+</html>

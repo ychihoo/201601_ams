@@ -1,0 +1,38 @@
+<style>
+    .tab2{
+        font-family: verdana,arial,sans-serif;
+        font-size:8px;
+        color:#333333;
+        border: 1px #666666;
+        border-collapse: collapse;
+    }
+</style>
+<table class="tab2" style="width:800px;" cellpadding="1" cellspacing="1" border="1px">
+    <tr><td colspan="10"><span>资产编号：{{ sid }}</span></td></tr>
+    <tr >
+        <th width="20px"><span>领用部门</span></th>
+        <th width="20px"><span>领用人</span></th>
+        <th width="20px"><span>使用人</span></th>
+        <th width="30px"><span>变更(领用)日期</span></th>
+        <th width="20px"><span>资产存放地</span></th>
+        <th width="16px"><span>资产状态</span></th>
+        <th width="100px"><span>变更(领用)原因</span></th>
+        <th width="50px"><span>备注</span></th>
+        <th width="30px"><span>操作人</span></th>
+        <th width="50px"><span>操作时间</span></th>
+    </tr>
+    {% for d in data %}
+    <tr>
+        <td><span>{{ d.ass_acceptDept }}</span></td>
+        <td><span>{{ d.ass_acceptUser }}</span></td>
+        <td><span>{{ d.ass_user }}</span></td>
+        <td><span>{{ d.ass_changeDate|date:"Y-m-d"}}</span></td>
+        <td><span>{{ d.ass_location }}</span></td>
+        <td><span>{% if d.ass_flag == 0 %}闲置{% elif d.ass_flag == 1 %}使用中{% elif d.ass_flag == 2 %}报废{% endif %}</span></td>
+        <td><span>{{ d.ass_reason }}</span></td>
+        <td><span>{{ d.ass_comment }}</span></td>
+        <td><span>{{ d.ass_operator }}</span></td>
+        <td><span>{{ d.ass_operDate|date:"Y-m-d h:m:s" }}</span></td>
+    </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+        body {
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        input[type="text"] {
+            width:120px;
+        }
+        .middle {
+            margin: 0 0 auto;
+        }
+        .up{
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+        ul{
+            clear: both;
+            width: 740px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            padding-left: 15px;
+            list-style: none;
+            padding-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="div-page">
+    <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
+    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;" data-options="collapsible:true">
+        <div style="float: left">
+            <ul>
+                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
+                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
+                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
+                <li ><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton" style="width: 80px;height: 25px"></li>
+            </ul>
+            <ul>
+                <li><a id="scrap" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">报废</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
+        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px" >
+        </table>
+    </div>
+</div>
+<div id="scrapbtn" class="easyui-dialog" title="变更" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="cf" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
+    {% csrf_token %}
+            <div style="margin-bottom:20px;">
+                资产编号：<input class="easyui-textbox" name="fid"  id="fid"  readonly="true">
+            </div>
+            <div style="margin-bottom:20px">
+                报废日期：<input class="easyui-datebox" name="scrapdate" id="fscrapdate" data-options="required:true,editable:false" >
+            </div>
+            <div style="margin-bottom:20px">
+                报废事由：<input class="easyui-textbox" name="reason" id="freason" data-options="required:true,multiline:true,height:50">
+            </div>
+            <div style="margin-bottom:20px">
+                存放地：<input class="easyui-textbox" name="location" id="flocation" data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                备注：<input class="easyui-textbox" name="comment" id="fcomment">
+            </div>
+        <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+    </div>
+    </form>
+</div>
+<script>
+
+$(function(){
+    $("#ok").click(function () {
+        load_ajax();
+    });
+    load_ajax();
+    $("#scrap").click(function() {
+        if(get_checkedID()){
+            $("#fid").textbox('setValue',get_checkedID());
+            $('#scrapbtn').dialog('open');
+        }
+    });
+    valid_max_length('id',15);
+    valid_max_length('name',15);
+    valid_max_length('model',15);
+    valid_max_length('flocation',30);
+    valid_max_length('freason',50);
+    valid_max_length('fcomment',30);
+});
+
+
+//加载表数据
+function load_ajax() {
+    var str = {
+    id:$("#id").val(),
+    name: $("#name").val(),
+    model:$("#model").val(),
+    }
+    $.ajax({
+        type: "get",
+        url: "/assets/scrap/ajax/",
+        data:str,
+        success: function (data) {
+            $('#dg').datagrid('loadData', data);
+            if (data.total == '0') {
+                $.messager.alert('提示', '没有检索到您要的数据！', 'info');
+            }
+        },
+        error : function() {
+            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+        }
+    });
+}
+
+// 提交数据
+function submitForm(){
+    $('#cf').form('submit',{
+        url:"/assets/scrap/post/",
+        onSubmit:function(){
+            return $(this).form('enableValidation').form('validate');
+        },
+        success: function(data) {
+            $.messager.alert("提示",data,"info");
+            clearForm();
+            closeForm();
+            load_ajax();
+        },
+        error: function () {
+            $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');
+
+        }
+    });
+}
+
+// 关闭弹窗
+function closeForm(){
+    $('#scrapbtn').dialog('close');
+}
+
+// 清除窗口数据
+function clearForm(){
+		$('#cf').form('clear');
+}
+</script>
+</body>
+</html>

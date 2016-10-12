@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+        body{
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        input[type="text"] {
+            width:120px;
+        }
+        .middle {
+            margin: 0 0 auto;
+        }
+        .up{
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+        ul{
+            clear: both;
+            width: 800px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            padding-left: 15px;
+            list-style: none;
+            padding-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="div-page">
+    <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
+    <div class="up easyui-panel" title="资产查询" style="min-width: 1000px;width: 98%;" data-options="collapsible:true">
+        <div style="float: left; ">
+            <ul>
+                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
+                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
+                <li>资产品牌：<input class="easyui-textbox" type="text" name="brand" id="brand" maxlength="20" ></li>
+                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
+            </ul>
+        </div>
+        <div style="clear: both">
+            <ul>
+                <li ><a href="javascript:void(0)" id="go" value="查询"  class="easyui-linkbutton" style="width: 80px" >查询</a></li>
+                <li><a id="morebtn" class="easyui-linkbutton" style="width: 80px">详情</a></li>
+                <li><a id="exportbtn" class="easyui-linkbutton" style="width: 80px">导出</a></li>
+                <li><a id="printbtn" class="easyui-linkbutton" style="width: 80px;">打印</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle" style="clear: both;min-width: 1000px;width: 98%;margin-top: 1px">
+        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;min-height: 400px" >
+        </table>
+    </div>
+</div>
+<div id="dlg" class="easyui-dialog" data-options="closed:true" style="width:600px;height:270px;overflow: auto;padding: 15px">
+    <div id="showhtml" ></div>
+    <div style="padding-top: 20px;text-align: center">
+        <a href="javascript:void(0)" style="width: 60px" class="easyui-linkbutton" onclick="$('#dlg').dialog('close')">关闭</a>
+    </div>
+</div>
+<div id="dlg2" class="easyui-window" data-options="closed:true,collapsible:false,minimizable:false" style="width:800px;height:400px;padding: 1px">
+    <div id="cdg"></div>
+    <div style="padding-top: 10px;text-align: center">
+        <a href="javascript:void(0)" style="width: 60px" class="easyui-linkbutton" onclick="$('#dlg2').window('close')">关闭</a>
+    </div>
+</div>
+<script>
+$(function(){
+    valid_max_length('id',15);
+    valid_max_length('name',15);
+    valid_max_length('model',15);
+    valid_max_length('brand',8);
+
+})
+$('#go').click(function() {
+        var str = {
+            id: $("#id").val(),
+            name: $("#name").val(),
+            model: $("#model").val(),
+            brand: $("#brand").val(),
+        }
+        loadData(str);
+    })
+//// 单击详情
+$("#morebtn").click(function() {
+    if(get_checkedID()){
+        ajax_showDetail(get_checkedID());
+        $('#dlg').dialog('open');
+    }
+})
+
+//// 单击变更记录
+$("#changebtn").click(function(){
+    if(get_checkedID()){
+        ajax_showChangeDetail(get_checkedID());
+        $('#dlg2').window('open');
+    }
+})
+// 载入数据至datagrid
+function loadData(str){
+    $.ajax({
+        type: "get",
+        url: "/assets/user/ajax/",
+        data: str,
+        success: function (data) {
+            //var data = $.parseJSON(data);
+            $('#dg').datagrid('loadData',data);
+            if(data.total == '0'){
+                $.messager.alert('提示','没有检索到您要的数据！','info');
+            }
+        },
+        error : function() {
+            $.messager.alert('error','加载错误，请重新尝试！','warning');
+        }
+    });
+}
+</script>
+</body>
+</html>

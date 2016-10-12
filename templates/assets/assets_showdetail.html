@@ -1,0 +1,43 @@
+
+<table class="tab1" style="width: 560px;font-size: 13px;">
+    <tr style="border: solid blue 1px">
+        <td><span>资产编号：</span>{{ d.ass_id }}</td>
+        <td><span>资产名称：</span>{{ d.ass_name }}</td>
+        <td><span>资产品牌：</span>{{ d.ass_brand }}</td>
+    </tr>
+    <tr>
+        <td><span>资产型号：</span>{{ d.ass_model }}</td>
+        <td><span>资产配置：</span>{{ d.ass_configuration }}</td>
+        <td><span>资产类型：</span>{{ d.ass_category }}</td>
+    </tr>
+    <tr>
+        <td><span>是否涉密：</span>{% ifequal ass_secret 0 %}是{% else %}否{% endifequal %}</td>
+        <td><span>数量：</span>{{ d.ass_quantity }}</td>
+        <td><span>购置价格：</span>{{ d.ass_price }}</td>
+    </tr>
+    <tr>
+        <td><span>购买日期：</span>{{ d.ass_buyDate|date:"Y-m-d" }}</td>
+        <td><span>供应商：</span>{{ d.ass_provider }}</td>
+        <td><span>领用部门：</span>{{ d.ass_acceptDept }}</td>
+    </tr>
+    <tr>
+        <td><span>领用人：</span>{{ d.ass_acceptUser }}</td>
+        <td><span>使用人：</span>{{ d.ass_user }}</td>
+        <td><span>领用日期：</span>{{ d.ass_acceptDate|date:"Y-m-d" }}</td>
+    </tr>
+    <tr>
+        <td><span>领用期限：</span>{{ d.ass_acceptDeadline}}</td>
+        <td><span>是否贴标：</span>{% ifequal ass_islabel 0 %}是{% else %}否{% endifequal %}</td>
+        <td><span>所放位置：</span>{{ d.ass_location }}</td>
+    </tr>
+    <tr>
+        <td><span>资产状态：</span>{% if ass_flag == '0' %}闲置{% elif  ass_flag == '1' %}使用中{% elif ass_flag == '2' %}报废{% endif %}</td>
+        <td><span>票据凭证：</span><a {% if d.ass_billPic  %}href="/{{ d.ass_billPic }}{% endif %}" target="_blank">点击查看</a></td>
+        <td><span>资产照片：</span><a {% if d.ass_Pic  %}href="/{{ d.ass_Pic }}{% endif %}" target="_blank">点击查看</a></td>
+    </tr>
+    <tr>
+        <td><span>备注：</span>{{ d.ass_comment }}</td>
+        <td><span>操作人：</span>{{ d.ass_operator }}</td>
+        <td><span>操作时间：</span>{{ d.ass_operDate|date:"Y-m-d h:m:s" }}</td>
+    </tr>
+</table>

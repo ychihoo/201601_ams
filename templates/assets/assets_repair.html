@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+        body {
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        div input {
+            width:150px;
+        }
+        .middle {
+            margin: 0 0 auto;
+        }
+        .up{
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+        ul{
+            clear: both;
+            width: 740px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            padding-left: 15px;
+            list-style: none;
+            padding-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="div-page">
+    <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
+    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;" data-options="collapsible:true">
+        <div style="float: left">
+            <ul>
+                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
+                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
+                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
+                <li ><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton" style="width: 80px;height: 25px"></li>
+            </ul>
+            <ul>
+                <li><a id="repair" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">维修</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
+        <table id="repair_dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px" >
+        </table>
+    </div>
+</div>
+<div id="repairbtn" class="easyui-dialog" title="维修" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="cf" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
+    {% csrf_token %}
+            <div style="margin-bottom:20px;">
+                 资产编号：<input  name="fid"  id="fid" data-options="required:true,editable:false">
+            </div>
+            <div style="margin-bottom:20px;">
+                送修人：<input class="easyui-textbox" name="r_user" id="r_user" data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px;">
+                维修日期：<input class="easyui-datebox" name="r_date" id="r_date"  data-options="required:true,editable:false">
+            </div>
+            <div style="margin-bottom:20px">
+                维修事由：<input class="easyui-textbox" name="r_reason" id="r_reason" data-options="required:true,multiline:true,height:50">
+            </div>
+            <div style="margin-bottom:20px">
+                维修内容：<input class="easyui-textbox" name="r_content" id="r_content" data-options="required:true,multiline:true,height:50">
+            </div>
+            <div style="margin-bottom:20px">
+                是否在保内：<input class="easyui-textbox" readonly="readonly">
+            </div>
+            <div style="margin-bottom:20px">
+                维修费用：<input class="easyui-numberbox" name="r_price" id="r_price" data-options="value:0,min:0,max:99999" precision="2" name="price">
+            </div>
+            <div style="margin-bottom:20px">
+                备注：<input class="easyui-textbox" name="r_comment" id="r_comment">
+            </div>
+        <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+        </div>
+        <div id="tb" style="padding:2px 5px;">
+            请输入关键字：<input class="easyui-textbox" id="txt" style="width:180px" data-options="prompt:'资产编号或名称或型号',">
+		<a href="javascript:void(0)" id="search" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+	</div>
+    </form>
+</div>
+<script>
+$(function() {
+    // 单击查询按钮
+    $("#ok").click(function () {
+        load_ajax();
+    });
+    // 页面初始化加载数据
+    load_ajax();
+    // 单击维修按钮
+    $("#repair").click(function () {
+            loadRepairID();
+            load_ajax_repair();
+            $('#repairbtn').dialog('open');
+    });
+    // 单击search按钮
+    $('#search').click(function(){
+        load_ajax_repair();
+    });
+    valid_max_length('id',15);
+    valid_max_length('name',15);
+    valid_max_length('model',15);
+    valid_max_length('r_user',8);
+    valid_max_length('r_reason',30);
+    valid_max_length('r_content',30);
+    valid_max_length('r_comment',30);
+});
+
+//加载表数据
+function load_ajax() {
+    var str = {
+    id:$("#id").val(),
+    name: $("#name").val(),
+    model:$("#model").val(),
+    }
+    $.ajax({
+        type: "get",
+        url: "/assets/repair/ajax/",
+        data:str,
+        success: function (data) {
+            $('#repair_dg').datagrid('loadData', data);
+            if (data.total == '0') {
+                $.messager.alert('提示', '没有检索到您要的数据！', 'info');
+            }
+        },
+        error : function() {
+            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+        }
+    });
+}
+
+// 预加载combogrid数据
+function load_ajax_repair() {
+    $.ajax({
+        type: "get",
+        url: "/assets/repair/ajax_id/",
+        data:{s:$('#txt').val()},
+        success: function (data) {
+            $('#fid').combogrid('grid').datagrid('loadData',data);
+        },
+        error : function() {
+            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+        }
+    });
+}
+
+// 提交数据
+function submitForm(){
+    $('#cf').form('submit',{
+        url:"/assets/repair/post/",
+        onSubmit:function(){
+            return $(this).form('enableValidation').form('validate');
+        },
+        success: function(data) {
+            $.messager.alert("提示",data,"info");
+            clearForm();
+            closeForm();
+            load_ajax();
+        },
+    });
+}
+
+// 关闭弹窗
+function closeForm(){
+    $('#repairbtn').dialog('close');
+}
+
+// 清除窗口数据
+function clearForm(){
+    $('#cf').form('clear');
+}
+</script>
+</body>
+</html>

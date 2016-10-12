@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+        body{
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        input[type="text"] {
+            width:130px;
+        }
+        .middle {
+            margin: 0 0 auto;
+        }
+        .up{
+            padding-top: 10px;
+            margin: 0 auto;
+        }
+        ul{
+            clear: both;
+            width: 800px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            padding-left: 15px;
+            list-style: none;
+            padding-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="div-page">
+    <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
+    <div class="up easyui-panel" title="资产查询" style="clear:both;min-width: 1000px;width: 98%;" data-options="collapsible:true">
+        <div style="float: left; ">
+            <ul>
+                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
+                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
+                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
+                <li>领用人：<input class="easyui-textbox" type="text" name="acceptUser" id="acceptUser" maxlength="20"></li>
+            </ul>
+            <ul>
+                <li>资产状态：<select class="easyui-combobox" name="status" id="status" data-options="panelHeight:'auto',editable:false" style="width: 134px">
+                    <option value="-1">---全部(除报废)---</option>
+                    <option value="0">闲置</option>
+                    <option value="1">使用中</option>
+                    <option value="2">报废</option>
+                    </select>
+                </li>
+                <li>品牌：<input class="easyui-textbox" type="text" name="brand" id="brand" maxlength="20" ></li>
+                <li>日期：<input class="easyui-datebox" data-options="prompt:'录入日期',editable:false" type="text" name="acceptdate" id="acceptdate" maxlength="20"></li>
+                <li>使用人：<input class="easyui-textbox" type="text" name="user" id="user" maxlength="20"></li>
+            </ul>
+
+        </div>
+        <div style="float:left;padding-top: 30px; width: 90px ">
+{#                <li ><input type="button" name="查询" id="test" value="查询"  class="easyui-linkbutton" style="width: 80px;height:30px" ></li>#}
+            <li ><a  href="javascript:void(0)" id="query" value="查询"  class="easyui-linkbutton" style="width: 80px;height:30px" >查询</a></li>
+        </div>
+        <div>
+            <ul>
+                <li><a id="morebtn" class="easyui-linkbutton" style="width: 80px">详情</a></li>
+                <li><a id="changebtn" class="easyui-linkbutton" style="width: 80px;">变更记录</a></li>
+                <li><a id="exportbtn" class="easyui-linkbutton" style="width: 80px">选择导出</a></li>
+                <li><a id="exportallbtn" class="easyui-linkbutton" style="width: 80px">全部导出</a></li>
+                <li><a id="printbtn" class="easyui-linkbutton" style="width: 80px;">打印</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle" style="clear: both;min-width: 1000px;width: 98%;margin-top: 1px">
+        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 380px" >
+{#            <thead>#}
+{#            <tr>#}
+{#                <th data-options="field:'ck',checkbox:true"></th>#}
+{#                <th data-options="field:'sid',width:100" sortable="true">资产编号</th>#}
+{#                <th data-options="field:'sname',width:100" sortable="true">资产名称</th>#}
+{#                <th data-options="field:'sbrand',width:80,align:'left'" sortable="true">品牌</th>#}
+{#                <th data-options="field:'smodel',width:100,align:'left'" sortable="true">型号</th>#}
+{#                <th data-options="field:'sconfiguration',width:100,align:'left'">配置</th>#}
+{#                <th data-options="field:'scategory',width:60,align:'center'">类别</th>#}
+{#                <th data-options="field:'squantity',width:40,align:'center'">数量</th>#}
+{#                <th data-options="field:'sbuydate',width:80,align:'center'">购买日期</th>#}
+{#                <th data-options="field:'sacceptdept',width:100,align:'center'">领用部门</th>#}
+{#                <th data-options="field:'sacceptuser',width:80,align:'center'">领用人</th>#}
+{#                <th data-options="field:'suser',width:80,align:'center'">使用人</th>#}
+{#                <th data-options="field:'sacceptdate',width:80,align:'center'">领用日期</th>#}
+{#                <th data-options="field:'sflag',width:60,align:'center'">资产状态</th>#}
+{#            </tr>#}
+{#        </thead>#}
+        </table>
+    </div>
+</div>
+<div id="dlg" class="easyui-dialog" data-options="closed:true" style="width:600px;height:270px;overflow: auto;padding: 15px">
+    <div id="showhtml" ></div>
+    <div style="padding-top: 20px;text-align: center">
+        <a href="javascript:void(0)" style="width: 60px" class="easyui-linkbutton" onclick="$('#dlg').dialog('close')">关闭</a>
+    </div>
+</div>
+<div id="dlg2" class="easyui-window" data-options="closed:true,collapsible:false,minimizable:false" style="width:800px;height:400px;padding: 1px">
+    <div id="cdg"></div>
+    <div style="padding-top: 10px;text-align: center">
+        <a href="javascript:void(0)" style="width: 60px" class="easyui-linkbutton" onclick="$('#dlg2').window('close')">关闭</a>
+    </div>
+</div>
+<script>
+$(function(){
+    valid_max_length('id',15);
+    valid_max_length('name',15);
+    valid_max_length('model',15);
+    valid_max_length('acceptUser',8);
+    valid_max_length('user',8);
+    valid_max_length('brand',8);
+
+})
+//// 单击详情
+$("#morebtn").click(function() {
+    if(get_checkedID()){
+        ajax_showDetail(get_checkedID());
+        $('#dlg').dialog('open');
+    }
+})
+
+//// 单击变更记录
+$("#changebtn").click(function(){
+    if(get_checkedID()){
+        ajax_showChangeDetail(get_checkedID());
+        $('#dlg2').window('open');
+    }
+})
+
+</script>
+</body>
+</html>
