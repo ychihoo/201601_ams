@@ -171,6 +171,7 @@ function loadRepairTable(){
         singleSelect:true,
         rownumbers: true,
         pagination: true,
+        height: get_dg_height(),
         //pageSize: 10,
         pageList: [10, 20, 30, 50, 100],
         showFooter: true,

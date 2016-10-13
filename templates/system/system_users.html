@@ -98,10 +98,10 @@
                 </select>
             </div>
             <div style="margin-bottom:20px">
-                手机：<input class="easyui-textbox" name="ftel" id="ftel" data-options="required:true" >
+                手机：<input class="easyui-textbox" name="ftel" id="ftel"  >
             </div>
             <div style="margin-bottom:20px">
-                邮箱：<input class="easyui-textbox easyui-validatebox"  name="fmail" id="fmail" data-options="required:true,validType:'email'">
+                邮箱：<input class="easyui-textbox easyui-validatebox"  name="fmail" id="fmail" data-options="validType:'email'">
             </div>
             <div style="margin-bottom:20px; line-height: 30px; text-align: center">
                <input type="checkbox" name="floginChPwd" id="floginChPwd" value="0" style="width:15px;height: 15px;"><span style="line-height: 15px">下次登录更改密码</span>
@@ -131,6 +131,7 @@ $(function() {
     valid_max_length('fpwd2',20);
     valid_max_length('ftel',11);
     valid_max_length('fmail',30);
+    valid_mobile('ftel');
 });
 
 
@@ -172,14 +173,13 @@ function submitForm(){
     $('#add').form('submit',{
         url:"/assets/scrap/post/",
         onSubmit:function(){
-            valid_mobile('ftel');
             return $(this).form('enableValidation').form('validate');
         },
         success: function(data) {
-            $.messager.alert("提示",data,"info");
-            clearForm();
-            closeForm();
-            load_ajax();
+            $.messager.alert("提示",'success!',"info");
+{#            clearForm();#}
+{#            closeForm();#}
+{#            load_ajax();#}
         },
         error: function () {
             $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');

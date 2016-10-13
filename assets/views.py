@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render, render_to_response, HttpResponse, RequestContext, HttpResponseRedirect
 from django.http import JsonResponse
-import json
+import json, time
 from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept
 from assets.models import *
 from system.models import *
@@ -32,6 +32,7 @@ def ajax_assets_mydisplay(request):
     data = data.filter(Q(ass_user=request.session.get('username', '')) | Q(ass_acceptUser=request.session.get('username', '')))
     json_item = {'total': data.count(), "rows": []}
     for d in data:
+        print d.ass_operDate
         if d.ass_flag == 0:
             d.ass_flag = '闲置'
         elif d.ass_flag == 1:

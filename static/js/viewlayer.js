@@ -33,10 +33,17 @@ function valid_max_length(vid, max_length)
 function valid_mobile(vid){
     var v = "#"+vid;
     var num = /^1\d{10}/;
-    if (!num.test($(v).textbox('getValue'))){
-        $.messager.alert('提示', '请输入正确的手机号码', 'warning');
-        return;
-    }
+    $(v).textbox({
+        onChange: function(n, o){
+            if (n!='' && !num.test(n)){
+                $.messager.alert('提示', '请输入正确的手机号码', 'warning');
+            }
+        }
+    })
+    //if ($(v).textbox('getValue')!='' && !num.test($(v).textbox('getValue'))){
+    //    $.messager.alert('提示', '请输入正确的手机号码', 'warning');
+    //    return false;
+    //}
 }
 
 function valid_input_iddddd(vid)

@@ -58,7 +58,7 @@
     <form id="cf" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
     {% csrf_token %}
             <div style="margin-bottom:20px">
-                资产收回：<select class="easyui-combobox" name="recyle" id="recyle"  data-options="panelHeight:'auto'" style="width: 153px;">
+                资产收回：<select class="easyui-combobox" name="recyle" id="recyle"  data-options="panelHeight:'auto',editable:false" style="width: 153px;">
                     <option value="是" >是</option>
                     <option value="否" selected>否</option>
                     </select>

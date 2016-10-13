@@ -138,6 +138,7 @@ function load_ajax() {
 
 function load_dept(){
     $('#dept').combotree({
+        method:'get',
         url:'/assets/mod/dept/',
         required:true
     });
