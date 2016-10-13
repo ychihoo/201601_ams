@@ -55,7 +55,7 @@
                 <li><a id="disUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">禁用账户</a></li>
                 <li><a id="enUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">启用账户</a></li>
                 <li><a id="resetPwdBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">密码重置</a></li>
-                <li><a id="chRoleBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">信息编辑</a></li>
+                <li><a id="editUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">编辑用户</a></li>
                 <li><a id="delUserBtn" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">账号删除</a></li>
             </ul>
         </div>
@@ -65,6 +65,7 @@
         </table>
     </div>
 </div>
+<!--添加用户界面!-->
 <div id="addForm" class="easyui-dialog" title="添加用户" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
     <form id="add" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
     {% csrf_token %}
@@ -113,6 +114,68 @@
     </div>
     </form>
 </div>
+<!--重置密码界面!-->
+<div id="resetPwdForm" class="easyui-dialog" title="重置密码" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="reset" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
+    {% csrf_token %}
+            <div style="margin-bottom:20px;">
+                登录名：<input class="easyui-textbox" name="faccount"  id="faccount"  data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                新密码：<input class="easyui-textbox" type="password" name="fpwd"  id="fpwd" data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                确认新密码：<input  class="easyui-textbox" type="password" name="fpwd2" id="fpwd2" data-options="required:true">
+            </div>
+        <div style="text-align:right;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+    </div>
+    </form>
+</div>
+<!--编辑用户界面!-->
+<div id="editForm" class="easyui-dialog" title="编辑用户" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="edit" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
+    {% csrf_token %}
+            <div style="margin-bottom:20px;">
+                登录名：<input class="easyui-textbox" name="faccount"  id="faccount"  data-options="required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                姓名：<input class="easyui-textbox" name="fusername"  id="fusername" data-options="required:true" >
+            </div>
+            <div style="margin-bottom:20px">
+                部门：<input class="easyui-combotree" name="fdept" id="fdept">
+            </div>
+            <div style="margin-bottom:20px;">
+                职位：<select class="easyui-combobox" name="fposition"  id="fposition" data-options="panelHeight:'auto',width:150,editable:false">
+                {% for p in pos %}
+                <option value="{{ p.p_name }}">{{ p.p_name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div style="margin-bottom:20px">
+                角色：<select class="easyui-combobox" name="frole" id="frole" data-options="panelHeight:'auto',width:150,editable:false">
+                {% for r in role %}
+                <option value="{{ r.id }}">{{ r.r_name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div style="margin-bottom:20px">
+                手机：<input class="easyui-textbox" name="ftel" id="ftel"  >
+            </div>
+            <div style="margin-bottom:20px">
+                邮箱：<input class="easyui-textbox easyui-validatebox"  name="fmail" id="fmail" data-options="validType:'email'">
+            </div>
+            <div style="margin-bottom:20px; line-height: 30px; text-align: center">
+               <input type="checkbox" name="floginChPwd" id="floginChPwd" value="0" style="width:15px;height: 15px;"><span style="line-height: 15px">下次登录更改密码</span>
+            </div>
+
+        <div style="text-align:right;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+    </div>
+    </form>
+</div>
 <script>
 
 $(function() {
@@ -121,8 +184,34 @@ $(function() {
         load_ajax();
     });
     load_ajax();
+    <!--添加用用户按钮 -->
     $("#addUserBtn").click(function () {
-        get_checked();
+        get_checked('addForm');
+        load_dept2();
+    });
+    <!--禁用账户按钮 -->
+    $("#disUserBtn").click(function () {
+        get_checked('disUser');
+        load_dept2();
+    });
+    <!--启用账户按钮 -->
+    $("#enUserBtn").click(function () {
+        get_checked('enUser');
+        load_dept2();
+    });
+    <!--重置密码按钮 -->
+    $("#resetPwdBtn").click(function () {
+        get_checked('resetPwdForm');
+        load_dept2();
+    });
+    <!--编辑用户按钮 -->
+    $("#editUserBtn").click(function () {
+        get_checked('editForm');
+        load_dept2();
+    });
+    <!--删除用用户按钮 -->
+    $("#delUserBtn").click(function () {
+        get_checked('delUser');
         load_dept2();
     });
     valid_max_length('faccount',20);
@@ -131,7 +220,6 @@ $(function() {
     valid_max_length('fpwd2',20);
     valid_max_length('ftel',11);
     valid_max_length('fmail',30);
-    valid_mobile('ftel');
 });
 
 
@@ -158,13 +246,34 @@ function load_ajax() {
     });
 }
 
-function get_checked(){
+function get_checked(dlg_form){
     var checkedRow = $('#user_dg').datagrid('getChecked');
     if(checkedRow.length == "0"){
         $.messager.alert("提示", "请选择！", "warning");
     }
     else{
-        $('#addForm').dialog('open');
+        if(dlg_form == 'addForm'){
+            $('#addForm').dialog('open');
+        }
+        else if(dlg_form == 'resetPwdForm'){
+            $('#resetPwdForm').dialog('open');
+        }
+        else if(dlg_form == 'editForm'){
+            $('#editForm').dialog('open');
+        }
+        else if(dlg_form == 'disUser'){
+            ;
+        }
+        else if(dlg_form == 'enUser'){
+            ;
+        }
+        else if(dlg_form == 'delUser'){
+            ;
+        }
+        else{
+            ;
+        }
+
     }
 }
 
@@ -188,7 +297,7 @@ function submitForm(){
     });
 }
 
-
+// 加载部门树
 function load_dept2(){
     $('#fdept').combotree({
         method:'get',
@@ -205,7 +314,7 @@ function closeForm(){
 
 // 清除窗口数据
 function clearForm(){
-		$('#add').form('clear');
+    $('#add').form('clear');
 }
 </script>
 </body>
