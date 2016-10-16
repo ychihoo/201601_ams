@@ -280,28 +280,32 @@
                 $('#editForm').dialog('open');
             }
             else if (dlg_form == 'disUser') {
-                $.ajax({
-                    data: {user: account},
-                    url: '/system/user_man/disable/',
-                    success: function (data) {
-                        load_ajax();
-                    },
-                    error: function () {
-                        msgShow('提示', "提交请求失败，请重新尝试", 'warning');
-                    }
-                })
+                if (checkedRow[0].status == "启用"){
+                    $.ajax({
+                        data: {user: account},
+                        url: '/system/user_man/disable/',
+                        success: function (data) {
+                            load_ajax();
+                        },
+                        error: function () {
+                            msgShow('提示', "提交请求失败，请重新尝试", 'warning');
+                        }
+                    })
+                }
             }
             else if (dlg_form == 'enUser') {
-                $.ajax({
-                    data: {user: account},
-                    url: '/system/user_man/enable/',
-                    success: function (data) {
-                        load_ajax();
-                    },
-                    error: function () {
-                        msgShow('提示', "提交请求失败，请重新尝试", 'warning');
-                    }
-                })
+                if (checkedRow[0].status == "禁用"){
+                    $.ajax({
+                        data: {user: account},
+                        url: '/system/user_man/enable/',
+                        success: function (data) {
+                            load_ajax();
+                        },
+                        error: function () {
+                            msgShow('提示', "提交请求失败，请重新尝试", 'warning');
+                        }
+                    })
+                }
             }
             else if (dlg_form == 'delUser') {
                 $.messager.confirm("提示","您确定要删除【"+account+"】用户么?",function(r){

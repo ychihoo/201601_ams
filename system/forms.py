@@ -25,7 +25,7 @@ class loginForm(forms.Form):
             Password = hashlib.sha1(hashlib.md5(Password).hexdigest()).hexdigest()
         if UserName and Password:
             try:
-                self.__user_cache = Users.objects.filter(u_delflag=0).get(u_account=UserName, u_pwd=Password)
+                self.__user_cache = Users.objects.filter(u_delflag=0, u_enabled=0).get(u_account=UserName, u_pwd=Password)
             except:
                 # save_to_log('用户名或密码错误','登录')
                 raise forms.ValidationError(u'用户名或密码输入错误')

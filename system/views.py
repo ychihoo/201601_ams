@@ -1,9 +1,10 @@
 # coding=utf-8
 from django.shortcuts import render_to_response, RequestContext
-from django.http import HttpResponse, JsonResponse, HttpRequest
+from django.http import HttpResponse, JsonResponse
 from start.public import login_valid, is_exsit
 from system.models import Users, Roles, Position
 import hashlib
+import string
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -84,8 +85,13 @@ def ajax_del_user(request):
 def post_resetPwd(request):
     account = request.POST['raccount']
     new_pwd = request.POST['rpwd']
+    new_pwd2 = request.POST['rpwd2']
     loginChPwd = request.POST.get('rloginChPwd', 1)
     new_pwd = hashlib.sha1(hashlib.md5(new_pwd).hexdigest()).hexdigest()
+    if new_pwd == "" or new_pwd2 == "" or len(new_pwd) < 6 or len(new_pwd2) < 6:
+        return HttpResponse("密码不能为空且密码长度不能低于6个字符")
+    if new_pwd != new_pwd2:
+        return HttpResponse("两次输入的密码不一致")
     try:
         Users.objects.filter(u_account=account).update(u_pwd=new_pwd, u_loginChPwd=loginChPwd)
         return HttpResponse('success')
@@ -99,13 +105,40 @@ def post_resetPwd(request):
 def post_addUser(request):
     account = request.POST['faccount']
     username = request.POST['fusername']
-    new_pwd = request.POST['fpwd2']
+    new_pwd = request.POST['fpwd']
+    new_pwd2 = request.POST['fpwd2']
     dept = request.POST['fdept']
     position = request.POST['fposition']
     role = request.POST['frole']
     tel = request.POST.get('ftel', '')
     mail = request.POST.get('fmail', '')
     loginChPwd = request.POST.get('floginChPwd', 1)
+    if account == "":
+        return HttpResponse("账户不能为空")
+    try:
+        Users.objects.get(u_account=account)
+        return HttpResponse("该用户已被占用")
+    except:
+        pass
+    if username == "" or len(username) < 2 or len(username) > 5:
+        return HttpResponse("姓名不能为空且字段长度在2到5之间")
+    if new_pwd == "" or new_pwd2 == "" or len(new_pwd) < 6 or len(new_pwd2) < 6:
+        return HttpResponse("密码不能为空且密码长度不能低于6个字符")
+    if new_pwd != new_pwd2:
+        return HttpResponse("两次输入的密码不一致")
+    if dept == "":
+        return HttpResponse("部门不能为空")
+    if role == "":
+        return HttpResponse("角色不能为空")
+    if tel != "" and len(tel) != 11:
+        return HttpResponse("请输入有效的手机号码")
+    try:
+        if tel != "":
+            int(tel)
+    except:
+        return HttpResponse("请输入有效的手机号码")
+    if mail != "" and (mail.find('@') == -1 or mail.find('.') == -1):
+        return HttpResponse("请输入有效的邮箱")
     new_pwd = hashlib.sha1(hashlib.md5(new_pwd).hexdigest()).hexdigest()
     try:
         user = Users()
@@ -135,6 +168,22 @@ def post_editUser(request):
     role = request.POST['erole']
     tel = request.POST.get('etel', '')
     mail = request.POST.get('email', '')
+    if username == "" or len(username) < 2 or len(username) > 5:
+        return HttpResponse("姓名不能为空且字段长度在2到5之间")
+    if dept == "":
+        return HttpResponse("部门不能为空")
+    if role == "":
+        return HttpResponse("角色不能为空")
+    if tel != "" and len(tel) != 11:
+        return HttpResponse("请输入有效的手机号码")
+    try:
+        if tel != "":
+            int(tel)
+    except:
+        return HttpResponse("请输入有效的手机号码")
+    if mail != "" and (mail.find('@') == -1 or mail.find('.') == -1):
+        return HttpResponse("请输入有效的邮箱")
+
     try:
         user = Users.objects.get(u_account=account)
         user.u_userName = username
