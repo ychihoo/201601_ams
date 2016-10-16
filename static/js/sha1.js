@@ -10,9 +10,12 @@
  *   Configurable   variables.   You   may   need   to   tweak   these   to   be   compatible   with   
  *   the   server-side,   but   the   defaults   work   in   most   cases.   
  */
-var hexcase = 0; /*   hex   output   format.   0   -   lowercase;   1   -   uppercase                 */
-var b64pad = ""; /*   base-64   pad   character.   "="   for   strict   RFC   compliance       */
-var chrsz = 8; /*   bits   per   input   character.   8   -   ASCII;   16   -   Unicode             */
+var hexcase = 0;
+/*   hex   output   format.   0   -   lowercase;   1   -   uppercase                 */
+var b64pad = "";
+/*   base-64   pad   character.   "="   for   strict   RFC   compliance       */
+var chrsz = 8;
+/*   bits   per   input   character.   8   -   ASCII;   16   -   Unicode             */
 
 /*   
  *   These   are   the   functions   you'll   usually   want   to   call   
@@ -153,7 +156,7 @@ function str2binb(str) {
     var bin = Array();
     var mask = (1 << chrsz) - 1;
     for (var i = 0; i < str.length * chrsz; i += chrsz)
-    bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i % 32);
+        bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i % 32);
     return bin;
 }
 
@@ -164,7 +167,7 @@ function binb2str(bin) {
     var str = "";
     var mask = (1 << chrsz) - 1;
     for (var i = 0; i < bin.length * 32; i += chrsz)
-    str += String.fromCharCode((bin[i >> 5] >>> (24 - i % 32)) & mask);
+        str += String.fromCharCode((bin[i >> 5] >>> (24 - i % 32)) & mask);
     return str;
 }
 

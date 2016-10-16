@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 import datetime
+
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('assets', '0013_auto_20160819_2242'),
     ]
@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='assets_detail',
             name='ass_operDate',
-            field=models.DateTimeField(blank=True, default=datetime.datetime(2016, 8, 20, 18, 54, 13, 667000), null=True),
+            field=models.DateTimeField(blank=True, default=datetime.datetime(2016, 8, 20, 18, 54, 13, 667000),
+                                       null=True),
         ),
     ]

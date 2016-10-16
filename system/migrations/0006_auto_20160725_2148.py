@@ -7,7 +7,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('system', '0005_menus_m_url'),
     ]
@@ -16,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='users',
             name='u_dept',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='system.Department'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    to='system.Department'),
         ),
         migrations.AlterField(
             model_name='users',

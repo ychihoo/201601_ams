@@ -1,8 +1,9 @@
 # coding=utf-8
-from django.test import TestCase
 from django.core import serializers
-from assets.models import Assets
 from django.http import HttpResponse
+
+from assets.models import Assets
+
 
 def ajax1(request):
     sid = request.GET.get('id')
@@ -17,4 +18,4 @@ def ajax1(request):
     #     'location': d.ass_location,
     # })
     # return JsonResponse(json_items)
-    return HttpResponse(serializers.serialize("json",d))
+    return HttpResponse(serializers.serialize("json", d))

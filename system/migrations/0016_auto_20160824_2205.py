@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 import datetime
+
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('system', '0015_auto_20160820_1854'),
     ]

@@ -13,7 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
+
 import views
 
 urlpatterns = [
@@ -40,4 +41,3 @@ urlpatterns = [
     url(r'^scrap/post/$', views.post_assets_scrap),
     url(r'^mod/dept/$', views.ajax_mod_dept),
 ]
-

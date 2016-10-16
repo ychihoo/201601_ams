@@ -1,17 +1,20 @@
 # coding=utf-8
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+import socket
+import uuid
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
-import socket, uuid
-from system.models import Log, Users, Menus, Department, Position
-import views
 from PIL import Image
+
+from system.models import Log, Users, Menus, Department
+import views
 
 
 # 登录验证
 def login_valid(func):
     def isLogin(request, *args, **kwargs):
         if request.session.get('account'):
-            #加一个检查是否对该页面有访问权限
+            # 加一个检查是否对该页面有访问权限
             # if get_auth_allow(request) == false:
             #     return HttpResponse('您没有权限访问此页面！',)
             # for meuns_url in valid_auth(request.session.get('account')):
@@ -20,9 +23,11 @@ def login_valid(func):
             return func(request)
         else:
             if get_root_url(request) != '/':
-                return HttpResponse('您的session已过期，请刷新浏览器页面操作',)
+                return HttpResponse('您的session已过期，请刷新浏览器页面操作', )
             return HttpResponseRedirect('/login/')
+
     return isLogin
+
 
 # 用户权限控制
 def valid_auth(user_account):
@@ -101,12 +106,13 @@ def update_user_log(request):
     user.u_lastLogin = get_local_datetime()
     user.save()
 
+
 # 处理图片文件名
-def change_pic_filename(filename,path):
+def change_pic_filename(filename, path):
     if filename:
-        phototime = str(timezone.now()).replace(':','').replace(' ','').replace('-','').replace('.','')
+        phototime = str(timezone.now()).replace(':', '').replace(' ', '').replace('-', '').replace('.', '')
         photo_last = str(filename).split('.')[-1]
-        newfilename =path+ phototime+'.'+photo_last
+        newfilename = path + phototime + '.' + photo_last
         img = Image.open(filename)
         img.save(newfilename)
         return newfilename
@@ -115,7 +121,7 @@ def change_pic_filename(filename,path):
 
 # 部门显示
 def get_json_dept():
-    dept = Department.objects.filter(dept_delflag=0).order_by('id','dept_order')
+    dept = Department.objects.filter(dept_delflag=0).order_by('id', 'dept_order')
     tree_root = Department.objects.filter(dept_delflag=0, dept_parentID=0)
     l = []
     dept_items = []
@@ -138,7 +144,7 @@ def loop_dept(obj, parentID, l, dept_items):
                 'children': [],
             })
         if flag == 0:
-            loop_dept2(obj, d.id, l, dept_items[len(dept_items)-1])
+            loop_dept2(obj, d.id, l, dept_items[len(dept_items) - 1])
 
 
 # 2.可实现部门多级遍历
@@ -149,11 +155,19 @@ def loop_dept2(obj, parentID, l, dept_list):
             flag = 0
             l.append(d.id)
             dept_list['children'].append({
-                    # ' id':d.id,
+                # ' id':d.id,
                 'id': d.dept_name,
                 'text': d.dept_name,
                 'children': [],
             })
         if flag == 0:
-            loop_dept2(obj, d.id, l, dept_list['children'][len(dept_list['children'])-1])
+            loop_dept2(obj, d.id, l, dept_list['children'][len(dept_list['children']) - 1])
 
+
+# 验证用户名是否存在
+def is_exsit(str):
+    try:
+        Users.objects.get(u_account=str)
+        return 0
+    except:
+        return 1

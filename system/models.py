@@ -34,7 +34,7 @@ class Users(models.Model):
     u_account = models.CharField(max_length=20, unique=True)
     u_pwd = models.CharField(max_length=50)
     u_userName = models.CharField(max_length=20)
-    u_dept = models.CharField(max_length=40,null=True, blank=True)
+    u_dept = models.CharField(max_length=40, null=True, blank=True)
     u_position = models.CharField(max_length=20, null=True, blank=True)
     u_role = models.ForeignKey(Roles, null=True, blank=True)
     u_tel = models.CharField(max_length=15, null=True, blank=True)

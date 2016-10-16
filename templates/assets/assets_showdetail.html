@@ -1,4 +1,3 @@
-
 <table class="tab1" style="width: 560px;font-size: 13px;">
     <tr style="border: solid blue 1px">
         <td><span>资产编号：</span>{{ d.ass_id }}</td>
@@ -26,14 +25,16 @@
         <td><span>领用日期：</span>{{ d.ass_acceptDate|date:"Y-m-d" }}</td>
     </tr>
     <tr>
-        <td><span>领用期限：</span>{{ d.ass_acceptDeadline}}</td>
+        <td><span>领用期限：</span>{{ d.ass_acceptDeadline }}</td>
         <td><span>是否贴标：</span>{% ifequal ass_islabel 0 %}是{% else %}否{% endifequal %}</td>
         <td><span>所放位置：</span>{{ d.ass_location }}</td>
     </tr>
     <tr>
-        <td><span>资产状态：</span>{% if ass_flag == '0' %}闲置{% elif  ass_flag == '1' %}使用中{% elif ass_flag == '2' %}报废{% endif %}</td>
-        <td><span>票据凭证：</span><a {% if d.ass_billPic  %}href="/{{ d.ass_billPic }}{% endif %}" target="_blank">点击查看</a></td>
-        <td><span>资产照片：</span><a {% if d.ass_Pic  %}href="/{{ d.ass_Pic }}{% endif %}" target="_blank">点击查看</a></td>
+        <td><span>资产状态：</span>{% if ass_flag == '0' %}闲置{% elif  ass_flag == '1' %}使用中{% elif ass_flag == '2' %}
+            报废{% endif %}</td>
+        <td><span>票据凭证：</span><a {% if d.ass_billPic %}href="/{{ d.ass_billPic }}{% endif %}" target="_blank">点击查看</a>
+        </td>
+        <td><span>资产照片：</span><a {% if d.ass_Pic %}href="/{{ d.ass_Pic }}{% endif %}" target="_blank">点击查看</a></td>
     </tr>
     <tr>
         <td><span>备注：</span>{{ d.ass_comment }}</td>

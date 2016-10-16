@@ -9,21 +9,26 @@
             padding-left: 15px;
             font-size: 12px;
         }
+
         input[type="text"] {
-            width:120px;
+            width: 120px;
         }
+
         .middle {
             margin: 0 0 auto;
         }
-        .up{
+
+        .up {
             padding-top: 10px;
             margin: 0 auto;
         }
-        .div-page ul{
+
+        .div-page ul {
             clear: both;
             width: 740px;
         }
-        .div-page li{
+
+        .div-page li {
             float: left;
             list-style: none;
             padding-left: 15px;
@@ -36,207 +41,212 @@
 
 <div class="div-page">
     <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
-    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;" data-options="collapsible:true">
+    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;"
+         data-options="collapsible:true">
         <div style="float: left">
             <ul>
                 <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
                 <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
                 <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
-                <li ><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton" style="width: 80px;height: 25px"></li>
+                <li><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton"
+                           style="width: 80px;height: 25px"></li>
             </ul>
             <ul>
-                <li><a id="change" class="easyui-linkbutton"  style="cursor:pointer;width: 80px">变更</a></li>
+                <li><a id="change" class="easyui-linkbutton" style="cursor:pointer;width: 80px">变更</a></li>
             </ul>
         </div>
     </div>
     <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
-        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px" >
+        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px">
         </table>
     </div>
 </div>
-<div id="changebtn" class="easyui-dialog" title="变更" data-options="closed:true" style="width:100%;max-width:400px;padding:30px 60px;">
-    <form id="cf" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;" >
-    {% csrf_token %}
-            <div style="margin-bottom:20px">
-                资产收回：<select class="easyui-combobox" name="recyle" id="recyle"  data-options="panelHeight:'auto',editable:false" style="width: 153px;">
-                    <option value="是" >是</option>
-                    <option value="否" selected>否</option>
-                    </select>
-            </div>
-            <div style="margin-bottom:20px;">
-                 资产编号：<input class="easyui-textbox" name="fid"  id="fid"  readonly="true">
-            </div>
-            <div style="margin-bottom:20px;">
-                领用部门：<input id="fdept" name="dept" style="width:150px;">
-            </div>
-            <div style="margin-bottom:20px">
-                领用人：<input class="easyui-textbox" name="acceptuser" id="facceptuser" >
-            </div>
-            <div style="margin-bottom:20px">
-                <span id="txtuser">使用人：</span><input class="easyui-textbox" name="user" id="fuser" >
-            </div>
-            <div style="margin-bottom:20px">
-                变更日期：<input class="easyui-datebox" name="changedate" id="fchangedate" data-options="required:true,editable:false" >
-            </div>
-            <div style="margin-bottom:20px">
-                存放位置：<input class="easyui-textbox" name="location" id="flocation">
-            </div>
-            <div style="margin-bottom:20px">
-                变更事由：<input class="easyui-textbox" name="reason" id="freason">
-            </div>
-            <div style="margin-bottom:20px">
-                备注：<input class="easyui-textbox" name="comment" id="fcomment">
-            </div>
+<div id="changebtn" class="easyui-dialog" title="变更" data-options="closed:true"
+     style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="cf" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
+        {% csrf_token %}
+        <div style="margin-bottom:20px">
+            资产收回：<select class="easyui-combobox" name="recyle" id="recyle"
+                         data-options="panelHeight:'auto',editable:false" style="width: 153px;">
+            <option value="是">是</option>
+            <option value="否" selected>否</option>
+        </select>
+        </div>
+        <div style="margin-bottom:20px;">
+            资产编号：<input class="easyui-textbox" name="fid" id="fid" readonly="true">
+        </div>
+        <div style="margin-bottom:20px;">
+            领用部门：<input id="fdept" name="dept" style="width:150px;">
+        </div>
+        <div style="margin-bottom:20px">
+            领用人：<input class="easyui-textbox" name="acceptuser" id="facceptuser">
+        </div>
+        <div style="margin-bottom:20px">
+            <span id="txtuser">使用人：</span><input class="easyui-textbox" name="user" id="fuser">
+        </div>
+        <div style="margin-bottom:20px">
+            变更日期：<input class="easyui-datebox" name="changedate" id="fchangedate"
+                        data-options="required:true,editable:false">
+        </div>
+        <div style="margin-bottom:20px">
+            存放位置：<input class="easyui-textbox" name="location" id="flocation">
+        </div>
+        <div style="margin-bottom:20px">
+            变更事由：<input class="easyui-textbox" name="reason" id="freason">
+        </div>
+        <div style="margin-bottom:20px">
+            备注：<input class="easyui-textbox" name="comment" id="fcomment">
+        </div>
         <div style="text-align:center;padding:5px 0">
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
-    </div>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+        </div>
     </form>
 </div>
 <script>
 
-$(function(){
-    $("#ok").click(function () {
+    $(function () {
+        $("#ok").click(function () {
+            load_ajax();
+        });
         load_ajax();
-    });
-    load_ajax();
-    onchangecombobx();
-    $("#change").click(function() {
-        if(get_checkedID()){
-            load_ajax_change(get_checkedID);
-            load_dept();
-            $('#changebtn').dialog('open');
-        }
-    });
-    valid_max_length('id',15);
-    valid_max_length('name',15);
-    valid_max_length('model',15);
-    valid_max_length('facceptuser',8);
-    valid_max_length('fuser',8);
-    valid_max_length('flocation',30);
-    valid_max_length('freason',50);
-    valid_max_length('fcomment',30);
-});
-
-// combobox改变事件
-function onchangecombobx(){
-    $("#recyle").combobox({
-        onChange: function (n,o) {
-            if(n == "是"){
-                $("#fdept").textbox('disable');
-                $("#fdept").textbox('clear');
-                $("#facceptuser").textbox('disable');
-                $("#facceptuser").textbox('clear');
-                $("#txtuser").text("回收人：");
-                $("#freason").textbox('setValue','行政回收');
+        onchangecombobx();
+        $("#change").click(function () {
+            if (get_checkedID()) {
+                load_ajax_change(get_checkedID);
+                load_dept();
+                $('#changebtn').dialog('open');
             }
-            else{
-                $("#fdept").textbox('enable');
-                $("#facceptuser").textbox('enable');
-                $("#txtuser").text("使用人：");
-                $("#freason").textbox('setValue','');
-            }
-        }
+        });
+        valid_max_length('id', 15);
+        valid_max_length('name', 15);
+        valid_max_length('model', 15);
+        valid_max_length('facceptuser', 8);
+        valid_max_length('fuser', 8);
+        valid_max_length('flocation', 30);
+        valid_max_length('freason', 50);
+        valid_max_length('fcomment', 30);
     });
-}
 
-//加载表数据
-function load_ajax() {
-    var str = {
-    id:$("#id").val(),
-    name: $("#name").val(),
-    model:$("#model").val(),
-    flag:'1',
+    // combobox改变事件
+    function onchangecombobx() {
+        $("#recyle").combobox({
+            onChange: function (n, o) {
+                if (n == "是") {
+                    $("#fdept").textbox('disable');
+                    $("#fdept").textbox('clear');
+                    $("#facceptuser").textbox('disable');
+                    $("#facceptuser").textbox('clear');
+                    $("#txtuser").text("回收人：");
+                    $("#freason").textbox('setValue', '行政回收');
+                }
+                else {
+                    $("#fdept").textbox('enable');
+                    $("#facceptuser").textbox('enable');
+                    $("#txtuser").text("使用人：");
+                    $("#freason").textbox('setValue', '');
+                }
+            }
+        });
     }
-    $.ajax({
-        type: "get",
-        url: "/assets/receive/ajax/",
-        data:str,
-        success: function (data) {
-            $('#dg').datagrid('loadData', data);
-            if (data.total == '0') {
-                $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-            }
-        },
-        error : function() {
-            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-        }
-    });
-}
 
-// 预加载弹窗数据
-function load_ajax_change(fid) {
+    //加载表数据
+    function load_ajax() {
+        var str = {
+            id: $("#id").val(),
+            name: $("#name").val(),
+            model: $("#model").val(),
+            flag: '1',
+        }
+        $.ajax({
+            type: "get",
+            url: "/assets/receive/ajax/",
+            data: str,
+            success: function (data) {
+                $('#dg').datagrid('loadData', data);
+                if (data.total == '0') {
+                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');
+                }
+            },
+            error: function () {
+                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+            }
+        });
+    }
+
+    // 预加载弹窗数据
+    function load_ajax_change(fid) {
         $.ajax({
             type: "get",
             url: "/assets/change/ajax/",
-            data:{id:fid},
+            data: {id: fid},
             success: function (data) {
-                $.each(data.item,function(i,d) {
-                    $("#fid").textbox('setValue',d['id']);
-                    $("#fdept").textbox('setValue',d['acceptdept']);
-                    $("#facceptuser").textbox('setValue',d['acceptuser']);
-                    $("#fuser").textbox('setValue',d['user']);
-                    $("#flocation").textbox('setValue',d['location']);
+                $.each(data.item, function (i, d) {
+                    $("#fid").textbox('setValue', d['id']);
+                    $("#fdept").textbox('setValue', d['acceptdept']);
+                    $("#facceptuser").textbox('setValue', d['acceptuser']);
+                    $("#fuser").textbox('setValue', d['user']);
+                    $("#flocation").textbox('setValue', d['location']);
                 });
             }
-            });
+        });
     }
 
-// 公共部门调用模块
-function load_dept(){
-    $('#fdept').combotree({
-        method:'get',
-        url:'/assets/mod/dept/',
-        required:true
-    });
-}
+    // 公共部门调用模块
+    function load_dept() {
+        $('#fdept').combotree({
+            method: 'get',
+            url: '/assets/mod/dept/',
+            required: true
+        });
+    }
 
-// 提交数据
-function submitForm(){
-    $('#cf').form('submit',{
-        url:"/assets/change/post/",
-        onSubmit:function(){
-            return $(this).form('enableValidation').form('validate');
-        },
-        success: function(data) {
-            $.messager.alert("提示",data,"info");
-            clearForm();
-            closeForm();
-            load_ajax();
-        },
-    });
-}
+    // 提交数据
+    function submitForm() {
+        $('#cf').form('submit', {
+            url: "/assets/change/post/",
+            onSubmit: function () {
+                return $(this).form('enableValidation').form('validate');
+            },
+            success: function (data) {
+                $.messager.alert("提示", data, "info");
+                clearForm();
+                closeForm();
+                load_ajax();
+            },
+        });
+    }
 
-// 关闭弹窗
-function closeForm(){
-    $('#changebtn').dialog('close');
-}
+    // 关闭弹窗
+    function closeForm() {
+        $('#changebtn').dialog('close');
+    }
 
-// 清除窗口数据
-function clearForm(){
-		$('#cf').form('clear');
-	}
+    // 清除窗口数据
+    function clearForm() {
+        $('#cf').form('clear');
+    }
 
-//日期格式转换
-function dateformatter(date){
-	var y = date.getFullYear();
-	var m = date.getMonth()+1;
-	var d = date.getDate();
-	return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
-}
+    //日期格式转换
+    function dateformatter(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+    }
 
-function dateparser(s){
-		if (!s) return new Date();
-		var ss = (s.split('-'));
-		var y = parseInt(ss[0],10);
-		var m = parseInt(ss[1],10);
-		var d = parseInt(ss[2],10);
-		if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
-			return new Date(y,m-1,d);
-		} else {
-			return new Date();
-		}
-}
+    function dateparser(s) {
+        if (!s) return new Date();
+        var ss = (s.split('-'));
+        var y = parseInt(ss[0], 10);
+        var m = parseInt(ss[1], 10);
+        var d = parseInt(ss[2], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+            return new Date(y, m - 1, d);
+        } else {
+            return new Date();
+        }
+    }
 </script>
 </body>
 </html>

@@ -1,14 +1,15 @@
 # coding=utf-8
-from django.shortcuts import render, render_to_response, HttpResponse, RequestContext, HttpResponseRedirect
+import json
+import sys
+
+from django.shortcuts import render_to_response, HttpResponse, RequestContext
 from django.http import JsonResponse
-import json, time
+
+from django.db.models import Q
+
 from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept
 from assets.models import *
 from system.models import *
-from django.db.models import Q
-from django.core import serializers
-
-import sys
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -29,7 +30,8 @@ def ajax_assets_mydisplay(request):
     brand = request.GET.get('brand')
     data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0).exclude(ass_flag=2)
     data = data.filter(ass_name__icontains=sname, ass_model__icontains=smodel, ass_brand__icontains=brand)
-    data = data.filter(Q(ass_user=request.session.get('username', '')) | Q(ass_acceptUser=request.session.get('username', '')))
+    data = data.filter(
+        Q(ass_user=request.session.get('username', '')) | Q(ass_acceptUser=request.session.get('username', '')))
     json_item = {'total': data.count(), "rows": []}
     for d in data:
         print d.ass_operDate
@@ -76,6 +78,7 @@ def assets_input(request):
 def assets_receive(request):
     return render_to_response('assets/test.html')
 
+
 @login_valid
 def assets_change(request):
     return render_to_response('assets/test.html')
@@ -93,7 +96,8 @@ def ajax_assets_repair(request):
     sid = request.GET.get('id')
     sname = request.GET.get('name')
     smodel = request.GET.get('model')
-    data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0, ass_name__icontains=sname, ass_model__icontains=smodel )
+    data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0, ass_name__icontains=sname,
+                                 ass_model__icontains=smodel)
     data = data.exclude(ass_flag=2)
     lis = []
     for l in data:
@@ -153,7 +157,7 @@ def post_assets_repair(request):
         data.ass_id = Assets.objects.get(ass_id=sid)
         data.re_operator = user
         data.re_date = date
-        data.re_content =content
+        data.re_content = content
         data.re_price = price
         data.re_reason = reason
         data.re_comment = comment
@@ -245,7 +249,7 @@ def ajax_assets_display(request):
     acceptUser = request.GET.get('acceptUser')
     user = request.GET.get('user')
     brand = request.GET.get('brand')
-    acceptdate = request.GET.get('acceptdate','')
+    acceptdate = request.GET.get('acceptdate', '')
     if acceptdate == "":
         acceptdate = "1990-1-1"
     status = request.GET.get('status')
@@ -354,7 +358,7 @@ def assets_input(request):
             return HttpResponse("只能上传图片格式（jpg/png/bmp/gif）")
         if pic and (str(pic).split('.')[-1].lower() not in ('jpg', 'png', 'bmp', 'gif')):
             return HttpResponse("只能上传图片格式（jpg/png/bmp/gif）")
-        if Assets.objects.filter(ass_id=sid).count() > 0 or sid =="":
+        if Assets.objects.filter(ass_id=sid).count() > 0 or sid == "":
             return HttpResponse(" 您输入的资产编号已存在，请重新输入！")
         ass = Assets()
         ass.ass_name = name
@@ -447,7 +451,7 @@ def ajax_assets_change(request):
         'acceptdept': d.ass_acceptDept,
         'acceptuser': d.ass_acceptUser,
         'user': d.ass_user,
-        'flag':d.ass_flag,
+        'flag': d.ass_flag,
         'location': d.ass_location,
     })
     return JsonResponse(json_items)

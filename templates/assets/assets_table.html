@@ -3,47 +3,47 @@
 <div>
     <table class="tab" cellpadding="0" cellspacing="0" border="1px">
         <tr>
-            <th><input type="checkbox" id="all_select" name="all_select" value="全选"  ></th>
-            <th  width="150px" >资产编号</th>
-            <th width="150px" >名称</th>
-            <th width="100px" >品牌</th>
-            <th width="150px" >型号</th>
-            <th width="150px" >配置</th>
-            <th width="60px" >类别</th>
-            <th width="50px" >数量</th>
-            <th width="180px" >购买日期</th>
-            <th width="150px" >领用部门</th>
-            <th width="100px" >领用人</th>
-            <th width="100px" >使用人</th>
-            <th width="180px" >领用日期</th>
-            <th width="80px" >状态</th>
+            <th><input type="checkbox" id="all_select" name="all_select" value="全选"></th>
+            <th width="150px">资产编号</th>
+            <th width="150px">名称</th>
+            <th width="100px">品牌</th>
+            <th width="150px">型号</th>
+            <th width="150px">配置</th>
+            <th width="60px">类别</th>
+            <th width="50px">数量</th>
+            <th width="180px">购买日期</th>
+            <th width="150px">领用部门</th>
+            <th width="100px">领用人</th>
+            <th width="100px">使用人</th>
+            <th width="180px">领用日期</th>
+            <th width="80px">状态</th>
         </tr>
-    {% if data %}
-        {% for ass in data %}
-        <tr onmouseover="style.backgroundColor='#FF9900'" onmouseout="style.backgroundColor='#FFFFFF'"  id="row" >
-            <td><input type="checkbox" name="checkbox" ></td>
-            <td>{{ ass.ass_id }}</td>
-            <td>{{ ass.ass_name }}</td>
-            <td>{{ ass.ass_brand }}</td>
-            <td>{{ ass.ass_model }}</td>
-            <td>{{ ass.ass_configuration}}</td>
-            <td>{{ ass.ass_category }}</td>
-            <td>{{ ass.ass_quantity }}</td>
-            <td>{{ ass.ass_buyDate | date:'Y-m-d' }}</td>
-            <td>{{ ass.ass_acceptDept }}</td>
-            <td>{{ ass.ass_acceptUser }}</td>
-            <td>{{ ass.ass_user }}</td>
-            <td>{{ ass.ass_acceptDate | date:'Y-m-d' }}</td>
-            <td>{% if  ass.ass_flag == 0 %}闲置 {% elif  ass.ass_flag == 1 %}使用中
-                {% elif ass.ass_flag == 2 %}报废
-            {% endif %}
-             </td>
-        </tr>
-        {% endfor %}
-    {% endif %}
+        {% if data %}
+            {% for ass in data %}
+                <tr onmouseover="style.backgroundColor='#FF9900'" onmouseout="style.backgroundColor='#FFFFFF'" id="row">
+                    <td><input type="checkbox" name="checkbox"></td>
+                    <td>{{ ass.ass_id }}</td>
+                    <td>{{ ass.ass_name }}</td>
+                    <td>{{ ass.ass_brand }}</td>
+                    <td>{{ ass.ass_model }}</td>
+                    <td>{{ ass.ass_configuration }}</td>
+                    <td>{{ ass.ass_category }}</td>
+                    <td>{{ ass.ass_quantity }}</td>
+                    <td>{{ ass.ass_buyDate | date:'Y-m-d' }}</td>
+                    <td>{{ ass.ass_acceptDept }}</td>
+                    <td>{{ ass.ass_acceptUser }}</td>
+                    <td>{{ ass.ass_user }}</td>
+                    <td>{{ ass.ass_acceptDate | date:'Y-m-d' }}</td>
+                    <td>{% if  ass.ass_flag == 0 %}闲置 {% elif  ass.ass_flag == 1 %}使用中
+                    {% elif ass.ass_flag == 2 %}报废
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
     </table>
 
-<script>
-    showDetail();
-</script>
+    <script>
+        showDetail();
+    </script>
 </div>

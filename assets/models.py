@@ -26,10 +26,10 @@ class Assets(models.Model):
     ass_acceptUser = models.CharField(max_length=10, null=True, blank=True, default='')
     ass_user = models.CharField(max_length=10, null=True, blank=True, default='')
     ass_acceptDate = models.DateTimeField(null=True, blank=True)
-    ass_acceptDeadline = models.IntegerField(default=0, null=True, blank=True)   # 0表示无期限，按月数计算
+    ass_acceptDeadline = models.IntegerField(default=0, null=True, blank=True)  # 0表示无期限，按月数计算
     ass_isLabel = models.IntegerField(default=0)  # 0表示贴标
     ass_location = models.CharField(max_length=20, null=True, blank=True)
-    ass_operator = models.CharField(max_length=10,)
+    ass_operator = models.CharField(max_length=10, )
     ass_operDate = models.DateTimeField(default=timezone.now())
     ass_enabled = models.IntegerField(default=0)  # 0启用，1停用等
     ass_flag = models.IntegerField(default=0)  # 2删除,1使用中，0闲置
@@ -107,5 +107,3 @@ class Brand(models.Model):
 
     class Meta:
         db_table = 't_brand'
-
-

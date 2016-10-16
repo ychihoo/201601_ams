@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{%  block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% include "start/jquery-easyui.html" %}
     {% block stylesheet %}{% endblock %}
     {% block javascript %}{% endblock %}
     <style type="text/css">
-        body{
+        body {
             font-size: 14px;
         }
     </style>
