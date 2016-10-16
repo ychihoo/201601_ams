@@ -3,7 +3,6 @@
 <HEAD>
     <TITLE>用户登录</TITLE>
     {% include "start/jquery-easyui.html" %}
-    <script  type="text/javascript" src="/static/js/viewlayer.js" ></script>
     <LINK href="/static/css/User_Login.css" type=text/css rel=stylesheet>
     <meta charset="UTF-8">
 </HEAD>
@@ -69,5 +68,22 @@
     {% endif %}
 </div>
 </FORM>
+<!--更改密码界面!-->
+<div id="changePwdForm" class="easyui-dialog" title="重置密码" data-options="closed:true"
+     style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="change" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
+        {% csrf_token %}
+        <div style="margin-bottom:20px">
+            新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="pwd" id="pwd" data-options="required:true,validType:['length[6,20]','englishOrNum']">
+        </div>
+        <div style="margin-bottom:20px">
+            确认新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="pwd2" id="pwd2" data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[pwd]']">
+        </div>
+        <div style="text-align:right;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitpwdForm()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
+        </div>
+    </form>
+</div>
 </BODY>
 </HTML>
