@@ -4,15 +4,22 @@ from django.http import HttpResponse, JsonResponse
 from start.public import login_valid, is_exsit
 from system.models import Users, Roles, Position
 import hashlib
-import string
+import json
 from django.views.decorators.csrf import csrf_exempt
 
 
+# 用户管理页面
 @login_valid
 def users(request):
     pos = get_position()
     role = get_role()
     return render_to_response('system/system_users.html', RequestContext(request, locals()))
+
+
+# 角色管理页面
+@login_valid
+def roles(request):
+    return render_to_response('system/system_role.html', RequestContext(request, locals()))
 
 
 # 查询用户生成json
@@ -87,11 +94,11 @@ def post_resetPwd(request):
     new_pwd = request.POST['rpwd']
     new_pwd2 = request.POST['rpwd2']
     loginChPwd = request.POST.get('rloginChPwd', 1)
-    new_pwd = hashlib.sha1(hashlib.md5(new_pwd).hexdigest()).hexdigest()
-    if new_pwd == "" or new_pwd2 == "" or len(new_pwd) < 6 or len(new_pwd2) < 6:
-        return HttpResponse("密码不能为空且密码长度不能低于6个字符")
     if new_pwd != new_pwd2:
         return HttpResponse("两次输入的密码不一致")
+    if new_pwd == "" or new_pwd2 == "" or len(new_pwd) < 6 or len(new_pwd2) < 6:
+        return HttpResponse("密码不能为空且密码长度不能低于6个字符")
+    new_pwd = hashlib.sha1(hashlib.md5(new_pwd).hexdigest()).hexdigest()
     try:
         Users.objects.filter(u_account=account).update(u_pwd=new_pwd, u_loginChPwd=loginChPwd)
         return HttpResponse('success')
@@ -183,7 +190,6 @@ def post_editUser(request):
         return HttpResponse("请输入有效的手机号码")
     if mail != "" and (mail.find('@') == -1 or mail.find('.') == -1):
         return HttpResponse("请输入有效的邮箱")
-
     try:
         user = Users.objects.get(u_account=account)
         user.u_userName = username
@@ -191,11 +197,25 @@ def post_editUser(request):
         user.u_position = position
         user.u_tel = tel
         user.u_email = mail
-        user.u_role_id = role
+        user.u_role = Roles.objects.get(r_name=role)
         user.save()
         return HttpResponse('success')
     except:
         return HttpResponse('添加用户失败')
+
+
+# 加载角色组数据内容
+def get_roles(request):
+    role = Roles.objects.filter(r_delflag=0)
+    json_items = []
+    for r in role:
+        json_items.append({
+            'id': r.id,
+            'text': r.r_name,
+        })
+    json_items = json.dumps(json_items)
+    return HttpResponse(json_items)
+
 
 
 # 公共职位调用

@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^user_man/post/resetPwd/$', views.post_resetPwd),
     url(r'^user_man/post/addUser/$', views.post_addUser),
     url(r'^user_man/post/editUser/$', views.post_editUser),
+    url(r'^role_man/$', views.roles),
+    url(r'^role_man/getRole/$', views.get_roles),
     url(r'^user_man/checkAccount/$', views.check_account_exsit),
 ]

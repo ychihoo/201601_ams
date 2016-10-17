@@ -44,11 +44,11 @@
     <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
     <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;"
          data-options="collapsible:true">
-        <div style="float: left">
+        <div id="head" style="float: left">
             <ul>
-                <li>部门：<input class="easyui-textbox" type="text" name="dept" id="dept" maxlength="20"></li>
-                <li>登录名：<input class="easyui-textbox" type="text" name="account" id="account" maxlength="20"></li>
-                <li>状态：<select class="easyui-combobox" name="status" id="status" maxlength="20"
+                <li>部门：<input class="easyui-textbox easyui-validatebox" type="text" name="dept" id="dept" data-options="validType:['maxLength[20]']"></li>
+                <li>登录名：<input class="easyui-textbox easyui-validatebox" type="text" name="account" id="account" data-options="validType:['maxLength[20]']"></li>
+                <li>状态：<select class="easyui-combobox easyui-validatebox" name="status" id="status" maxlength="20"
                                data-options="panelHeight:'auto',width:150,editable:false">
                     <option value="-1">-----全部选择-----</option>
                     <option value="0">启用</option>
@@ -177,7 +177,7 @@
             角色：<select class="easyui-combobox" name="erole" id="erole"
                        data-options="panelHeight:'auto',width:150,editable:false">
             {% for r in role %}
-                <option value="{{ r.id }}">{{ r.r_name }}</option>
+                <option value="{{ r.r_name }}">{{ r.r_name }}</option>
             {% endfor %}
         </select>
         </div>
