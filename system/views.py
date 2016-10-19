@@ -8,6 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 
+
 # 用户管理页面
 @login_valid
 def users(request):
@@ -20,6 +21,12 @@ def users(request):
 @login_valid
 def roles(request):
     return render_to_response('system/system_role.html', RequestContext(request, locals()))
+
+
+# 部门管理页面
+@login_valid
+def dept(request):
+    return render_to_response('system/system_dept.html', RequestContext(request, locals()))
 
 
 # 查询用户生成json

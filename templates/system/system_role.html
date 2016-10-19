@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {% include "start/jquery-easyui.html" %}
+    <style type="text/css">
+{#        body {#}
+{#            padding-left: 15px;#}
+{#            font-size: 12px;#}
+{#        }#}
+{##}
+{#        div input {#}
+{#            width: 150px;#}
+{#        }#}
+{##}
+{#        .middle {#}
+{#            margin: 0 0 auto;#}
+{#        }#}
+{##}
+{#        .up {#}
+{#            padding-top: 10px;#}
+{#            margin: 0 auto;#}
+{#        }#}
+{##}
+{#        ul {#}
+{#            clear: both;#}
+{#            width: 740px;#}
+{#        }#}
+{##}
+{#        li {#}
+{#            float: left;#}
+{#            list-style: none;#}
+{#            padding-left: 15px;#}
+{#            list-style: none;#}
+{#            padding-bottom: 15px;#}
+{#        }#}
+    </style>
+
+</head>
+<body>
+    <h2>Binding to Remote Data</h2>
+    <p>The DataList is bound to a remote data.</p>
+    <div style="margin:20px 0"></div>
+    <ul class="easyui-datalist" title="Basic DataList" lines="true" style="width:400px;height:250px">
+        <li value="AL">Alabama</li>
+        <li value="AK">Alaska</li>
+        <li value="AZ">Arizona</li>
+        <li value="AR">Arkansas</li>
+        <li value="CA">California</li>
+        <li value="CO">Colorado</li>
+    </ul>
+{#    <div class="easyui-datalist" title="Remote Data" style="width:400px;height:250px" data-options="#}
+{#            url: '/system/role_man/getRole/',#}
+{#            method: 'get'#}
+{#            ">#}
+{#    </div>#}
+</body>
+</html>

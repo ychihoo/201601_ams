@@ -1,0 +1,38 @@
+{% extends "assets/assets_base.html" %}
+{% block stylesheet %}
+    <style type="text/css">
+    #dept_body{
+        margin: 0px auto;
+        width: 1010px;
+        margin-top: 20px;
+    }
+    </style>
+{% endblock %}
+{% block body %}
+<div id="dept_body">
+    <div style="float: left" >
+        <div class="easyui-panel"  title="组织架构" style="width: 350px;height: 400px;">
+            <ul id="td" style="padding-left: 50px;padding-top: 10px;padding-bottom: 10px"></ul>
+        </div>
+    </div>
+    <div style="float:left;padding-left: 2px" >
+        <div class="easyui-panel" style="width: 650px;height: 400px;">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+$('#td').tree({
+    method:'get',
+    url:'/assets/mod/dept/',
+    animate:true,
+    lines:true,
+    onSelect:function(node){
+        $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
+    }
+})
+
+</script>
+{% endblock %}
