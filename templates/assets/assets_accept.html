@@ -105,9 +105,8 @@
         load_ajax();
         $("#ly").click(function () {
             if (get_checkedID()) {
-                $("#fid").textbox('setValue', get_checkedID);
+                $("#fid").textbox('setValue', get_checkedID());
                 load_dept();
-
                 $('#lybtn').dialog('open');
             }
         });

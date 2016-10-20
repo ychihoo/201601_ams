@@ -113,7 +113,7 @@
         onchangecombobx();
         $("#change").click(function () {
             if (get_checkedID()) {
-                load_ajax_change(get_checkedID);
+                load_ajax_change(get_checkedID());
                 load_dept();
                 $('#changebtn').dialog('open');
             }

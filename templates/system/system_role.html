@@ -1,59 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    {% include "start/jquery-easyui.html" %}
+{% extends "assets/assets_base.html" %}
+{% block stylesheet %}
     <style type="text/css">
-{#        body {#}
-{#            padding-left: 15px;#}
-{#            font-size: 12px;#}
-{#        }#}
-{##}
-{#        div input {#}
-{#            width: 150px;#}
-{#        }#}
-{##}
-{#        .middle {#}
-{#            margin: 0 0 auto;#}
-{#        }#}
-{##}
-{#        .up {#}
-{#            padding-top: 10px;#}
-{#            margin: 0 auto;#}
-{#        }#}
-{##}
-{#        ul {#}
-{#            clear: both;#}
-{#            width: 740px;#}
-{#        }#}
-{##}
-{#        li {#}
-{#            float: left;#}
-{#            list-style: none;#}
-{#            padding-left: 15px;#}
-{#            list-style: none;#}
-{#            padding-bottom: 15px;#}
-{#        }#}
+    #role_body{
+        margin: 0 auto;
+        width: 810px;
+        margin-top: 20px;
+    }
+    div ul li{
+        list-style: none;
+        float: left;
+        padding: 5px;
+    }
     </style>
+{% endblock %}
+{% block body %}
+<div id="role_body">
+    <div style="float:left;">
+        <ul id="dl" class="easyui-datalist" style="width:300px;height:400px" ></ul>
+    </div>
+    <div style="float:left;margin-left: 2px">
+            <div class="easyui-panel" title="操作" style="width:500px;height:100px;margin-top: 0px;margin-bottom: 2px">
+                <ul>
+                    <li><a class="easyui-linkbutton" style="width: 80px;">添加</a></li>
+                    <li><a class="easyui-linkbutton" style="width: 80px;">编辑</a></li>
+                    <li><a class="easyui-linkbutton" style="width: 80px;">删除</a></li>
+                </ul>
+            </div>
+            <div class="easyui-panel" title="表单" style=";width: 500px;height: 300px">
+                <div style="text-align:center;padding-top: 20px">
+                    <form id="ff" class="easyui-form" method="POST" >{% csrf_token %}
+                    <div style="margin-bottom:20px;">
+                        角色名称：<input class="easyui-textbox" name="id" id="fid" data-options="readonly:true" >
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        角色权限：<input id="dept" name="depts">
+                    </div>
+                    <div style="margin-bottom:20px">
+                        备注(说明)：<input class="easyui-textbox" name="comment" id="fcomment" >
+                    </div>
+                    </form>
+                </div>
+            </div>
+    </div>
 
-</head>
-<body>
-    <h2>Binding to Remote Data</h2>
-    <p>The DataList is bound to a remote data.</p>
-    <div style="margin:20px 0"></div>
-    <ul class="easyui-datalist" title="Basic DataList" lines="true" style="width:400px;height:250px">
-        <li value="AL">Alabama</li>
-        <li value="AK">Alaska</li>
-        <li value="AZ">Arizona</li>
-        <li value="AR">Arkansas</li>
-        <li value="CA">California</li>
-        <li value="CO">Colorado</li>
-    </ul>
-{#    <div class="easyui-datalist" title="Remote Data" style="width:400px;height:250px" data-options="#}
-{#            url: '/system/role_man/getRole/',#}
-{#            method: 'get'#}
-{#            ">#}
-{#    </div>#}
-</body>
-</html>
+</div>
+
+    <script>
+        $('#dl').datalist({
+            url: '/system/role_man/getRole/',
+            method: 'get',
+            title:"角色组"
+        })
+    </script>
+{% endblock %}

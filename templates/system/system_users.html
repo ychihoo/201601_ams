@@ -91,7 +91,7 @@
             确认密码：<input class="easyui-textbox easyui-validatebox" type="password" name="fpwd2" id="fpwd2" data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[fpwd]']">
         </div>
         <div style="margin-bottom:20px">
-            部门：<input class="easyui-combotree easyui-validatebox" name="fdept" id="fdept">
+            部门：<input class="easyui-combotree" name="fdept" id="fdept">
         </div>
         <div style="margin-bottom:20px;">
             职位：<select class="easyui-combobox easyui-validatebox" name="fposition" id="fposition"
@@ -205,32 +205,28 @@
         <!--添加用用户按钮 -->
         $("#addUserBtn").click(function () {
             $('#addForm').dialog('open');
-            load_dept2();
+            load_fdept();
         });
         <!--禁用账户按钮 -->
         $("#disUserBtn").click(function () {
             get_checked('disUser');
-            load_dept2();
         });
         <!--启用账户按钮 -->
         $("#enUserBtn").click(function () {
             get_checked('enUser');
-            load_dept2();
         });
         <!--重置密码按钮 -->
         $("#resetPwdBtn").click(function () {
             get_checked('resetPwdForm');
-            load_dept2();
         });
         <!--编辑用户按钮 -->
         $("#editUserBtn").click(function () {
             get_checked('editForm');
-            load_dept2();
+            load_edept();
         });
         <!--删除用用户按钮 -->
         $("#delUserBtn").click(function () {
             get_checked('delUser');
-            load_dept2();
         });
     });
 
@@ -388,18 +384,21 @@
     }
 
     // 加载部门树
-    function load_dept2() {
+    function load_fdept() {
         $('#fdept').combotree({
             method: 'get',
             url: '/assets/mod/dept/',
             required: true
         });
+    }
+
+     // 加载部门树
+    function load_edept() {
         $('#edept').combotree({
             method: 'get',
             url: '/assets/mod/dept/',
             required: true
         });
-
     }
 
     // 关闭弹窗

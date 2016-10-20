@@ -56,7 +56,8 @@ def get_local_datetime():
 
 # # 获取IP
 def get_ip_address(request):
-    ip = socket.gethostbyname(socket.gethostname())
+    # ip = socket.gethostbyname(socket.gethostname())
+    ip = "0.0.0.0"
     return ip
 
 
