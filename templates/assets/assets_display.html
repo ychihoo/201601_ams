@@ -45,10 +45,10 @@
          data-options="collapsible:true">
         <div style="float: left; ">
             <ul>
-                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
-                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
-                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
-                <li>领用人：<input class="easyui-textbox" type="text" name="acceptUser" id="acceptUser" maxlength="20"></li>
+                <li>资产编号：<input class="easyui-textbox easyui-validate" type="text" name="id" id="id" data-options="validType:['maxLength[20]']"></li>
+                <li>名称：<input class="easyui-textbox easyui-validate" type="text" name="name" id="name" data-options="validType:['maxLength[10]']"></li>
+                <li>型号：<input class="easyui-textbox easyui-validate" type="text" name="model" id="model" data-options="validType:['maxLength[20]']"></li>
+                <li>领用人：<input class="easyui-textbox easyui-validate" type="text" name="acceptUser" id="acceptUser" data-options="validType:['maxLength[6]','CHS']"></li>
             </ul>
             <ul>
                 <li>资产状态：<select class="easyui-combobox" name="status" id="status"
@@ -59,10 +59,10 @@
                     <option value="2">报废</option>
                 </select>
                 </li>
-                <li>品牌：<input class="easyui-textbox" type="text" name="brand" id="brand" maxlength="20"></li>
+                <li>品牌：<input class="easyui-textbox easyui-validate" type="text" name="brand" id="brand" data-options="validType:['maxLength[10]']"></li>
                 <li>日期：<input class="easyui-datebox" data-options="prompt:'录入日期',editable:false" type="text"
                               name="acceptdate" id="acceptdate" maxlength="20"></li>
-                <li>使用人：<input class="easyui-textbox" type="text" name="user" id="user" maxlength="20"></li>
+                <li>使用人：<input class="easyui-textbox easyui-validate" type="text" name="user" id="user" data-options="validType:['maxLength[6]','CHS']"></li>
             </ul>
 
         </div>

@@ -46,10 +46,10 @@
             <form method="post" action="" id="form" class="easyui-form" enctype="multipart/form-data">{% csrf_token %}
                 <div id="input">
                     <ul>
-                        <li><span>资产编号：</span><input type="text" class="easyui-textbox" data-options="required:true"
-                                                     name="id" id="id"></li>
-                        <li><span>资产名称：</span><input type="text" class="easyui-textbox" data-options="required:true"
-                                                     name="name" id="name"></li>
+                        <li><span>资产编号：</span><input type="text" class="easyui-textbox easyui-validate"
+                                                     name="id" id="id" data-options="required:true,validType:['maxLength[20]']"></li>
+                        <li><span>资产名称：</span><input type="text" class="easyui-textbox easyui-validate"
+                                                     name="name" id="name" data-options="required:true,validType:['maxLength[20]']"></li>
                     </ul>
                     <ul>
                         <li><span>资产品牌：</span><select type="text" class="easyui-combobox"
@@ -60,17 +60,17 @@
                             {% endfor %}
                         </select>
                         </li>
-                        <li><span>资产型号：</span><input type="text" class="easyui-textbox" data-options="required:true"
+                        <li><span>资产型号：</span><input type="text" class="easyui-textbox easyui-validate" data-options="required:true,validType:['maxLength[20]']"
                                                      name="model" id="model"></li>
                     </ul>
                     <ul>
-                        <li><span>产品序列号：</span><input type="text" class="easyui-textbox" name="sn" id="sn"></li>
-                        <li><span>资产分类：</span><input type="text" class="easyui-textbox" name="class" id="class"></li>
+                        <li><span>产品序列号：</span><input type="text" class="easyui-textbox easyui-validate" name="sn" id="sn" data-options="validType:['maxLength[20]']"></li>
+                        <li><span>资产分类：</span><input type="text" class="easyui-textbox easyui-validate" name="class" id="class" data-options="validType:['maxLength[10]']"></li>
                     </ul>
                     <ul>
-                        <li><span>资产配置：</span><input type="text" class="easyui-textbox" name="configuration"
-                                                     id="configuration"></li>
-                        <li><span>资产类别：</span><input type="text" class="easyui-textbox" name="category" id="category">
+                        <li><span>资产配置：</span><input type="text" class="easyui-textbox easyui-validate" name="configuration"
+                                                     id="configuration" data-options="validType:['maxLength[30]']"></li>
+                        <li><span>资产类别：</span><input type="text" class="easyui-textbox easyui-validate" name="category" id="category">
                         </li>
                     </ul>
 
@@ -108,11 +108,11 @@
                             <option value="0">是</option>
                             <option value="1" selected>否</option>
                         </select></li>
-                        <li><span>存放位置：</span><input type="text" class="easyui-textbox" name="location" id="location">
+                        <li><span>存放位置：</span><input type="text" class="easyui-textbox easyui-validate" name="location" id="location" data-options="validType:['maxLength[20]']">
                         </li>
                     </ul>
                     <ul>
-                        <li><span>备注：</span><input type="text" class="easyui-textbox" name="comment" id="comment"></li>
+                        <li><span>备注：</span><input type="text" class="easyui-textbox easyui-validate" name="comment" id="comment"></li>
                         <li>使用期限：<input class="easyui-numberbox" data-options="value:0,min:0,max:10" type="text"
                                         name="deadline" id="deadline"></li>
                     </ul>

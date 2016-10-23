@@ -46,9 +46,9 @@
          data-options="collapsible:true">
         <div style="float: left">
             <ul>
-                <li>资产编号：<input class="easyui-textbox" type="text" name="id" id="id" maxlength="20"></li>
-                <li>名称：<input class="easyui-textbox" type="text" name="name" id="name" maxlength="20"></li>
-                <li>型号：<input class="easyui-textbox" type="text" name="model" id="model" maxlength="20"></li>
+                <li>资产编号：<input class="easyui-textbox easyui-validate" type="text" name="id" id="id" data-options="validType:['maxLength[20]']"></li>
+                <li>名称：<input class="easyui-textbox easyui-validate" type="text" name="name" id="name" data-options="validType:['maxLength[20]']"></li>
+                <li>型号：<input class="easyui-textbox easyui-validate" type="text" name="model" id="model" data-options="validType:['maxLength[20]']"></li>
                 <li><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton"
                            style="width: 80px;height: 25px"></li>
             </ul>
@@ -71,18 +71,18 @@
             资产编号：<input name="fid" id="fid" data-options="required:true,editable:false">
         </div>
         <div style="margin-bottom:20px;">
-            送修人：<input class="easyui-textbox" name="r_user" id="r_user" data-options="required:true">
+            送修人：<input class="easyui-textbox easyui-validate" name="r_user" id="r_user" data-options="required:true,validType:['maxLength[6]','CHS']">
         </div>
         <div style="margin-bottom:20px;">
             维修日期：<input class="easyui-datebox" name="r_date" id="r_date" data-options="required:true,editable:false">
         </div>
         <div style="margin-bottom:20px">
-            维修事由：<input class="easyui-textbox" name="r_reason" id="r_reason"
-                        data-options="required:true,multiline:true,height:50">
+            维修事由：<input class="easyui-textbox easyui-validate" name="r_reason" id="r_reason"
+                        data-options="required:true,multiline:true,height:50,validType:['maxLength[40]']">
         </div>
         <div style="margin-bottom:20px">
-            维修内容：<input class="easyui-textbox" name="r_content" id="r_content"
-                        data-options="required:true,multiline:true,height:50">
+            维修内容：<input class="easyui-textbox easyui-validate" name="r_content" id="r_content"
+                        data-options="required:true,multiline:true,height:50,validType:['maxLength[40]']">
         </div>
         <div style="margin-bottom:20px">
             是否在保内：<input class="easyui-textbox" readonly="readonly">
@@ -92,7 +92,7 @@
                         precision="2" name="price">
         </div>
         <div style="margin-bottom:20px">
-            备注：<input class="easyui-textbox" name="r_comment" id="r_comment">
+            备注：<input class="easyui-textbox easyui-validate" name="r_comment" id="r_comment" data-options="validType:['maxLength[30]']">
         </div>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
