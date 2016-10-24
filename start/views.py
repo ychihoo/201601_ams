@@ -6,6 +6,7 @@ from start.public import login_valid, save_to_log, valid_auth
 from system.models import Users
 import hashlib
 
+
 # 全局变量用于传输session
 # GET_SESSION = ''
 

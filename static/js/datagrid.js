@@ -248,7 +248,7 @@ function loadUserTable() {
                 $('#disUserBtn').linkbutton('disable');
                 $('#enUserBtn').linkbutton('enable');
             }
-            else{
+            else {
                 $('#disUserBtn').linkbutton('enable');
                 $('#enUserBtn').linkbutton('disable');
             }

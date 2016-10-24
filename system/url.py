@@ -30,5 +30,8 @@ urlpatterns = [
     url(r'^role_man/getRole/$', views.get_roles),
     url(r'^user_man/checkAccount/$', views.check_account_exsit),
     url(r'^dept_man/$', views.dept),
-
+    url(r'^dept_man/add/$', views.dept),
+    url(r'^dept_man/remove/$', views.remove_dept),
+    url(r'^dept_man/edit/$', views.dept),
+    url(r'^dept_man/drag/$', views.update_dept),
 ]

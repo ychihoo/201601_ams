@@ -2,11 +2,10 @@
 from django.shortcuts import render_to_response, RequestContext
 from django.http import HttpResponse, JsonResponse
 from start.public import login_valid, is_exsit
-from system.models import Users, Roles, Position
+from system.models import Users, Roles, Position, Department
 import hashlib
 import json
 from django.views.decorators.csrf import csrf_exempt
-
 
 
 # 用户管理页面
@@ -224,6 +223,47 @@ def get_roles(request):
     return HttpResponse(json_items)
 
 
+# 添加部门
+@login_valid
+def add_dept(request):
+    pass
+
+
+# 删除部门
+@login_valid
+def remove_dept(request):
+    id = request.GET.get('id')
+    if id != "":
+        dept = Department.objects.filter(dept_parentID=id, dept_delflag=0)
+        print dept.count()
+        if dept.count() > 0:
+            return HttpResponse("请先删除子部门")
+        else:
+            try:
+                Department.objects.filter(id=id, dept_delflag=0).update(dept_delflag=1)
+                return HttpResponse("已删除")
+            except:
+                return HttpResponse("删除失败")
+    return HttpResponse("没有获取到ID")
+
+
+# 获取编辑部门
+def edit_dept(request):
+    pass
+
+
+# 拖拽更新部门
+def update_dept(request):
+    id = request.GET.get('id')
+    parent_id = request.GET.get('parent_id', 0)
+    if id != "" or parent_id != "":
+        try:
+            Department.objects.filter(id=id, dept_delflag=0).update(dept_parentID=parent_id)
+            return HttpResponse("更新成功")
+        except:
+            return HttpResponse("更新失败")
+    return HttpResponse("没有获取到ID")
+
 
 # 公共职位调用
 def get_position():
@@ -241,7 +281,7 @@ def get_role():
 @login_valid
 def check_account_exsit(request):
     account = request.GET.get('user')
-    if account !="":
+    if account != "":
         if is_exsit(account):
             return HttpResponse("true")
         return HttpResponse("false")

@@ -1,38 +1,115 @@
 {% extends "assets/assets_base.html" %}
 {% block stylesheet %}
     <style type="text/css">
-    #dept_body{
-        margin: 0px auto;
-        width: 1010px;
-        margin-top: 20px;
-    }
+        #dept_body {
+            margin: 0px auto;
+            width: 1010px;
+            margin-top: 20px;
+            font-size: 12px;
+        }
     </style>
 {% endblock %}
 {% block body %}
-<div id="dept_body">
-    <div style="float: left" >
-        <div class="easyui-panel"  title="组织架构" style="width: 350px;height: 400px;">
-            <ul id="td" style="padding-left:30px;padding-top: 10px;padding-bottom: 10px"></ul>
+    <div id="dept_body">
+        <div style="float: left">
+            <div class="easyui-panel" title="组织架构" style="width: 350px;height: 400px;">
+                <ul id="td" style="padding-left:30px;padding-top: 10px;padding-bottom: 10px"></ul>
+            </div>
+        </div>
+        <div style="float:left;padding-left: 2px">
+            <div class="easyui-panel" style="width: 650px;height: 400px;">
+
+            </div>
+        </div>
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="addit()" data-options="iconCls:'icon-add'">添加</div>
+            <div onclick="editit()" data-options="iconCls:'icon-edit'">编辑</div>
+            <div onclick="removeit()" data-options="iconCls:'icon-remove'">删除</div>
+            <div class="menu-sep"></div>
+            <div onclick="expand()">展开</div>
+            <div onclick="collapse()">收起</div>
         </div>
     </div>
-    <div style="float:left;padding-left: 2px" >
-        <div class="easyui-panel" style="width: 650px;height: 400px;">
-
-        </div>
-    </div>
-</div>
 
 
-<script>
-$('#td').tree({
-    method:'get',
-    url:'/assets/mod/dept/',
-    animate:true,
-    lines:true,
-    onSelect:function(node){
-        $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
-    }
-})
+    <script>
+    $(function(){
+        load_tree_data();
+    })
+    function load_tree_data(){
+        $('#td').tree({
+            method: 'get',
+            url: '/assets/mod/dept/',
+            animate: true,
+            lines: true,
+            dnd:true,
+            onDblClick: function (node) {
+                $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
+            },
+            onContextMenu: function (e, node) {
+                e.preventDefault();
+                $(this).tree('select', node.target);
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            },
+            onStopDrag:function(node){
+                var id = $(this).tree('getNode',node.target).id;
+                var parent_id;
+                try{
+                    parent_id = $(this).tree('getParent', node.target).id;
+                }
+                catch(err){
+                    parent_id = 0;
+                }
+                $.ajax({
+                    url:'/system/dept_man/drag/',
+                    data:{id:id,parent_id:parent_id},
+                    success:function(data){
+{#                        $.messager.alert("提示",data,"warning");#}
+                        load_tree_data();
+                    },
+                    error:function(){
+                        $.messager.alert("提示","提交失败，请重新尝试删除","warning");
+                    },
+                })
+            },
+        })
+        }
+        function addit(){
+            var id = $('#td').tree('getSelected').id;
+            alert(id);
+        }
+        function removeit(){
+            var node = $('#td').tree('getSelected');
+            $.messager.confirm("提示","您确认要删除么？",function(r){
+                if (r){
+                    $.ajax({
+                        url:'/system/dept_man/remove/',
+                        data:{id:node.id},
+                        success:function(data){
+                            $.messager.alert("提示",data,"warning");
+                            load_tree_data();
+                        },
+                        error:function(){
+                            $.messager.alert("提示","提交失败，请重新尝试删除","warning");
+                        }
+                    })
+                }
 
-</script>
+            })
+        }
+        function editit(){
+            var id = $('#td').tree('getSelected').id;
+        }
+        function collapse() {
+            var node = $('#td').tree('getSelected');
+            $('#td').tree('collapse', node.target);
+        }
+        function expand() {
+            var node = $('#td').tree('getSelected');
+            $('#td').tree('expand', node.target);
+        }
+    </script>
 {% endblock %}

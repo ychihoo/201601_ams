@@ -1,24 +1,25 @@
 {% extends "assets/assets_base.html" %}
 {% block stylesheet %}
     <style type="text/css">
-    #role_body{
-        margin: 0 auto;
-        width: 810px;
-        margin-top: 20px;
-    }
-    div ul li{
-        list-style: none;
-        float: left;
-        padding: 5px;
-    }
+        #role_body {
+            margin: 0 auto;
+            width: 810px;
+            margin-top: 20px;
+        }
+
+        div ul li {
+            list-style: none;
+            float: left;
+            padding: 5px;
+        }
     </style>
 {% endblock %}
 {% block body %}
-<div id="role_body">
-    <div style="float:left;">
-        <ul id="dl" class="easyui-datalist" style="width:300px;height:400px" ></ul>
-    </div>
-    <div style="float:left;margin-left: 2px">
+    <div id="role_body">
+        <div style="float:left;">
+            <ul id="dl" class="easyui-datalist" style="width:300px;height:400px"></ul>
+        </div>
+        <div style="float:left;margin-left: 2px">
             <div class="easyui-panel" title="操作" style="width:500px;height:100px;margin-top: 0px;margin-bottom: 2px">
                 <ul>
                     <li><a class="easyui-linkbutton" style="width: 80px;">添加</a></li>
@@ -28,28 +29,28 @@
             </div>
             <div class="easyui-panel" title="表单" style=";width: 500px;height: 300px">
                 <div style="text-align:center;padding-top: 20px">
-                    <form id="ff" class="easyui-form" method="POST" >{% csrf_token %}
-                    <div style="margin-bottom:20px;">
-                        角色名称：<input class="easyui-textbox" name="id" id="fid" data-options="readonly:true" >
-                    </div>
-                    <div style="margin-bottom:20px;">
-                        角色权限：<input id="dept" name="depts">
-                    </div>
-                    <div style="margin-bottom:20px">
-                        备注(说明)：<input class="easyui-textbox" name="comment" id="fcomment" >
-                    </div>
+                    <form id="ff" class="easyui-form" method="POST">{% csrf_token %}
+                        <div style="margin-bottom:20px;">
+                            角色名称：<input class="easyui-textbox" name="id" id="fid" data-options="readonly:true">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            角色权限：<input id="dept" name="depts">
+                        </div>
+                        <div style="margin-bottom:20px">
+                            备注(说明)：<input class="easyui-textbox" name="comment" id="fcomment">
+                        </div>
                     </form>
                 </div>
             </div>
-    </div>
+        </div>
 
-</div>
+    </div>
 
     <script>
         $('#dl').datalist({
             url: '/system/role_man/getRole/',
             method: 'get',
-            title:"角色组"
+            title: "角色组"
         })
     </script>
 {% endblock %}

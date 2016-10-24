@@ -139,8 +139,8 @@ def loop_dept(obj, parentID, l, dept_items):
             flag = 0
             l.append(d.id)
             dept_items.append({
-                # ' id':d.id,
-                'id': d.dept_name,
+                'id': d.id,
+                # 'id': d.dept_name,
                 'text': d.dept_name,
                 'children': [],
             })
@@ -156,8 +156,8 @@ def loop_dept2(obj, parentID, l, dept_list):
             flag = 0
             l.append(d.id)
             dept_list['children'].append({
-                # ' id':d.id,
-                'id': d.dept_name,
+                'id': d.id,
+                # 'id': d.dept_name,
                 'text': d.dept_name,
                 'children': [],
             })

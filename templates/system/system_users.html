@@ -46,9 +46,11 @@
          data-options="collapsible:true">
         <div id="head" style="float: left">
             <ul>
-                <li>部门：<input class="easyui-textbox easyui-validatebox" type="text" name="dept" id="dept" data-options="validType:['maxLength[20]']"></li>
-                <li>登录名：<input class="easyui-textbox easyui-validatebox" type="text" name="account" id="account" data-options="validType:['maxLength[20]']"></li>
-                <li>状态：<select class="easyui-combobox easyui-validatebox" name="status" id="status" maxlength="20"
+                <li>部门：<input class="easyui-textbox easyui-validatebox" type="text" name="dept" id="dept"
+                              data-options="validType:['maxLength[20]']"></li>
+                <li>登录名：<input class="easyui-textbox easyui-validatebox" type="text" name="account" id="account"
+                               data-options="validType:['maxLength[20]']"></li>
+                <li>状态：<select class="easyui-combobox easyui-validatebox" name="status" id="status"
                                data-options="panelHeight:'auto',width:150,editable:false">
                     <option value="-1">-----全部选择-----</option>
                     <option value="0">启用</option>
@@ -79,16 +81,20 @@
     <form id="add" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
         {% csrf_token %}
         <div style="margin-bottom:20px;">
-            登录名：<input class="easyui-textbox easyui-validatebox " name="faccount" id="faccount" data-options="required:true,validType:{remote:['/system/user_man/checkAccount/','user'],length:[3,20]},">
+            登录名：<input class="easyui-textbox easyui-validatebox " name="faccount" id="faccount"
+                       data-options="required:true,validType:{remote:['/system/user_man/checkAccount/','user'],length:[3,20]},">
         </div>
         <div style="margin-bottom:20px">
-            姓名：<input class="easyui-textbox easyui-validatebox" name="fusername" id="fusername" data-options="required:true,validType:['length[2,5]','CHS']">
+            姓名：<input class="easyui-textbox easyui-validatebox" name="fusername" id="fusername"
+                      data-options="required:true,validType:['length[2,5]','CHS']">
         </div>
         <div style="margin-bottom:20px">
-            密码：<input class="easyui-textbox easyui-validatebox" type="password" name="fpwd" id="fpwd" data-options="required:true,validType:['length[6,20]','englishOrNum']">
+            密码：<input class="easyui-textbox easyui-validatebox" type="password" name="fpwd" id="fpwd"
+                      data-options="required:true,validType:['length[6,20]','englishOrNum']">
         </div>
         <div style="margin-bottom:20px">
-            确认密码：<input class="easyui-textbox easyui-validatebox" type="password" name="fpwd2" id="fpwd2" data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[fpwd]']">
+            确认密码：<input class="easyui-textbox easyui-validatebox" type="password" name="fpwd2" id="fpwd2"
+                        data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[fpwd]']">
         </div>
         <div style="margin-bottom:20px">
             部门：<input class="easyui-combotree" name="fdept" id="fdept">
@@ -117,7 +123,7 @@
                       data-options="validType:'email'">
         </div>
         <div style="margin-bottom:20px; line-height: 30px; text-align: center">
-            <input type="checkbox" name="floginChPwd" id="floginChPwd"  value="0" style="width:15px;height: 15px;"><span
+            <input type="checkbox" name="floginChPwd" id="floginChPwd" value="0" style="width:15px;height: 15px;"><span
                 style="line-height: 15px">下次登录更改密码</span>
         </div>
 
@@ -133,13 +139,16 @@
     <form id="reset" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
         {% csrf_token %}
         <div style="margin-bottom:20px;">
-            登录名：<input class="easyui-textbox" name="raccount" id="raccount" data-options="required:true" readonly="readonly">
+            登录名：<input class="easyui-textbox" name="raccount" id="raccount" data-options="required:true"
+                       readonly="readonly">
         </div>
         <div style="margin-bottom:20px">
-            新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="rpwd" id="rpwd" data-options="required:true,validType:['length[6,20]','englishOrNum']">
+            新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="rpwd" id="rpwd"
+                       data-options="required:true,validType:['length[6,20]','englishOrNum']">
         </div>
         <div style="margin-bottom:20px">
-            确认新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="rpwd2" id="rpwd2" data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[rpwd]']">
+            确认新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="rpwd2" id="rpwd2"
+                         data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[rpwd]']">
         </div>
         <div style="margin-bottom:20px; line-height: 30px; text-align: center">
             <input type="checkbox" name="rloginChPwd" id="rloginChPwd" value="0" style="width:15px;height: 15px;"><span
@@ -157,10 +166,12 @@
     <form id="edit" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
         {% csrf_token %}
         <div style="margin-bottom:20px;">
-            登录名：<input class="easyui-textbox" name="eaccount" id="eaccount" data-options="required:true" readonly="readonly">
+            登录名：<input class="easyui-textbox" name="eaccount" id="eaccount" data-options="required:true"
+                       readonly="readonly">
         </div>
         <div style="margin-bottom:20px">
-            姓名：<input class="easyui-textbox  easyui-validatebox" name="eusername" id="eusername" data-options="required:true,validType:['length[2,5]','CHS']">
+            姓名：<input class="easyui-textbox  easyui-validatebox" name="eusername" id="eusername"
+                      data-options="required:true,validType:['length[2,5]','CHS']">
         </div>
         <div style="margin-bottom:20px">
             部门：<input class="easyui-combotree" name="edept" id="edept">
@@ -268,7 +279,7 @@
             else if (dlg_form == 'editForm') {
                 $('#eaccount').textbox('setValue', account);
                 $('#eusername').textbox('setValue', checkedRow[0].username);
-                $('#edept').combotree('setValue',checkedRow[0].dept);
+                $('#edept').combotree('setValue', checkedRow[0].dept);
                 $('#eposition').combobox('setValue', checkedRow[0].position);
                 $('#erole').combobox('setValue', checkedRow[0].role);
                 $('#etel').textbox('setValue', checkedRow[0].tel);
@@ -276,7 +287,7 @@
                 $('#editForm').dialog('open');
             }
             else if (dlg_form == 'disUser') {
-                if (checkedRow[0].status == "启用"){
+                if (checkedRow[0].status == "启用") {
                     $.ajax({
                         data: {user: account},
                         url: '/system/user_man/disable/',
@@ -290,7 +301,7 @@
                 }
             }
             else if (dlg_form == 'enUser') {
-                if (checkedRow[0].status == "禁用"){
+                if (checkedRow[0].status == "禁用") {
                     $.ajax({
                         data: {user: account},
                         url: '/system/user_man/enable/',
@@ -304,8 +315,8 @@
                 }
             }
             else if (dlg_form == 'delUser') {
-                $.messager.confirm("提示","您确定要删除【"+account+"】用户么?",function(r){
-                    if(r){
+                $.messager.confirm("提示", "您确定要删除【" + account + "】用户么?", function (r) {
+                    if (r) {
                         $.ajax({
                             data: {user: account},
                             url: '/system/user_man/remove/',
@@ -392,7 +403,7 @@
         });
     }
 
-     // 加载部门树
+    // 加载部门树
     function load_edept() {
         $('#edept').combotree({
             method: 'get',

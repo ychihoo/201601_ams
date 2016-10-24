@@ -45,9 +45,12 @@
          data-options="collapsible:true">
         <div style="float: left">
             <ul>
-                <li>资产编号：<input class="easyui-textbox easyui-validate" type="text" name="id" id="id" data-options="validType:['maxLength[20]']"></li>
-                <li>名称：<input class="easyui-textbox easyui-validate" type="text" name="name" id="name" data-options="validType:['maxLength[20]']"></li>
-                <li>型号：<input class="easyui-textbox easyui-validate" type="text" name="model" id="model" data-options="validType:['maxLength[20]']"></li>
+                <li>资产编号：<input class="easyui-textbox easyui-validate" type="text" name="id" id="id"
+                                data-options="validType:['maxLength[20]']"></li>
+                <li>名称：<input class="easyui-textbox easyui-validate" type="text" name="name" id="name"
+                              data-options="validType:['maxLength[20]']"></li>
+                <li>型号：<input class="easyui-textbox easyui-validate" type="text" name="model" id="model"
+                              data-options="validType:['maxLength[20]']"></li>
                 <li><input type="button" name="查询" id="ok" value="查询" width="100px" class="easyui-linkbutton"
                            style="width: 80px;height: 25px"></li>
             </ul>
@@ -79,23 +82,28 @@
             领用部门：<input id="fdept" name="dept" style="width:150px;">
         </div>
         <div style="margin-bottom:20px">
-            领用人：<input class="easyui-textbox  easyui-validate" name="acceptuser" id="facceptuser" data-options="validType:['maxLength[6]','CHS']">
+            领用人：<input class="easyui-textbox  easyui-validate" name="acceptuser" id="facceptuser"
+                       data-options="validType:['maxLength[6]','CHS']">
         </div>
         <div style="margin-bottom:20px">
-            <span id="txtuser">使用人：</span><input class="easyui-textbox easyui-validate" name="user" id="fuser" data-options="validType:['maxLength[6]','CHS']">
+            <span id="txtuser">使用人：</span><input class="easyui-textbox easyui-validate" name="user" id="fuser"
+                                                 data-options="validType:['maxLength[6]','CHS']">
         </div>
         <div style="margin-bottom:20px">
             变更日期：<input class="easyui-datebox" name="changedate" id="fchangedate"
                         data-options="required:true,editable:false">
         </div>
         <div style="margin-bottom:20px">
-            存放位置：<input class="easyui-textbox easyui-validate" name="location" id="flocation" data-options="validType:['maxLength[20]']">
+            存放位置：<input class="easyui-textbox easyui-validate" name="location" id="flocation"
+                        data-options="validType:['maxLength[20]']">
         </div>
         <div style="margin-bottom:20px">
-            变更事由：<input class="easyui-textbox easyui-validate" name="reason" id="freason" data-options="validType:['maxLength[30]']">
+            变更事由：<input class="easyui-textbox easyui-validate" name="reason" id="freason"
+                        data-options="validType:['maxLength[30]']">
         </div>
         <div style="margin-bottom:20px">
-            备注：<input class="easyui-textbox easyui-validate" name="comment" id="fcomment" data-options="validType:['maxLength[30]']">
+            备注：<input class="easyui-textbox easyui-validate" name="comment" id="fcomment"
+                      data-options="validType:['maxLength[30]']">
         </div>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
@@ -198,8 +206,8 @@
             method: 'get',
             url: '/assets/mod/dept/',
             required: true,
-            animate:true,
-            panelHeight:'auto',
+            animate: true,
+            panelHeight: 'auto',
         });
     }
 

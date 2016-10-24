@@ -474,7 +474,7 @@ def post_assets_accept(request):
         operdate = get_local_datetime()
         data = Assets_Detail()
         data.ass_id = Assets.objects.get(ass_id=sid)
-        data.ass_acceptDept = acceptdept
+        data.ass_acceptDept = get_dept_name(acceptdept)
         data.ass_acceptUser = acceptuser
         data.ass_user = user
         data.ass_changeDate = changedate
@@ -509,7 +509,7 @@ def post_assets_change(request):
         iscyle = request.POST['recyle']
         data = Assets_Detail()
         data.ass_id = Assets.objects.get(ass_id=sid)
-        data.ass_acceptDept = acceptdept
+        data.ass_acceptDept = get_dept_name(acceptdept)
         data.ass_acceptUser = acceptuser
         data.ass_user = user
         data.ass_changeDate = changedate
@@ -534,3 +534,8 @@ def post_assets_change(request):
 def ajax_mod_dept(request):
     temp = json.dumps(get_json_dept())
     return HttpResponse(temp)
+
+def get_dept_name(id):
+    dept = Department.objects.get(id=id, dept_delflag=0)
+    name = dept.dept_name
+    return name
