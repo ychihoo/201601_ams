@@ -1,8 +1,8 @@
 # coding=utf-8
 from django.shortcuts import render_to_response, RequestContext
 from django.http import HttpResponse, JsonResponse
-from start.public import login_valid, is_exsit
-from system.models import Users, Roles, Position, Department
+from start.public import login_valid, is_exsit, get_json_menu
+from system.models import Users, Roles, Position, Department, Menus
 import hashlib
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -121,6 +121,8 @@ def post_addUser(request):
     new_pwd = request.POST['fpwd']
     new_pwd2 = request.POST['fpwd2']
     dept = request.POST['fdept']
+    if dept != "":
+        dept = Department.objects.get(id=dept, dept_delflag=0).dept_name
     position = request.POST['fposition']
     role = request.POST['frole']
     tel = request.POST.get('ftel', '')
@@ -177,6 +179,8 @@ def post_editUser(request):
     account = request.POST['eaccount']
     username = request.POST['eusername']
     dept = request.POST['edept']
+    if dept != "":
+        dept = Department.objects.get(id=dept, dept_delflag=0).dept_name
     position = request.POST['eposition']
     role = request.POST['erole']
     tel = request.POST.get('etel', '')
@@ -210,26 +214,15 @@ def post_editUser(request):
         return HttpResponse('添加用户失败')
 
 
-# 加载角色组数据内容
-def get_roles(request):
-    role = Roles.objects.filter(r_delflag=0)
-    json_items = []
-    for r in role:
-        json_items.append({
-            'id': r.id,
-            'text': r.r_name,
-        })
-    json_items = json.dumps(json_items)
-    return HttpResponse(json_items)
-
-
 # 添加部门
+@csrf_exempt
 @login_valid
 def add_dept(request):
     pass
 
 
 # 删除部门
+@csrf_exempt
 @login_valid
 def remove_dept(request):
     id = request.GET.get('id')
@@ -248,11 +241,15 @@ def remove_dept(request):
 
 
 # 获取编辑部门
+@csrf_exempt
+@login_valid
 def edit_dept(request):
     pass
 
 
 # 拖拽更新部门
+@csrf_exempt
+@login_valid
 def update_dept(request):
     id = request.GET.get('id')
     parent_id = request.GET.get('parent_id', 0)
@@ -263,6 +260,152 @@ def update_dept(request):
         except:
             return HttpResponse("更新失败")
     return HttpResponse("没有获取到ID")
+
+
+# 部门详细信息
+@csrf_exempt
+@login_valid
+def showdetail_dept(request):
+    id = request.GET.get('id')
+    if id != "":
+        try:
+            dept = Department.objects.get(id=id, dept_delflag=0)
+            if dept.dept_parentID != 0:
+                p_dept = Department.objects.get(id=dept.dept_parentID, dept_delflag=0)
+                d = {'id': dept.id, 'name': dept.dept_name, 'parentid': p_dept.id, 'parent': p_dept.dept_name,
+                     'order': dept.dept_order}
+            else:
+                d = {'id': dept.id, 'name': dept.dept_name, 'parentid': -1, 'parent': '---', 'order': dept.dept_order}
+            return JsonResponse(d)
+        except:
+            return HttpResponse("false")
+    return HttpResponse("false")
+
+
+# dept
+# 保存编辑 和新增数据
+@csrf_exempt
+@login_valid
+def save_update_dept(request):
+    if request.method == "POST":
+        id = request.POST.get('fid', '')
+        name = request.POST.get('fdept', '')
+        if name == "":
+            return HttpResponse("部门名称不能为空")
+        parent = request.POST['fparent']
+        if parent == "":
+            return HttpResponse("父节点不能为空")
+        order = request.POST.get('forder', '')
+        if order == "":
+            order = 9999
+        if id == "":
+            valid_dept = Department.objects.filter(dept_parentID=parent)
+            for v_d in valid_dept:
+                if v_d.dept_name == name:
+                    return HttpResponse("同级目录下该部门已存在，请更换后重新提交")
+            dept = Department()
+            dept.dept_name = name
+            dept.dept_parentID = parent
+            dept.dept_order = order
+            try:
+                dept.save()
+                return HttpResponse("添加成功")
+            except:
+                return HttpResponse("添加失败")
+        else:
+            dept = Department.objects.get(id=id, dept_delflag=0)
+            dept.dept_name = name
+            dept.dept_parentID = parent
+            dept.dept_order = order
+            try:
+                dept.save()
+                return HttpResponse("更新成功")
+            except:
+                return HttpResponse("更新失败")
+
+
+# 加载角色组数据内容
+@login_valid
+def get_roles(request):
+    role = Roles.objects.filter(r_delflag=0).order_by('id')
+    json_items = []
+    for r in role:
+        auth = list(r.r_authority)
+        auth = filter(remove_char, auth)
+        json_items.append({
+            'id': r.id,
+            'text': r.r_name,
+            'auth': auth,
+            'desc': r.r_description
+        })
+        print auth
+    json_items = json.dumps(json_items)
+    return HttpResponse(json_items)
+
+
+def remove_char(n):
+    if n != ",":
+        return True
+    return False
+
+
+# role
+# 保存编辑 和新增数据
+@login_valid
+def save_update_role(request):
+    if request.method == "POST":
+        id = request.POST.get('rid', '')
+        name = request.POST.get('rname', '')
+        if name == "":
+            return HttpResponse("角色名称不能为空")
+        auth = request.POST.getlist('rauth')
+        auth = ','.join(auth)
+        print auth
+        if auth == "":
+            return HttpResponse("权限不能为空")
+        desc = request.POST.get('rdesc', '')
+        if id == "":
+            try:
+                Roles.objects.get(r_name=name)
+                return HttpResponse("角色名称已存在，请重新填写")
+            except:
+                pass
+            role = Roles()
+            role.r_name = name
+            role.r_authority = auth
+            role.r_description = desc
+            try:
+                role.save()
+                return HttpResponse("添加成功")
+            except:
+                return HttpResponse("添加失败")
+        else:
+            role = Roles.objects.get(id=id, r_delflag=0)
+            role.r_name = name
+            role.r_authority = auth
+            role.r_description = desc
+            try:
+                role.save()
+                return HttpResponse("更新成功")
+            except:
+                return HttpResponse("更新失败")
+
+
+# 删除角色
+@login_valid
+def remove_role(request):
+    id = request.GET.get('id', '')
+    if id != "":
+        try:
+            Roles.objects.filter(id=id, r_delflag=0).update(r_delflag=1)
+            return HttpResponse('删除成功')
+        except:
+            return HttpResponse('删除失败')
+
+# menu
+def get_menus(request):
+    menus = json.dumps(get_json_menu())
+    return HttpResponse(menus)
 
 
 # 公共职位调用
@@ -285,3 +428,15 @@ def check_account_exsit(request):
         if is_exsit(account):
             return HttpResponse("true")
         return HttpResponse("false")
+
+
+# 验证角色名称是否存在
+@login_valid
+def check_role_exsit(request):
+    name = request.GET.get('name')
+    if name != "":
+        try:
+            Roles.objects.get(r_name=name)
+            return HttpResponse("true")
+        except:
+            return HttpResponse("false")

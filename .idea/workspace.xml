@@ -41,36 +41,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.815625">
+              <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
               <folding>
                 <element signature="e#15#78#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/assets/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7794872">
-              <caret line="476" column="54" selection-start-line="476" selection-start-column="54" selection-end-line="476" selection-end-column="54" />
-              <folding>
-                <element signature="e#15#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/system/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -79,32 +57,24 @@
         <entry file="file://$PROJECT_DIR$/system/url.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+              <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="system_dept.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/system/system_dept.html">
+      <file leaf-file-name="system_role.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/system/system_role.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3846154">
-              <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+            <state vertical-scroll-proportion="-26.346153">
+              <caret line="82" column="11" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
               <folding>
-                <element signature="e#576#612#0#HTML" expanded="true" />
-                <element signature="e#652#687#0#HTML" expanded="true" />
-                <element signature="e#765#785#0#HTML" expanded="true" />
+                <element signature="e#471#502#0#HTML" expanded="true" />
+                <element signature="e#552#583#0#HTML" expanded="true" />
+                <element signature="e#618#653#0#HTML" expanded="true" />
+                <element signature="e#720#755#0#HTML" expanded="true" />
+                <element signature="e#1894#1951#0#HTML" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="assets_accept.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/assets/assets_accept.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.1923077">
-              <caret line="75" column="18" selection-start-line="75" selection-start-column="18" selection-end-line="75" selection-end-column="18" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -145,10 +115,8 @@
         <option value="$PROJECT_DIR$/assets/models.py" />
         <option value="$PROJECT_DIR$/static/css/User_Login.css" />
         <option value="$PROJECT_DIR$/static/js/outlook2.js" />
-        <option value="$PROJECT_DIR$/assets/url.py" />
         <option value="$PROJECT_DIR$/AMS/urls.py" />
         <option value="$PROJECT_DIR$/templates/assets/assets_mydisplay.html" />
-        <option value="$PROJECT_DIR$/templates/start/jquery-easyui.html" />
         <option value="$PROJECT_DIR$/system/models.py" />
         <option value="$PROJECT_DIR$/static/js/datagrid.js" />
         <option value="$PROJECT_DIR$/templates/start/index.html" />
@@ -160,19 +128,22 @@
         <option value="$PROJECT_DIR$/static/html/test.html" />
         <option value="$PROJECT_DIR$/templates/system/test.html" />
         <option value="$PROJECT_DIR$/templates/system/assets_dept.html" />
-        <option value="$PROJECT_DIR$/templates/system/system_role.html" />
         <option value="$PROJECT_DIR$/templates/assets/assets_display.html" />
-        <option value="$PROJECT_DIR$/templates/assets/assets_accept.html" />
-        <option value="$PROJECT_DIR$/templates/assets/assets_change.html" />
         <option value="$PROJECT_DIR$/templates/assets/assets_input.html" />
         <option value="$PROJECT_DIR$/templates/assets/assets_repair.html" />
         <option value="$PROJECT_DIR$/templates/assets/assets_scrap.html" />
+        <option value="$PROJECT_DIR$/static/js/mycookies.js" />
+        <option value="$PROJECT_DIR$/templates/start/jquery-easyui.html" />
+        <option value="$PROJECT_DIR$/assets/url.py" />
+        <option value="$PROJECT_DIR$/templates/assets/assets_accept.html" />
+        <option value="$PROJECT_DIR$/templates/assets/assets_change.html" />
         <option value="$PROJECT_DIR$/templates/system/system_users.html" />
         <option value="$PROJECT_DIR$/start/public.py" />
-        <option value="$PROJECT_DIR$/system/url.py" />
-        <option value="$PROJECT_DIR$/system/views.py" />
         <option value="$PROJECT_DIR$/templates/system/system_dept.html" />
+        <option value="$PROJECT_DIR$/system/url.py" />
         <option value="$PROJECT_DIR$/assets/views.py" />
+        <option value="$PROJECT_DIR$/templates/system/system_role.html" />
+        <option value="$PROJECT_DIR$/system/views.py" />
       </list>
     </option>
   </component>
@@ -185,10 +156,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="125" />
+    <option name="y" value="32" />
+    <option name="width" value="1142" />
+    <option name="height" value="748" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -235,7 +206,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -434,6 +404,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -462,11 +433,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\201601ams\trunk\static\js" />
       <recent name="C:\Users\Administrator\Desktop\201601ams\trunk\templates\assets" />
       <recent name="C:\Users\Administrator\Desktop\201601ams\trunk\templates\system" />
       <recent name="E:\Django\AMS\SVN-AMS\system" />
       <recent name="E:\Django\AMS\SVN-AMS\templates\assets" />
-      <recent name="E:\Django\AMS\SVN-AMS\static\js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\201601ams\trunk\templates\system" />
@@ -810,7 +781,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="125" y="32" width="1142" height="748" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32626426" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -819,8 +790,8 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41761827" sideWeight="0.4969743" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40293637" sideWeight="0.49092284" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45439738" sideWeight="0.47846442" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18835099" sideWeight="0.49338374" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3867314" sideWeight="0.47846442" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18391867" sideWeight="0.49338374" order="0" side_tool="false" content_ui="combo" />
       <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292797" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -882,13 +853,11 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/system/system_dept.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#26#0" expanded="true" />
-          </folding>
+          <caret line="190" column="5" selection-start-line="174" selection-start-column="4" selection-end-line="190" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -969,13 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/ams.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/outlook2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1025,13 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/ams2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="3" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AMS/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26198632">
@@ -1062,13 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/start/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27586207">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6838565">
@@ -1084,25 +1032,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/start/jquery-easyui.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.576923">
-          <caret line="7" column="69" selection-start-line="7" selection-start-column="69" selection-end-line="7" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/html/test.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="7.1923075">
           <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/url.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1127,14 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/system/system_role.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50611246">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/assets/assets_base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5403423">
@@ -1151,57 +1076,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/assets/assets_change.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.230769">
-          <caret line="97" column="128" selection-start-line="97" selection-start-column="128" selection-end-line="97" selection-end-column="128" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/assets/assets_input.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.3846154">
           <caret line="51" column="103" selection-start-line="51" selection-start-column="103" selection-end-line="51" selection-end-column="103" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/assets/assets_repair.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.923077">
-          <caret line="73" column="146" selection-start-line="73" selection-start-column="146" selection-end-line="73" selection-end-column="146" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/viewlayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="43" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/start/public.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74298054">
-          <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/system/system_users.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.784897">
-          <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#div#9;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#form#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#form#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1213,26 +1092,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/start/index.html">
+    <entry file="file://$PROJECT_DIR$/static/js/ams2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3685152">
-          <caret line="95" column="56" selection-start-line="95" selection-start-column="36" selection-end-line="95" selection-end-column="56" />
+        <state vertical-scroll-proportion="-4.30622">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/url.py">
+    <entry file="file://$PROJECT_DIR$/templates/start/jquery-easyui.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43367347">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/mycookies.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+          <caret line="37" column="53" selection-start-line="37" selection-start-column="53" selection-end-line="37" selection-end-column="53" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/assets/assets_repair.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="56.615383">
+          <caret line="73" column="88" selection-start-line="73" selection-start-column="88" selection-end-line="73" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/assets/assets_accept.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82647586">
+          <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/assets/assets_change.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.0">
+          <caret line="130" column="38" selection-start-line="130" selection-start-column="38" selection-end-line="130" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/datagrid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.751634">
-          <caret line="221" column="25" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="5" selection-start-line="60" selection-start-column="0" selection-end-line="71" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1245,42 +1166,92 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/system/system_dept.html">
+    <entry file="file://$PROJECT_DIR$/start/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.3846154">
-          <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
-          <folding>
-            <element signature="e#576#612#0#HTML" expanded="true" />
-            <element signature="e#652#687#0#HTML" expanded="true" />
-            <element signature="e#765#785#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/assets/assets_accept.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1923077">
-          <caret line="75" column="18" selection-start-line="75" selection-start-column="18" selection-end-line="75" selection-end-column="18" />
+        <state vertical-scroll-proportion="-6.1666665">
+          <caret line="17" column="31" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/views.py">
+    <entry file="file://$PROJECT_DIR$/start/public.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#78#0" expanded="true" />
-          </folding>
+          <caret line="207" column="21" selection-start-line="207" selection-start-column="21" selection-end-line="207" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7794872">
-          <caret line="476" column="54" selection-start-line="476" selection-start-column="54" selection-end-line="476" selection-end-column="54" />
+        <state vertical-scroll-proportion="0.02905983">
+          <caret line="479" column="0" selection-start-line="479" selection-start-column="0" selection-end-line="480" selection-end-column="0" />
           <folding>
-            <element signature="e#15#26#0" expanded="true" />
+            <element signature="e#15#26#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/system_dept.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7316637">
+          <caret line="61" column="14" selection-start-line="54" selection-start-column="8" selection-end-line="61" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/system_users.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42218247">
+          <caret line="71" column="110" selection-start-line="71" selection-start-column="62" selection-end-line="71" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/viewlayer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.95726496">
+          <caret line="82" column="43" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/start/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5205724">
+          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/system_role.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-26.346153">
+          <caret line="82" column="11" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
+          <folding>
+            <element signature="e#471#502#0#HTML" expanded="true" />
+            <element signature="e#552#583#0#HTML" expanded="true" />
+            <element signature="e#618#653#0#HTML" expanded="true" />
+            <element signature="e#720#755#0#HTML" expanded="true" />
+            <element signature="e#1894#1951#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.815625">
+          <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
+          <folding>
+            <element signature="e#15#78#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -29,7 +29,7 @@ def login_valid(func):
     return isLogin
 
 
-# 用户权限控制
+# 用户menu权限控制
 def valid_auth(user_account):
     user = Users.objects.get(u_account=user_account)
     user_role_list = user.u_role.r_authority.split(',')
@@ -122,7 +122,7 @@ def change_pic_filename(filename, path):
 
 # 部门显示
 def get_json_dept():
-    dept = Department.objects.filter(dept_delflag=0).order_by('id', 'dept_order')
+    dept = Department.objects.filter(dept_delflag=0).order_by('dept_parentID', 'dept_order')
     tree_root = Department.objects.filter(dept_delflag=0, dept_parentID=0)
     l = []
     dept_items = []
@@ -163,6 +163,49 @@ def loop_dept2(obj, parentID, l, dept_list):
             })
         if flag == 0:
             loop_dept2(obj, d.id, l, dept_list['children'][len(dept_list['children']) - 1])
+
+
+# menu显示
+def get_json_menu():
+    menu = Menus.objects.filter(m_delflag=0).order_by('m_parentID', 'm_order')
+    tree_root = Menus.objects.filter(m_delflag=0, m_parentID=0)
+    l = []
+    menu_items = []
+    if tree_root.count() > 0:
+        loop_menu(menu, 0, l, menu_items)
+    return menu_items
+
+
+# 1.可实现菜单多级遍历
+def loop_menu(obj, parentID, l, menu_items):
+    flag = 1
+    for d in obj:
+        if d.m_parentID == parentID and d.id not in l:
+            flag = 0
+            l.append(d.id)
+            menu_items.append({
+                'id': d.id,
+                'text': d.m_name,
+                'children': [],
+            })
+        if flag == 0:
+            loop_menu2(obj, d.id, l, menu_items[len(menu_items) - 1])
+
+
+# 2.可实现菜单多级遍历
+def loop_menu2(obj, parentID, l, menu_list):
+    for d in obj:
+        flag = 1
+        if d.m_parentID == parentID and d.id not in l:
+            flag = 0
+            l.append(d.id)
+            menu_list['children'].append({
+                'id': d.id,
+                'text': d.m_name,
+                'children': [],
+            })
+        if flag == 0:
+            loop_menu2(obj, d.id, l, menu_list['children'][len(menu_list['children']) - 1])
 
 
 # 验证用户名是否存在

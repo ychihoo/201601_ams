@@ -20,7 +20,7 @@ import views
 urlpatterns = [
     url(r'^user/$', views.my_assets),
     url(r'^user/ajax/$', views.ajax_assets_mydisplay),
-    url(r'^user/change/$', views.my_assets_change),
+    # url(r'^user/change/$', views.my_assets_change),
     url(r'^query/$', views.assets_display),
     url(r'^query/ajax/$', views.ajax_assets_display),
     url(r'^query/showdetail/$', views.assets_showdetail),

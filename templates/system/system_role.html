@@ -7,7 +7,11 @@
             margin-top: 20px;
         }
 
-        div ul li {
+        div input {
+            width: 200px;
+        }
+
+        div.easyui-panel ul li {
             list-style: none;
             float: left;
             padding: 5px;
@@ -16,41 +20,149 @@
 {% endblock %}
 {% block body %}
     <div id="role_body">
-        <div style="float:left;">
-            <ul id="dl" class="easyui-datalist" style="width:300px;height:400px"></ul>
+        <div style="float:left;width: 300px">
+            <ul id="dl" class="easyui-datalist" style="width:100%;height:400px"></ul>
         </div>
         <div style="float:left;margin-left: 2px">
-            <div class="easyui-panel" title="操作" style="width:500px;height:100px;margin-top: 0px;margin-bottom: 2px">
-                <ul>
-                    <li><a class="easyui-linkbutton" style="width: 80px;">添加</a></li>
-                    <li><a class="easyui-linkbutton" style="width: 80px;">编辑</a></li>
-                    <li><a class="easyui-linkbutton" style="width: 80px;">删除</a></li>
-                </ul>
-            </div>
-            <div class="easyui-panel" title="表单" style=";width: 500px;height: 300px">
-                <div style="text-align:center;padding-top: 20px">
-                    <form id="ff" class="easyui-form" method="POST">{% csrf_token %}
+            <div class="easyui-panel" id="role_panel" title="详情" style=";width: 500px;height: 400px">
+                <div style="text-align:right;padding-top: 25px;padding-right: 130px">
+                    <form id="role_form" class="easyui-form" method="POST">{% csrf_token %}
                         <div style="margin-bottom:20px;">
-                            角色名称：<input class="easyui-textbox" name="id" id="fid" data-options="readonly:true">
+                            角色ID：<input class="easyui-textbox" name="rid" id="rid" data-options="readonly:true">
                         </div>
                         <div style="margin-bottom:20px;">
-                            角色权限：<input id="dept" name="depts">
+                            角色名称：<input class="easyui-textbox easyui-validate" name="rname" id="rname" data-options="required:true,readonly:true,validType:['CHS','maxLength[10]']">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            角色权限：<input id="rauth" name="rauth" readonly="readonly">
                         </div>
                         <div style="margin-bottom:20px">
-                            备注(说明)：<input class="easyui-textbox" name="comment" id="fcomment">
+                            角色描述：<input class="easyui-textbox" name="rdesc" id="rdesc"
+                                        data-options="multiline:true,height:60,readonly:true">
+                        </div>
+                        <div id="div_save" style="margin-top:30px;padding-right: 50px;display: none">
+                            <a href="javascript:void(0)" data-options="iconCls:'icon-save'" class="easyui-linkbutton"
+                               style="width: 80px;" onclick="submitForm()">保存</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="addit()" data-options="iconCls:'icon-add'">添加</div>
+            <div onclick="editit()" data-options="iconCls:'icon-edit'">编辑</div>
+            <div onclick="removeit()" data-options="iconCls:'icon-remove'">删除</div>
+        </div>
     </div>
 
     <script>
+    $(function(){
+        load_datalist_data();
+    })
+    function load_datalist_data(){
         $('#dl').datalist({
             url: '/system/role_man/getRole/',
             method: 'get',
-            title: "角色组"
-        })
+            title: "角色组",
+            onSelect:function(index,row){
+                $('#rid').textbox('setValue',row.id);
+                $('#rname').textbox('setValue',row.text);
+                $('#rauth').combotree('setValues',row.auth);
+{#                $('#rauth').combotree('setValues', ['1','3','21']);#}
+                $('#rdesc').textbox('setValue',row.desc);
+                $('#role_panel').panel({title: '详情'});
+            },
+            onRowContextMenu:function(e,index,row){
+                e.preventDefault();
+                $(this).datalist('selectRow', index);
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            },
+        });
+        $('#rauth').combotree({
+            url: '/system/role_man/menus/',
+            method: 'get',
+            required:true,
+            multiline: true,
+            cascadeCheck:false,
+            height: 60,
+            checkbox: true,
+            multiple: true,
+            onLoadSuccess: function (node, data) {
+{#                $("#rauth").combotree('tree').tree("collapseAll");#}
+            }
+        });
+    }
+
+        function addit(){
+            $('#rname').textbox('readonly',false);
+            $('#rauth').textbox('readonly',false);
+            $('#rdesc').textbox('readonly',false);
+            $('#div_save').css('display','block');
+            $('#role_panel').panel({title: '新增'});
+            $('#rid').textbox('clear');
+            $('#rname').textbox('clear');
+            $('#rauth').textbox('clear');
+            $('#rdesc').textbox('clear');
+
+        }
+        function removeit(){
+            if (get_checkedID()){
+                $.messager.confirm("提示", "您确认要删除么？", function (r) {
+                    if (r) {
+                        $.ajax({
+                            url: '/system/role_man/remove/',
+                            data: {id: get_checkedID()},
+                            success: function (data) {
+                                $.messager.alert("提示", data, "warning");
+                                load_datalist_data();
+                            },
+                            error: function () {
+                                $.messager.alert("提示", "提交失败，请重新尝试删除", "warning");
+                            }
+                        })
+                    }
+
+                })
+            }
+        }
+        function editit(){
+            if (get_checkedID()){
+                $('#rname').textbox('readonly',false);
+                $('#rauth').textbox('readonly',false);
+                $('#rdesc').textbox('readonly',false);
+                $('#div_save').css('display','block');
+                $('#role_panel').panel({title: '编辑'});
+            }
+        }
+        function submitForm() {
+            $('#role_form').form('submit', {
+                url: "/system/role_man/post/",
+                onSubmit: function () {
+                    return $(this).form('enableValidation').form('validate');
+                },
+                success: function (data) {
+                    $.messager.alert("提示", data, "info");
+                    load_datalist_data();
+                },
+                error: function () {
+                    $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');
+                }
+            });
+        };
+
+    // 获取datalist选中的id
+function get_checkedID() {
+    var checkedRow = $('#dl').datalist('getSelected');
+    if (checkedRow == null) {
+        $.messager.alert("提示", "请选择！", "warning");
+    }
+    else {
+        var id = checkedRow.id;
+        return id;
+    }
+}
     </script>
 {% endblock %}

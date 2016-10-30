@@ -7,6 +7,10 @@
             margin-top: 20px;
             font-size: 12px;
         }
+
+        div input {
+            width: 180px;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -17,8 +21,35 @@
             </div>
         </div>
         <div style="float:left;padding-left: 2px">
-            <div class="easyui-panel" style="width: 650px;height: 400px;">
-
+            <div class="easyui-panel" id="div_panel" title="详情" style="width: 650px;height: 400px;">
+                <div style="width: 300px;margin: 0 auto;text-align: right;padding-right: 100px;padding-top: 40px">
+                    <form id="dept_form" method="POST">{% csrf_token %}
+                        <div style="margin-bottom:20px">
+                            ID：<input class="easyui-textbox easyui-validate" name="fid" id="fid"
+                                      data-options="validType:['maxLength[3]']" readonly="readonly">
+                        </div>
+                        <div style="margin-bottom:20px">
+                            部门名称：<input class="easyui-textbox easyui-validate" name="fdept" id="fdept"
+                                        readonly="readonly"
+                                        data-options="required:true,validType:['maxLength[15]']">
+                        </div>
+                        <div style="margin-bottom:20px">
+                            父节点：<input class="easyui-combobox" name="fparent" id="fparent"
+                                       data-options="required:true" readonly="readonly">
+                        </div>
+                        <div style="margin-bottom:20px">
+                            显示顺序：<input class="easyui-textbox easyui-validate" name="forder" id="forder"
+                                        readonly="readonly"
+                                        data-options="validType:['number','maxLength[2]']">
+                        </div>
+                        <div id="btn_div" style="padding:5px;display: none;text-align:right">
+                            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()"
+                               style="width:80px">保存</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()"
+                               style="width:80px">重置</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <div id="mm" class="easyui-menu" style="width:120px;">
@@ -33,75 +64,135 @@
 
 
     <script>
-    $(function(){
-        load_tree_data();
-    })
-    function load_tree_data(){
-        $('#td').tree({
-            method: 'get',
-            url: '/assets/mod/dept/',
-            animate: true,
-            lines: true,
-            dnd:true,
-            onDblClick: function (node) {
-                $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
-            },
-            onContextMenu: function (e, node) {
-                e.preventDefault();
-                $(this).tree('select', node.target);
-                $('#mm').menu('show', {
-                    left: e.pageX,
-                    top: e.pageY
-                });
-            },
-            onStopDrag:function(node){
-                var id = $(this).tree('getNode',node.target).id;
-                var parent_id;
-                try{
-                    parent_id = $(this).tree('getParent', node.target).id;
-                }
-                catch(err){
-                    parent_id = 0;
-                }
-                $.ajax({
-                    url:'/system/dept_man/drag/',
-                    data:{id:id,parent_id:parent_id},
-                    success:function(data){
-{#                        $.messager.alert("提示",data,"warning");#}
-                        load_tree_data();
-                    },
-                    error:function(){
-                        $.messager.alert("提示","提交失败，请重新尝试删除","warning");
-                    },
-                })
-            },
+        $(function () {
+            load_tree_data();
+            load_fdept();
         })
-        }
-        function addit(){
-            var id = $('#td').tree('getSelected').id;
-            alert(id);
-        }
-        function removeit(){
-            var node = $('#td').tree('getSelected');
-            $.messager.confirm("提示","您确认要删除么？",function(r){
-                if (r){
+        function load_tree_data() {
+            $('#td').tree({
+                method: 'get',
+                url: '/assets/mod/dept/',
+                animate: true,
+                lines: true,
+                dnd: true,
+                onDblClick: function (node) {
+                    $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
+                },
+                onContextMenu: function (e, node) {
+                    e.preventDefault();
+                    $(this).tree('select', node.target);
+                    $('#mm').menu('show', {
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                },
+                onSelect: function (node) {
+                    var id = node.id;
                     $.ajax({
-                        url:'/system/dept_man/remove/',
-                        data:{id:node.id},
-                        success:function(data){
-                            $.messager.alert("提示",data,"warning");
+                        url: '/system/dept_man/showdetail/',
+                        data: {id: id},
+                        success: function (data) {
+                            if (data != false) {
+                                $("#fid").textbox('setValue', data.id);
+                                $("#fdept").textbox('setValue', data.name);
+                                $("#fparent").combotree('setValue', {id: data.parentid, text: data.parent});
+                                $("#forder").textbox('setValue', data.order);
+                                $("#fdept").textbox('readonly', true);
+                                $("#fparent").textbox('readonly', true);
+                                $("#forder").textbox('readonly', true);
+                                $('#btn_div').css('display', 'none');
+                                $('#div_panel').panel({title: '详情'});
+                            }
+                        },
+                        error: function () {
+                            $.messager.alert("提示", "加载失败", "warning");
+                        },
+                    })
+                },
+                onStopDrag: function (node) {
+                    var id = node.id;
+                    var parent_id;
+                    try {
+                        parent_id = $(this).tree('getParent', node.target).id;
+                    }
+                    catch (err) {
+                        parent_id = 0;
+                    }
+                    $.ajax({
+                        url: '/system/dept_man/drag/',
+                        data: {id: id, parent_id: parent_id},
+                        success: function (data) {
+                            {#                        $.messager.alert("提示",data,"warning");#}
                             load_tree_data();
                         },
-                        error:function(){
-                            $.messager.alert("提示","提交失败，请重新尝试删除","warning");
+                        error: function () {
+                            $.messager.alert("提示", "提交失败，请重新尝试删除", "warning");
+                        },
+                    })
+                },
+            })
+        }
+        // 添加
+        function addit() {
+            var node = $('#td').tree('getSelected');
+            load_fdept();
+            $("#fid").textbox('clear');
+            $("#fdept").textbox('clear');
+            $("#fdept").textbox('readonly', false);
+            $("#fparent").combotree('setValue', {id: node.id, text: node.text});
+            $("#fparent").combobox('readonly', false);
+            $("#forder").textbox('clear');
+            $("#forder").textbox('readonly', false);
+            $('#btn_div').css('display', 'block');
+            $('#div_panel').panel({title: '新增'});
+        }
+        //移除
+        function removeit() {
+            var node = $('#td').tree('getSelected');
+            $.messager.confirm("提示", "您确认要删除么？", function (r) {
+                if (r) {
+                    $.ajax({
+                        url: '/system/dept_man/remove/',
+                        data: {id: node.id},
+                        success: function (data) {
+                            $.messager.alert("提示", data, "warning");
+                            load_tree_data();
+                            load_fdept();
+                        },
+                        error: function () {
+                            $.messager.alert("提示", "提交失败，请重新尝试删除", "warning");
                         }
                     })
                 }
 
             })
         }
-        function editit(){
-            var id = $('#td').tree('getSelected').id;
+        // 编辑
+        function editit() {
+            var node = $('#td').tree('getSelected').id;
+            $("#fdept").textbox('readonly', false);
+            $("#fparent").combotree('readonly', false);
+            $("#forder").textbox('readonly', false);
+            $('#btn_div').css('display', 'block');
+            $('#div_panel').panel({title: '编辑'});
+        }
+
+        function submitForm() {
+            $('#dept_form').form('submit', {
+                url: "/system/dept_man/post/",
+                onSubmit: function () {
+                    return $(this).form('enableValidation').form('validate');
+                },
+                success: function (data) {
+                    $.messager.alert("提示", data, "info");
+                    load_tree_data();
+                    load_fdept();
+                    clearForm();
+                },
+                error: function () {
+                    $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');
+                }
+            });
         }
         function collapse() {
             var node = $('#td').tree('getSelected');
@@ -110,6 +201,18 @@
         function expand() {
             var node = $('#td').tree('getSelected');
             $('#td').tree('expand', node.target);
+        }
+        // 加载部门树
+        function load_fdept() {
+            $('#fparent').combotree({
+                method: 'get',
+                url: '/assets/mod/dept/',
+                required: true,
+            });
+        }
+        // 清除窗口数据
+        function clearForm() {
+            $('#dept_form').form('clear');
         }
     </script>
 {% endblock %}

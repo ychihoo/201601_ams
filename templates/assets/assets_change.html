@@ -109,6 +109,7 @@
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
         </div>
+        {% csrf_token %}
     </form>
 </div>
 <script>
@@ -191,7 +192,7 @@
             success: function (data) {
                 $.each(data.item, function (i, d) {
                     $("#fid").textbox('setValue', d['id']);
-                    $("#fdept").textbox('setValue', d['acceptdept']);
+                    $("#fdept").combotree('setValue', {id: d['deptid'], text: d['acceptdept']});
                     $("#facceptuser").textbox('setValue', d['acceptuser']);
                     $("#fuser").textbox('setValue', d['user']);
                     $("#flocation").textbox('setValue', d['location']);
@@ -220,7 +221,6 @@
             },
             success: function (data) {
                 $.messager.alert("提示", data, "info");
-                clearForm();
                 closeForm();
                 load_ajax();
             },

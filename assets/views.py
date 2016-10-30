@@ -4,7 +4,7 @@ import sys
 
 from django.shortcuts import render_to_response, HttpResponse, RequestContext
 from django.http import JsonResponse
-
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 
 from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept
@@ -62,26 +62,6 @@ def ajax_assets_mydisplay(request):
 @login_valid
 def assets_display(request):
     return render_to_response('assets/assets_display.html')
-
-
-@login_valid
-def my_assets_change(request):
-    return render_to_response("assets/test.html", RequestContext(request, locals()))
-
-
-@login_valid
-def assets_input(request):
-    return render_to_response('assets/test.html')
-
-
-@login_valid
-def assets_receive(request):
-    return render_to_response('assets/test.html')
-
-
-@login_valid
-def assets_change(request):
-    return render_to_response('assets/test.html')
 
 
 # 维修表
@@ -142,7 +122,7 @@ def ajax_assets_repair_id(request):
         })
     return JsonResponse(json_item)
 
-
+@csrf_exempt
 @login_valid
 def post_assets_repair(request):
     if request.method == "POST":
@@ -210,6 +190,7 @@ def ajax_assets_scrap(request):
 
 
 # 提交报废数据
+@csrf_exempt
 @login_valid
 def post_assets_scrap(request):
     if request.method == "POST":
@@ -445,9 +426,11 @@ def assets_change(request):
 def ajax_assets_change(request):
     sid = request.GET.get('id')
     d = Assets.objects.get(ass_id=str(sid))
+    deptID = get_dept_id(d.ass_acceptDept)
     json_items = {'item': []}
     json_items['item'].append({
         'id': d.ass_id,
+        'deptid': deptID,
         'acceptdept': d.ass_acceptDept,
         'acceptuser': d.ass_acceptUser,
         'user': d.ass_user,
@@ -459,6 +442,7 @@ def ajax_assets_change(request):
 
 
 # 提交保存领用信息
+@csrf_exempt
 @login_valid
 def post_assets_accept(request):
     if request.method == "POST":
@@ -493,6 +477,7 @@ def post_assets_accept(request):
 
 
 # 提交保存变更信息
+@csrf_exempt
 @login_valid
 def post_assets_change(request):
     if request.method == "POST":
@@ -527,7 +512,6 @@ def post_assets_change(request):
             data.save()
         except:
             return HttpResponse("请检查输入格式是否正确！")
-
         return HttpResponse("变更成功!")
 
 
@@ -535,7 +519,14 @@ def ajax_mod_dept(request):
     temp = json.dumps(get_json_dept())
     return HttpResponse(temp)
 
+
 def get_dept_name(id):
     dept = Department.objects.get(id=id, dept_delflag=0)
     name = dept.dept_name
     return name
+
+
+def get_dept_id(name):
+    dept = Department.objects.get(dept_name=name, dept_delflag=0)
+    id = dept.id
+    return id
