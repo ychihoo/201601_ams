@@ -192,7 +192,7 @@
             success: function (data) {
                 $.each(data.item, function (i, d) {
                     $("#fid").textbox('setValue', d['id']);
-                    $("#fdept").combotree('setValue', {id: d['deptid'], text: d['acceptdept']});
+                    $("#fdept").combotree('setValue', d['deptid']);
                     $("#facceptuser").textbox('setValue', d['acceptuser']);
                     $("#fuser").textbox('setValue', d['user']);
                     $("#flocation").textbox('setValue', d['location']);

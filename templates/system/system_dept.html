@@ -95,7 +95,7 @@
                             if (data != false) {
                                 $("#fid").textbox('setValue', data.id);
                                 $("#fdept").textbox('setValue', data.name);
-                                $("#fparent").combotree('setValue', {id: data.parentid, text: data.parent});
+                                $("#fparent").combotree('setValue', data.parentid);
                                 $("#forder").textbox('setValue', data.order);
                                 $("#fdept").textbox('readonly', true);
                                 $("#fparent").textbox('readonly', true);
@@ -139,7 +139,7 @@
             $("#fid").textbox('clear');
             $("#fdept").textbox('clear');
             $("#fdept").textbox('readonly', false);
-            $("#fparent").combotree('setValue', {id: node.id, text: node.text});
+            $("#fparent").combotree('setValue', node.id);
             $("#fparent").combobox('readonly', false);
             $("#forder").textbox('clear');
             $("#forder").textbox('readonly', false);

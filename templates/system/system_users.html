@@ -12,7 +12,7 @@
 
         .div-page ul {
             clear: both;
-            width: 740px;
+            width: 800px;
         }
 
         .div-page li {
@@ -221,7 +221,6 @@
         <!--编辑用户按钮 -->
         $("#editUserBtn").click(function () {
             get_checked('editForm');
-            load_edept();
         });
         <!--删除用用户按钮 -->
         $("#delUserBtn").click(function () {
@@ -267,12 +266,12 @@
             else if (dlg_form == 'editForm') {
                 $('#eaccount').textbox('setValue', account);
                 $('#eusername').textbox('setValue', checkedRow[0].username);
-                {#                $('#edept').combotree('setValue', {id:checkedRow[0].dept,text:checkedRow[0].dept});#}
-                $('#edept').textbox('setValue', checkedRow[0].dept);
+                $('#edept').combotree('setValue', checkedRow[0].dept_id);
                 $('#eposition').combobox('setValue', checkedRow[0].position);
                 $('#erole').combobox('setValue', checkedRow[0].role);
                 $('#etel').textbox('setValue', checkedRow[0].tel);
                 $('#email').textbox('setValue', checkedRow[0].email);
+                load_edept();
                 $('#editForm').dialog('open');
 
             }
@@ -307,16 +306,21 @@
             else if (dlg_form == 'delUser') {
                 $.messager.confirm("提示", "您确定要删除【" + account + "】用户么?", function (r) {
                     if (r) {
-                        $.ajax({
-                            data: {user: account},
-                            url: '/system/user_man/remove/',
-                            success: function (data) {
-                                load_ajax();
-                            },
-                            error: function () {
-                                msgShow('提示', "提交请求失败，请重新尝试", 'warning');
-                            }
-                        })
+                        if ( account == "admin"){
+                            $.messager.alert('提示', "禁止删除管理员账户", 'warning');
+                        }
+                        else{
+                            $.ajax({
+                                data: {user: account},
+                                url: '/system/user_man/remove/',
+                                success: function (data) {
+                                    load_ajax();
+                                },
+                                error: function () {
+                                    msgShow('提示', "提交请求失败，请重新尝试", 'warning');
+                                }
+                            })
+                        }
                     }
                 });
 

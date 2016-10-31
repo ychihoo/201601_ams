@@ -44,7 +44,12 @@ def ajax_users(request):
             d.u_enabled = '启用'
         else:
             d.u_enabled = '禁用'
+        try:
+            dept_id=Department.objects.get(dept_name=d.u_dept).id
+        except:
+            pass
         json_item['rows'].append({
+            'dept_id': dept_id,
             'account': d.u_account,
             'username': d.u_userName,
             'dept': d.u_dept,
@@ -63,11 +68,14 @@ def ajax_users(request):
 @login_valid
 def ajax_disable_user(request):
     account = request.GET.get('user')
-    try:
-        Users.objects.filter(u_account=account).update(u_enabled=1)
-        return HttpResponse('success')
-    except:
-        return HttpResponse('禁用失败')
+    if account == "admin":
+        return HttpResponse("管理员账户禁止禁用")
+    else:
+        try:
+            Users.objects.filter(u_account=account).update(u_enabled=1)
+            return HttpResponse('success')
+        except:
+            return HttpResponse('禁用失败')
 
 
 # 启用账户
@@ -85,11 +93,14 @@ def ajax_enable_user(request):
 @login_valid
 def ajax_del_user(request):
     account = request.GET.get('user')
-    try:
-        Users.objects.filter(u_account=account).update(u_delflag=1)
-        return HttpResponse('success')
-    except:
-        return HttpResponse('删除失败')
+    if account == "admin":
+        return HttpResponse("管理员账户禁止删除")
+    else:
+        try:
+            Users.objects.filter(u_account=account).update(u_delflag=1)
+            return HttpResponse('success')
+        except:
+            return HttpResponse('删除失败')
 
 
 # 重置密码
@@ -397,8 +408,12 @@ def remove_role(request):
     id = request.GET.get('id', '')
     if id != "":
         try:
-            Roles.objects.filter(id=id, r_delflag=0).update(r_delflag=1)
-            return HttpResponse('删除成功')
+            r = Roles.objects.filter(r_delflag=0)
+            if r.count() == 1:
+                return HttpResponse("至少要存在一个角色组")
+            else:
+                Roles.objects.filter(id=id, r_delflag=0).update(r_delflag=1)
+                return HttpResponse('删除成功')
         except:
             return HttpResponse('删除失败')
 
