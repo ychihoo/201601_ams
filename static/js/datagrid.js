@@ -48,7 +48,7 @@ function loadtable() {
             {field: 'sbuydate', title: '购买日期', width: 80, align: 'center'},
             {field: 'sacceptdept', title: '领用部门', width: 100, align: 'center'},
             {field: 'sacceptuser', title: '领用人', width: 80, align: 'center'},
-            {field: 'suser', title: '使用人', width: 80, align: 'center'},
+            {field: 'suser', title: '使用(保管)人', width: 80, align: 'center'},
             {field: 'sacceptdate', title: '领用日期', width: 80, align: 'center'},
             {field: 'sflag', title: '资产状态', width: 80, align: 'center'}
         ]],
@@ -248,7 +248,7 @@ function loadUserTable() {
                 $('#disUserBtn').linkbutton('disable');
                 $('#enUserBtn').linkbutton('enable');
             }
-            else {
+            else{
                 $('#disUserBtn').linkbutton('enable');
                 $('#enUserBtn').linkbutton('disable');
             }

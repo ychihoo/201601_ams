@@ -3,9 +3,9 @@
     <style type="text/css">
         #dept_body {
             margin: 0px auto;
-            width: 1010px;
+            width: 910px;
             margin-top: 20px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         div input {
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div style="float:left;padding-left: 2px">
-            <div class="easyui-panel" id="div_panel" title="详情" style="width: 650px;height: 400px;">
+            <div class="easyui-panel" id="div_panel" title="详情" style="width: 550px;height: 400px;">
                 <div style="width: 300px;margin: 0 auto;text-align: right;padding-right: 100px;padding-top: 40px">
                     <form id="dept_form" method="POST">{% csrf_token %}
                         <div style="margin-bottom:20px">
@@ -40,7 +40,7 @@
                         <div style="margin-bottom:20px">
                             显示顺序：<input class="easyui-textbox easyui-validate" name="forder" id="forder"
                                         readonly="readonly"
-                                        data-options="validType:['number','maxLength[2]']">
+                                        data-options="validType:['number','maxLength[4]']">
                         </div>
                         <div id="btn_div" style="padding:5px;display: none;text-align:right">
                             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()"
@@ -59,6 +59,9 @@
             <div class="menu-sep"></div>
             <div onclick="expand()">展开</div>
             <div onclick="collapse()">收起</div>
+        </div>
+        <div >
+            <span style="line-height: 50px;color: #0070a9">注：选中组织成员右击可进行添加、编辑、删除等操作</span>
         </div>
     </div>
 

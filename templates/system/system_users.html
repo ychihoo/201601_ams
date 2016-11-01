@@ -122,7 +122,7 @@
 </div>
 <!--重置密码界面!-->
 <div id="resetPwdForm" class="easyui-dialog" title="重置密码" data-options="closed:true"
-     style="width:100%;max-width:400px;padding:30px 60px;">
+     style="width:100%;max-width:410px;padding:30px 60px;">
     <form id="reset" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
         {% csrf_token %}
         <div style="margin-bottom:20px;">
@@ -276,18 +276,22 @@
 
             }
             else if (dlg_form == 'disUser') {
-                if (checkedRow[0].status == "启用") {
-                    $.ajax({
-                        data: {user: account},
-                        url: '/system/user_man/disable/',
-                        success: function (data) {
-                            load_ajax();
-                        },
-                        error: function () {
-                            msgShow('提示', "提交请求失败，请重新尝试", 'warning');
-                        }
-                    })
+                if (checkedRow[0].account == "admin") {
+                    $.messager.alert('提示', "【admin】账户不能禁用", 'warning');
                 }
+                else
+                    if (checkedRow[0].status == "启用") {
+                        $.ajax({
+                            data: {user: account},
+                            url: '/system/user_man/disable/',
+                            success: function (data) {
+                                load_ajax();
+                            },
+                            error: function () {
+                                msgShow('提示', "提交请求失败，请重新尝试", 'warning');
+                            }
+                        })
+                    }
             }
             else if (dlg_form == 'enUser') {
                 if (checkedRow[0].status == "禁用") {
@@ -411,6 +415,7 @@
         $('#addForm').dialog('close');
         $('#resetPwdForm').dialog('close');
         $('#editForm').dialog('close');
+        clearForm();
     }
 
     // 清除窗口数据

@@ -45,9 +45,10 @@ def ajax_users(request):
         else:
             d.u_enabled = '禁用'
         try:
-            dept_id=Department.objects.get(dept_name=d.u_dept).id
+            dept_id = Department.objects.get(dept_name=d.u_dept).id
         except:
-            pass
+            dept_id = 0
+        print dept_id
         json_item['rows'].append({
             'dept_id': dept_id,
             'account': d.u_account,
@@ -286,7 +287,7 @@ def showdetail_dept(request):
                 d = {'id': dept.id, 'name': dept.dept_name, 'parentid': p_dept.id, 'parent': p_dept.dept_name,
                      'order': dept.dept_order}
             else:
-                d = {'id': dept.id, 'name': dept.dept_name, 'parentid': -1, 'parent': '---', 'order': dept.dept_order}
+                d = {'id': dept.id, 'name': dept.dept_name, 'parentid': 0, 'parent': '---', 'order': dept.dept_order}
             return JsonResponse(d)
         except:
             return HttpResponse("false")
@@ -341,7 +342,7 @@ def get_roles(request):
     role = Roles.objects.filter(r_delflag=0).order_by('id')
     json_items = []
     for r in role:
-        auth = list(r.r_authority)
+        auth = r.r_authority.split(',')
         auth = filter(remove_char, auth)
         json_items.append({
             'id': r.id,
@@ -349,7 +350,6 @@ def get_roles(request):
             'auth': auth,
             'desc': r.r_description
         })
-        print auth
     json_items = json.dumps(json_items)
     return HttpResponse(json_items)
 
@@ -371,7 +371,6 @@ def save_update_role(request):
             return HttpResponse("角色名称不能为空")
         auth = request.POST.getlist('rauth')
         auth = ','.join(auth)
-        print auth
         if auth == "":
             return HttpResponse("权限不能为空")
         desc = request.POST.get('rdesc', '')
