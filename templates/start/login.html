@@ -9,7 +9,7 @@
 </HEAD>
 <BODY id=userlogin_body>
 <DIV id="div_top"></DIV>
-<form method="post">{% csrf_token %}
+<form id="login_form" method="post">{% csrf_token %}
     <DIV id=user_login>
         <DL>
             <DD id=user_top>
@@ -32,26 +32,25 @@
                             </UL>
                             <UL>
                                 <LI class=user_main_text>密 码：</LI>
-                                <LI class=user_main_input><INPUT class="easyui-textbox"
+                                <LI class=user_main_input><INPUT class="easyui-textbox" required="true"
                                                                  data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38"
                                                                  id=TxtPassword type=password name=TxtPassword></LI>
                             </UL>
                             <UL>
-                                <LI class=user_main_text>Cookie：</LI>
-                                <LI class=user_main_input><SELECT id=DropExpiration name=DropExpiration>
-                                    <OPTION value=None selected>不保存</OPTION>
-                                    <OPTION value=Day>保存一天</OPTION>
-                                    <OPTION value=Month>保存一月</OPTION>
-                                    <OPTION value=Year>保存一年</OPTION>
-                                </SELECT>
+                                <LI class=user_main_text>验证码：</LI>
+                                <LI class=user_main_input>
+                                    <input id="checkcode" name="checkcode" class="easyui-textbox easyui-validate" data-options="required:true,validType:['maxLength[4]',]" style="width: 100px">
+                                </li>
+                                <li style="padding-left: 5px;line-height: 30px">
+                                    <img onclick='ChangeCode();' id='imgCode' src='/checkcode/' title='点击更新'/>
                                 </LI>
                             </UL>
                         </DIV>
                     </LI>
                     <LI class=user_main_r>
                         <INPUT class=IbtnEnterCssClass id=IbtnEnter
-                               style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
-                               type=image src="/static/images/user_botton.gif" name=IbtnEnter>
+                               style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; "
+                               type=image src="/static/images/user_botton.gif" name=IbtnEnter >
                     </LI>
                 </UL>
             <DD id=user_bottom>
@@ -69,31 +68,18 @@
         <SPAN id=ValrValidateCode style="DISPLAY: none; COLOR: red"></SPAN>
     </div>
     <div>
-        {% if login_form.errors %}
+        {% if error %}
             <script type="text/javascript">
-                $.messager.alert('提示', '{{ login_form.errors }}', 'warning')
+                $.messager.alert('提示', '{{ error }}', 'warning')
             </script>
         {% endif %}
     </div>
 </FORM>
-<!--更改密码界面!-->
-<div id="changePwdForm" class="easyui-dialog" title="重置密码" data-options="closed:true"
-     style="width:100%;max-width:400px;padding:30px 60px;">
-    <form id="change" class="easyui-form" method="post" action="" style="text-align: right;padding-right: 30px;">
-        {% csrf_token %}
-        <div style="margin-bottom:20px">
-            新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="pwd" id="pwd"
-                       data-options="required:true,validType:['length[6,20]','englishOrNum']">
-        </div>
-        <div style="margin-bottom:20px">
-            确认新密码：<input class="easyui-textbox easyui-validatebox" type="password" name="pwd2" id="pwd2"
-                         data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[pwd]']">
-        </div>
-        <div style="text-align:right;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitpwdForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeForm()" style="width:80px">关闭</a>
-        </div>
-    </form>
-</div>
+<script type="text/javascript">
+    function ChangeCode() {
+        var code = document.getElementById('imgCode');
+        code.src += '?';
+    }
+</script>
 </BODY>
 </HTML>

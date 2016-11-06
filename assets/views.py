@@ -6,7 +6,8 @@ from django.shortcuts import render_to_response, HttpResponse, RequestContext
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-
+import xlsxwriter as xlwt
+import time
 from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept
 from assets.models import *
 from system.models import *
@@ -121,6 +122,7 @@ def ajax_assets_repair_id(request):
             'sflag': d.ass_flag
         })
     return JsonResponse(json_item)
+
 
 @csrf_exempt
 @login_valid
@@ -521,12 +523,161 @@ def ajax_mod_dept(request):
 
 
 def get_dept_name(id):
-    dept = Department.objects.get(id=id, dept_delflag=0)
-    name = dept.dept_name
+    try:
+        dept = Department.objects.get(id=id, dept_delflag=0)
+        name = dept.dept_name
+    except:
+        name = ""
     return name
 
 
 def get_dept_id(name):
-    dept = Department.objects.get(dept_name=name, dept_delflag=0)
-    id = dept.id
+    try:
+        dept = Department.objects.get(dept_name=name, dept_delflag=0)
+        id = dept.id
+    except:
+        id = ''
     return id
+
+
+from StringIO import StringIO
+
+
+# 导出除报废的资产信息
+@login_valid
+def export_to_xlsx(request):
+    output = StringIO()
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=资产信息_' + time.strftime('%Y%m%d', time.localtime(
+        time.time())) + '.xlsx'
+    workbook = xlwt.Workbook(output)  # 创建工作簿
+    sheet = workbook.add_worksheet("sheet1")  # 创建工作页
+    row0 = [u'序号', u'资产编号', u'资产名称', u'品牌', u'型号',
+            u'序列号', u'配置', u'类别', u'是否涉密', u'数量',
+            u'购买单价', u'购买日期', u'质保期', u'领用部门',
+            u'领用人', u'使用（保管）人', u'最近一次领用日期', u'是否贴标', u'存放位置',
+            u'存档编号', u'备注'
+            ]
+    for i in range(0, len(row0)):
+        sheet.write(0, i, row0[i])
+    data = Assets.objects.filter(ass_enabled=0).exclude(ass_flag=2)
+    num = 1
+    for d in data:
+        if d.ass_isLabel == 0:
+            d.ass_isLabel = "是"
+        else:
+            d.ass_isLabel = "否"
+        if d.ass_secret == 0:
+            d.ass_secret = "否"
+        else:
+            d.ass_secret = "是"
+        sheet.write(num, 0, num)
+        sheet.write(num, 1, d.ass_id)
+        sheet.write(num, 2, d.ass_name)
+        sheet.write(num, 3, d.ass_brand)
+        sheet.write(num, 4, d.ass_model)
+        sheet.write(num, 5, d.ass_SN)
+        sheet.write(num, 6, d.ass_configuration)
+        sheet.write(num, 7, d.ass_category)
+        sheet.write(num, 8, d.ass_secret)
+        sheet.write(num, 9, d.ass_quantity)
+        sheet.write(num, 10, d.ass_price)
+        sheet.write(num, 11, str(d.ass_buyDate))
+        sheet.write(num, 12, d.ass_period)
+        sheet.write(num, 13, d.ass_acceptDept)
+        sheet.write(num, 14, d.ass_acceptUser)
+        sheet.write(num, 15, d.ass_user)
+        sheet.write(num, 16, str(d.ass_acceptDate)[0:-9])
+        sheet.write(num, 17, d.ass_isLabel)
+        sheet.write(num, 18, d.ass_location)
+        sheet.write(num, 19, d.ass_archiveNO)
+        sheet.write(num, 20, d.ass_comment)
+
+        sheet.set_column('A:A', 6)
+        sheet.set_column('B:B', 15)
+        sheet.set_column('C:E', 15)
+        sheet.set_column('F:F', 20)
+        sheet.set_column('G:G', 30)
+        sheet.set_column('H:H', 15)
+        sheet.set_column('I:K', 10)
+        sheet.set_column('L:L', 12)
+        sheet.set_column('M:M', 8)
+        sheet.set_column('N:N', 16)
+        sheet.set_column('O:O', 10)
+        sheet.set_column('P:P', 14)
+        sheet.set_column('Q:Q', 16)
+        sheet.set_column('R:R', 8)
+        sheet.set_column('S:S', 16)
+        sheet.set_column('T:T', 16)
+        sheet.set_column('U:U', 20)
+        num += 1
+    workbook.close()
+    xlsx_data = output.getvalue()
+    response.write(xlsx_data)
+    return response
+
+
+# 导出盘点信息表
+@login_valid
+def export_to_stock(request):
+    output = StringIO()
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=盘点表_' + time.strftime('%Y%m%d', time.localtime(
+        time.time())) + '.xlsx'
+    workbook = xlwt.Workbook(output)  # 创建工作簿
+    sheet = workbook.add_worksheet("sheet1")  # 创建工作页
+    row0 = [u'序号', u'资产编号', u'资产名称', u'品牌', u'型号',
+            u'序列号', u'配置', u'是否涉密', u'数量',
+            u'领用部门', u'领用人', u'使用（保管）人',
+            u'是否贴标', u'存放位置', u'备注', u'盘点情况'
+            ]
+    for i in range(0, len(row0)):
+        sheet.write(0, i, row0[i])
+    data = Assets.objects.filter(ass_enabled=0).exclude(ass_flag=2)
+    num = 1
+    for d in data:
+        if d.ass_isLabel == 0:
+            d.ass_isLabel = "是"
+        else:
+            d.ass_isLabel = "否"
+        if d.ass_secret == 0:
+            d.ass_secret = "否"
+        else:
+            d.ass_secret = "是"
+        sheet.write(num, 0, num)
+        sheet.write(num, 1, d.ass_id)
+        sheet.write(num, 2, d.ass_name)
+        sheet.write(num, 3, d.ass_brand)
+        sheet.write(num, 4, d.ass_model)
+        sheet.write(num, 5, d.ass_SN)
+        sheet.write(num, 6, d.ass_configuration)
+        sheet.write(num, 7, d.ass_secret)
+        sheet.write(num, 8, d.ass_quantity)
+        sheet.write(num, 9, d.ass_acceptDept)
+        sheet.write(num, 10, d.ass_acceptUser)
+        sheet.write(num, 11, d.ass_user)
+        sheet.write(num, 12, d.ass_isLabel)
+        sheet.write(num, 13, d.ass_location)
+        sheet.write(num, 14, d.ass_comment)
+
+        sheet.set_column('A:A', 6)
+        sheet.set_column('B:B', 15)
+        sheet.set_column('C:E', 15)
+        sheet.set_column('F:F', 16)
+        sheet.set_column('G:G', 30)
+        sheet.set_column('H:H', 8)
+        sheet.set_column('J:J', 20)
+        sheet.set_column('L:L', 14)
+        sheet.set_column('M:M', 8)
+        sheet.set_column('N:N', 16)
+        sheet.set_column('O:O', 20)
+        sheet.set_column('P:P', 20)
+        sheet.set_column('R:R', 8)
+        sheet.set_column('S:S', 16)
+        sheet.set_column('K:T', 10)
+        sheet.set_column('I:I', 6)
+        num += 1
+    workbook.close()
+    xlsx_data = output.getvalue()
+    response.write(xlsx_data)
+    return response

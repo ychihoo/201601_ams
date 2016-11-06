@@ -21,17 +21,18 @@
 {% block body %}
     <div id="role_body">
         <div style="float:left;width: 350px">
-            <ul id="dl" class="easyui-datalist" style="width:100%;height:400px"></ul>
+            <ul id="dl" class="easyui-datalist" style="width:100%;height:450px"></ul>
         </div>
         <div style="float:left;margin-left: 2px">
-            <div class="easyui-panel" id="role_panel" title="详情" style=";width: 550px;height: 400px">
+            <div class="easyui-panel" id="role_panel" title="详情" style=";width: 550px;height: 450px">
                 <div style="text-align:right;padding-top: 25px;padding-right: 150px">
                     <form id="role_form" class="easyui-form" method="POST">{% csrf_token %}
                         <div style="margin-bottom:20px;">
                             角色ID：<input class="easyui-textbox" name="rid" id="rid" data-options="readonly:true">
                         </div>
                         <div style="margin-bottom:20px;">
-                            角色名称：<input class="easyui-textbox easyui-validate" name="rname" id="rname" data-options="required:true,readonly:true,validType:['CHS','maxLength[10]']">
+                            角色名称：<input class="easyui-textbox easyui-validate" name="rname" id="rname"
+                                        data-options="required:true,readonly:true,validType:['CHS','maxLength[10]']">
                         </div>
                         <div style="margin-bottom:20px;">
                             角色权限：<input id="rauth" name="rauth" readonly="readonly">
@@ -53,57 +54,57 @@
             <div onclick="editit()" data-options="iconCls:'icon-edit'">编辑</div>
             <div onclick="removeit()" data-options="iconCls:'icon-remove'">删除</div>
         </div>
-        <div >
+        <div>
             <span style="line-height: 50px;color: #0070a9">注：选中角色右击可进行添加、编辑、删除操作</span>
         </div>
     </div>
 
     <script>
-    $(function(){
-        load_datalist_data();
-    })
-    function load_datalist_data(){
-        $('#dl').datalist({
-            url: '/system/role_man/getRole/',
-            method: 'get',
-            title: "角色组",
-            onSelect:function(index,row){
-                $('#rid').textbox('setValue',row.id);
-                $('#rname').textbox('setValue',row.text);
-                $('#rauth').combotree('setValues',row.auth);
-{#                $('#rauth').combotree('setValues', ['1','3','21']);#}
-                $('#rdesc').textbox('setValue',row.desc);
-                $('#role_panel').panel({title: '详情'});
-            },
-            onRowContextMenu:function(e,index,row){
-                e.preventDefault();
-                $(this).datalist('selectRow', index);
-                $('#mm').menu('show', {
-                    left: e.pageX,
-                    top: e.pageY
-                });
-            },
-        });
-        $('#rauth').combotree({
-            url: '/system/role_man/menus/',
-            method: 'get',
-            required:true,
-            multiline: true,
-            cascadeCheck:false,
-            height: 80,
-            checkbox: true,
-            multiple: true,
-            onLoadSuccess: function (node, data) {
-{#                $("#rauth").combotree('tree').tree("collapseAll");#}
-            }
-        });
-    }
+        $(function () {
+            load_datalist_data();
+        })
+        function load_datalist_data() {
+            $('#dl').datalist({
+                url: '/system/role_man/getRole/',
+                method: 'get',
+                title: "角色组",
+                onSelect: function (index, row) {
+                    $('#rid').textbox('setValue', row.id);
+                    $('#rname').textbox('setValue', row.text);
+                    $('#rauth').combotree('setValues', row.auth);
+                    {#                $('#rauth').combotree('setValues', ['1','3','21']);#}
+                    $('#rdesc').textbox('setValue', row.desc);
+                    $('#role_panel').panel({title: '详情'});
+                },
+                onRowContextMenu: function (e, index, row) {
+                    e.preventDefault();
+                    $(this).datalist('selectRow', index);
+                    $('#mm').menu('show', {
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                },
+            });
+            $('#rauth').combotree({
+                url: '/system/role_man/menus/',
+                method: 'get',
+                required: true,
+                multiline: true,
+                cascadeCheck: false,
+                height: 80,
+                checkbox: true,
+                multiple: true,
+                onLoadSuccess: function (node, data) {
+                    {#                $("#rauth").combotree('tree').tree("collapseAll");#}
+                }
+            });
+        }
 
-        function addit(){
-            $('#rname').textbox('readonly',false);
-            $('#rauth').textbox('readonly',false);
-            $('#rdesc').textbox('readonly',false);
-            $('#div_save').css('display','block');
+        function addit() {
+            $('#rname').textbox('readonly', false);
+            $('#rauth').textbox('readonly', false);
+            $('#rdesc').textbox('readonly', false);
+            $('#div_save').css('display', 'block');
             $('#role_panel').panel({title: '新增'});
             $('#rid').textbox('clear');
             $('#rname').textbox('clear');
@@ -111,8 +112,8 @@
             $('#rdesc').textbox('clear');
 
         }
-        function removeit(){
-            if (get_checkedID()){
+        function removeit() {
+            if (get_checkedID()) {
                 $.messager.confirm("提示", "您确认要删除么？", function (r) {
                     if (r) {
                         $.ajax({
@@ -131,12 +132,12 @@
                 })
             }
         }
-        function editit(){
-            if (get_checkedID()){
-                $('#rname').textbox('readonly',false);
-                $('#rauth').textbox('readonly',false);
-                $('#rdesc').textbox('readonly',false);
-                $('#div_save').css('display','block');
+        function editit() {
+            if (get_checkedID()) {
+                $('#rname').textbox('readonly', false);
+                $('#rauth').textbox('readonly', false);
+                $('#rdesc').textbox('readonly', false);
+                $('#div_save').css('display', 'block');
                 $('#role_panel').panel({title: '编辑'});
             }
         }
@@ -154,18 +155,19 @@
                     $.messager.alert('error', '数据提交失败，请重新尝试！', 'warning');
                 }
             });
-        };
+        }
+        ;
 
-    // 获取datalist选中的id
-function get_checkedID() {
-    var checkedRow = $('#dl').datalist('getSelected');
-    if (checkedRow == null) {
-        $.messager.alert("提示", "请选择！", "warning");
-    }
-    else {
-        var id = checkedRow.id;
-        return id;
-    }
-}
+        // 获取datalist选中的id
+        function get_checkedID() {
+            var checkedRow = $('#dl').datalist('getSelected');
+            if (checkedRow == null) {
+                $.messager.alert("提示", "请选择！", "warning");
+            }
+            else {
+                var id = checkedRow.id;
+                return id;
+            }
+        }
     </script>
 {% endblock %}

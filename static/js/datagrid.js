@@ -40,15 +40,15 @@ function loadtable() {
             {field: 'ck', checkbox: true},
             {field: 'sid', title: '资产编号', width: 100, align: 'left', sortable: true},
             {field: 'sname', title: '资产名称', width: 100, align: 'left'},
-            {field: 'sbrand', title: '品牌', width: 80, align: 'left'},
-            {field: 'smodel', title: '型号', width: 100, align: 'left'},
-            {field: 'sconfiguration', title: '配置', width: 100, align: 'left'},
-            {field: 'scategory', title: '类别', width: 60, align: 'center'},
+            {field: 'sbrand', title: '品牌', width: 100, align: 'left'},
+            {field: 'smodel', title: '型号', width: 120, align: 'left'},
+            {field: 'sconfiguration', title: '配置', width: 150, align: 'left'},
+            {field: 'scategory', title: '类别', width: 80, align: 'center'},
             {field: 'squantity', title: '数量', width: 40, align: 'center'},
             {field: 'sbuydate', title: '购买日期', width: 80, align: 'center'},
-            {field: 'sacceptdept', title: '领用部门', width: 100, align: 'center'},
-            {field: 'sacceptuser', title: '领用人', width: 80, align: 'center'},
-            {field: 'suser', title: '使用(保管)人', width: 80, align: 'center'},
+            {field: 'sacceptdept', title: '领用部门', width: 120, align: 'center'},
+            {field: 'sacceptuser', title: '领用人', width: 90, align: 'center'},
+            {field: 'suser', title: '使用(保管)人', width: 90, align: 'center'},
             {field: 'sacceptdate', title: '领用日期', width: 80, align: 'center'},
             {field: 'sflag', title: '资产状态', width: 80, align: 'center'}
         ]],
@@ -248,7 +248,7 @@ function loadUserTable() {
                 $('#disUserBtn').linkbutton('disable');
                 $('#enUserBtn').linkbutton('enable');
             }
-            else{
+            else {
                 $('#disUserBtn').linkbutton('enable');
                 $('#enUserBtn').linkbutton('disable');
             }

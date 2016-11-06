@@ -416,6 +416,7 @@ def remove_role(request):
         except:
             return HttpResponse('删除失败')
 
+
 # menu
 def get_menus(request):
     menus = json.dumps(get_json_menu())

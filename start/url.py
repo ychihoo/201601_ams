@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^changepwd/', views.chpwd),
     url(r'^start/test/', public.get_json_dept),
+    url(r'^checkcode/', views.CheckCode),
 ]

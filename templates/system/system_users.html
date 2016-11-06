@@ -22,8 +22,9 @@
             list-style: none;
             padding-bottom: 15px;
         }
+
         input, select {
-            width:160px;
+            width: 160px;
         }
     </style>
 
@@ -61,7 +62,7 @@
         </div>
     </div>
     <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
-        <table id="user_dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px">
+        <table id="user_dg" class="easyui-datagrid" style="width: 100%;min-height: 450px;">
         </table>
     </div>
 </div>
@@ -87,7 +88,7 @@
                         data-options="required:true,validType:['length[6,20]','englishOrNum','equalTo[fpwd]']">
         </div>
         <div style="margin-bottom:20px">
-            部门：<input class="easyui-combotree" name="fdept" id="fdept">
+            部门：<input name="fdept" id="fdept">
         </div>
         <div style="margin-bottom:20px;">
             职位：<select class="easyui-combobox" name="fposition" id="fposition"
@@ -164,7 +165,7 @@
                       data-options="required:true,validType:['length[2,5]','CHS']">
         </div>
         <div style="margin-bottom:20px">
-            部门：<input class="easyui-combotree" name="edept" id="edept">
+            部门：<input name="edept" id="edept">
         </div>
         <div style="margin-bottom:20px;">
             职位：<select class="easyui-combobox" name="eposition" id="eposition"
@@ -200,7 +201,6 @@
     $(function () {
         loadUserTable();
         load_ajax();
-        {#        load_edept();#}
         $("#ok").click(function () {
             load_ajax();
         });
@@ -269,7 +269,7 @@
             else if (dlg_form == 'editForm') {
                 $('#eaccount').textbox('setValue', account);
                 $('#eusername').textbox('setValue', checkedRow[0].username);
-                $('#edept').combotree('setValue', checkedRow[0].dept_id);
+                //$('#edept').combotree('setValue', checkedRow[0].dept_id);
                 $('#eposition').combobox('setValue', checkedRow[0].position);
                 $('#erole').combobox('setValue', checkedRow[0].role);
                 $('#etel').textbox('setValue', checkedRow[0].tel);
@@ -282,19 +282,18 @@
                 if (checkedRow[0].account == "admin") {
                     $.messager.alert('提示', "【admin】账户不能禁用", 'warning');
                 }
-                else
-                    if (checkedRow[0].status == "启用") {
-                        $.ajax({
-                            data: {user: account},
-                            url: '/system/user_man/disable/',
-                            success: function (data) {
-                                load_ajax();
-                            },
-                            error: function () {
-                                msgShow('提示', "提交请求失败，请重新尝试", 'warning');
-                            }
-                        })
-                    }
+                else if (checkedRow[0].status == "启用") {
+                    $.ajax({
+                        data: {user: account},
+                        url: '/system/user_man/disable/',
+                        success: function (data) {
+                            load_ajax();
+                        },
+                        error: function () {
+                            msgShow('提示', "提交请求失败，请重新尝试", 'warning');
+                        }
+                    })
+                }
             }
             else if (dlg_form == 'enUser') {
                 if (checkedRow[0].status == "禁用") {
@@ -313,10 +312,10 @@
             else if (dlg_form == 'delUser') {
                 $.messager.confirm("提示", "您确定要删除【" + account + "】用户么?", function (r) {
                     if (r) {
-                        if ( account == "admin"){
+                        if (account == "admin") {
                             $.messager.alert('提示', "禁止删除管理员账户", 'warning');
                         }
-                        else{
+                        else {
                             $.ajax({
                                 data: {user: account},
                                 url: '/system/user_man/remove/',

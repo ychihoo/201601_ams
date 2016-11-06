@@ -40,4 +40,6 @@ urlpatterns = [
     url(r'^scrap/ajax/$', views.ajax_assets_scrap),
     url(r'^scrap/post/$', views.post_assets_scrap),
     url(r'^mod/dept/$', views.ajax_mod_dept),
+    url(r'^export_to_xlsx/$', views.export_to_xlsx),
+    url(r'^export_to_stock/$', views.export_to_stock),
 ]

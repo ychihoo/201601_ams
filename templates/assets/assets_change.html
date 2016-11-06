@@ -10,8 +10,8 @@
             font-size: 12px;
         }
 
-        input[type="text"] {
-            width: 120px;
+        input, select {
+            width: 160px;
         }
 
         .middle {
@@ -25,7 +25,7 @@
 
         .div-page ul {
             clear: both;
-            width: 740px;
+            width: 810px;
         }
 
         .div-page li {
@@ -41,7 +41,7 @@
 
 <div class="div-page">
     <div style="height: 2px;min-width: 1000px;width: 98%;"></div>
-    <div class="up easyui-panel" title="条件查询" style="clear:both;min-width: 1000px;width: 98%;"
+    <div class="up easyui-panel" title="条件查询" style="min-width: 1000px;width: 98%;"
          data-options="collapsible:true">
         <div style="float: left">
             <ul>
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="middle" style="clear:both;min-width: 1000px;width: 98%;margin-top: 1px">
-        <table id="dg" class="easyui-datagrid" style="padding: 10px;min-width: 1000px;width: 100%;height: 400px">
+        <table id="dg" class="easyui-datagrid" style="width: 100%;min-height: 450px">
         </table>
     </div>
 </div>
@@ -70,7 +70,7 @@
         {% csrf_token %}
         <div style="margin-bottom:20px">
             资产收回：<select class="easyui-combobox" name="recyle" id="recyle"
-                         data-options="panelHeight:'auto',editable:false" style="width: 153px;">
+                         data-options="panelHeight:'auto',editable:false">
             <option value="是">是</option>
             <option value="否" selected>否</option>
         </select>
@@ -79,7 +79,7 @@
             资产编号：<input class="easyui-textbox" name="fid" id="fid" readonly="true">
         </div>
         <div style="margin-bottom:20px;">
-            领用部门：<input id="fdept" name="dept" style="width:150px;">
+            领用部门：<input id="fdept" name="dept">
         </div>
         <div style="margin-bottom:20px">
             领用人：<input class="easyui-textbox  easyui-validate" name="acceptuser" id="facceptuser"

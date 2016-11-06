@@ -41,6 +41,7 @@ function addTab(subtitle, url) {
         $('#tabs').tabs('add', {
             title: subtitle,
             content: createFrame(url),
+            //href: url,
             closable: true,
             width: $('#mainPanle').width() - 10,
             height: $('#mainPanle').height() - 26
