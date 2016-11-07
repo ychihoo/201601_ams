@@ -80,10 +80,10 @@ def get_FQDN():
 
 
 # 日志记录到数据库
-def save_to_log(request, log_content, log_action=None):
+def save_to_log(log_content, log_action, request):
     content = str(log_content)
     action = str(log_action)
-    operater = views.GET_SESSION
+    operater = request.session.get('account', '')
     time = get_local_datetime()
     ip = get_ip_address(request)
     fqdn = get_FQDN()
@@ -102,10 +102,13 @@ def save_to_log(request, log_content, log_action=None):
 
 # 更新user表中最后一次登录的时间和IP
 def update_user_log(request):
-    user = Users.objects.get(u_account=views.GET_SESSION)
-    user.u_lastIP = get_ip_address(request)
-    user.u_lastLogin = get_local_datetime()
-    user.save()
+    try:
+        user = Users.objects.get(u_account=request.session.get('account', ''))
+        user.u_lastIP = get_ip_address(request)
+        user.u_lastLogin = get_local_datetime()
+        user.save()
+    except:
+        pass
 
 
 # 处理图片文件名

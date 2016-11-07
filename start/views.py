@@ -47,7 +47,7 @@ def login(request):
                         request.session['chpwd'] = user.u_loginChPwd
                         global GET_SESSION
                         GET_SESSION = request.session.get('account', 'guest')
-                        save_to_log('登录成功', '登录')
+                        save_to_log(GET_SESSION+'登录成功', '登录', request)
                         return HttpResponseRedirect('/')
                     except:
                         # save_to_log('用户名或密码错误','登录')
@@ -76,6 +76,7 @@ def get_session(request):
 @login_valid
 def logout(request):
     if request.session.get('account'):
+        save_to_log(request.session.get('account')+'注销登录', '注销', request)
         del request.session['account']
     if request.session.get('username'):
         del request.session['username']
@@ -95,6 +96,7 @@ def chpwd(request):
         user.save()
         del request.session['chpwd']
         request.session['chpwd'] = 1
+        save_to_log('修改密码成功', '修改密码', request)
     except:
         return HttpResponse('no')
     return HttpResponse('ok')

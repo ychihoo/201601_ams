@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render_to_response, RequestContext
 from django.http import HttpResponse, JsonResponse
-from start.public import login_valid, is_exsit, get_json_menu
+from start.public import login_valid, is_exsit, get_json_menu, save_to_log
 from system.models import Users, Roles, Position, Department, Menus
 import hashlib
 import json
@@ -74,6 +74,7 @@ def ajax_disable_user(request):
     else:
         try:
             Users.objects.filter(u_account=account).update(u_enabled=1)
+            save_to_log('禁用账户:['+account+']', '禁用', request)
             return HttpResponse('success')
         except:
             return HttpResponse('禁用失败')
@@ -85,6 +86,7 @@ def ajax_enable_user(request):
     account = request.GET.get('user')
     try:
         Users.objects.filter(u_account=account).update(u_enabled=0)
+        save_to_log('启用账户:['+account+']', '启用', request)
         return HttpResponse('success')
     except:
         return HttpResponse('启用失败')
@@ -99,6 +101,7 @@ def ajax_del_user(request):
     else:
         try:
             Users.objects.filter(u_account=account).update(u_delflag=1)
+            save_to_log('删除账户:['+account+']', '删除', request)
             return HttpResponse('success')
         except:
             return HttpResponse('删除失败')
@@ -119,6 +122,7 @@ def post_resetPwd(request):
     new_pwd = hashlib.sha1(hashlib.md5(new_pwd).hexdigest()).hexdigest()
     try:
         Users.objects.filter(u_account=account).update(u_pwd=new_pwd, u_loginChPwd=loginChPwd)
+        save_to_log('重置账户密码:['+account+']', '重置密码', request)
         return HttpResponse('success')
     except:
         return HttpResponse('重置密码失败')
@@ -179,6 +183,7 @@ def post_addUser(request):
         user.u_loginChPwd = loginChPwd
         user.u_role_id = role
         user.save()
+        save_to_log('添加账户:['+account+']信息', '添加用户', request)
         return HttpResponse('success')
     except:
         return HttpResponse('添加用户失败')
@@ -221,6 +226,7 @@ def post_editUser(request):
         user.u_email = mail
         user.u_role = Roles.objects.get(r_name=role)
         user.save()
+        save_to_log('编辑账户:['+account+']信息', '编辑用户', request)
         return HttpResponse('success')
     except:
         return HttpResponse('添加用户失败')
@@ -240,11 +246,12 @@ def remove_dept(request):
     id = request.GET.get('id')
     if id != "":
         dept = Department.objects.filter(dept_parentID=id, dept_delflag=0)
-        print dept.count()
         if dept.count() > 0:
             return HttpResponse("请先删除子部门")
         else:
             try:
+                dd = Department.objects.get(id=id, dept_delflag=0)
+                save_to_log('删除部门:['+dd.dept_name+']', '删除', request)
                 Department.objects.filter(id=id, dept_delflag=0).update(dept_delflag=1)
                 return HttpResponse("已删除")
             except:
@@ -321,6 +328,7 @@ def save_update_dept(request):
             dept.dept_order = order
             try:
                 dept.save()
+                save_to_log('添加部门:['+name+']', '添加部门', request)
                 return HttpResponse("添加成功")
             except:
                 return HttpResponse("添加失败")
@@ -331,6 +339,7 @@ def save_update_dept(request):
             dept.dept_order = order
             try:
                 dept.save()
+                save_to_log('更新部门:['+name+']', '更新部门', request)
                 return HttpResponse("更新成功")
             except:
                 return HttpResponse("更新失败")
@@ -386,6 +395,7 @@ def save_update_role(request):
             role.r_description = desc
             try:
                 role.save()
+                save_to_log('添加角色:['+name+']', '添加角色', request)
                 return HttpResponse("添加成功")
             except:
                 return HttpResponse("添加失败")
@@ -396,6 +406,7 @@ def save_update_role(request):
             role.r_description = desc
             try:
                 role.save()
+                save_to_log('更新角色:['+name+']', '更新角色', request)
                 return HttpResponse("更新成功")
             except:
                 return HttpResponse("更新失败")
@@ -411,6 +422,8 @@ def remove_role(request):
             if r.count() == 1:
                 return HttpResponse("至少要存在一个角色组")
             else:
+                rr = Roles.objects.filter(id=id, r_delflag=0)
+                save_to_log('删除角色:['+rr.r_name+']', '删除角色', request)
                 Roles.objects.filter(id=id, r_delflag=0).update(r_delflag=1)
                 return HttpResponse('删除成功')
         except:

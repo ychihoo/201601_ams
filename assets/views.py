@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 import xlsxwriter as xlwt
 import time
-from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept
+from start.public import login_valid, get_local_datetime, change_pic_filename, get_json_dept, save_to_log
 from assets.models import *
 from system.models import *
 
@@ -57,6 +57,7 @@ def ajax_assets_mydisplay(request):
             'sacceptdate': str(d.ass_acceptDate),
             'sflag': d.ass_flag
         })
+    save_to_log('查询个人资产信息', '查询', request)
     return JsonResponse(json_item)
 
 
@@ -147,7 +148,7 @@ def post_assets_repair(request):
             data.save()
         except:
             return HttpResponse("请检查输入格式是否正确！")
-
+        save_to_log('新增资产:['+sid+']维修信息', '维修', request)
         return HttpResponse("提交成功!")
 
 
@@ -220,6 +221,7 @@ def post_assets_scrap(request):
             data.save()
         except:
             return HttpResponse("请检查输入格式是否正确！")
+        save_to_log('新增资产:['+sid+']报废信息', '报废', request)
         return HttpResponse("报废成功!")
 
 
@@ -369,6 +371,7 @@ def assets_input(request):
             ass.save()
         except:
             return HttpResponse("数据保存出错，请检查是否按要求输入后再次提交，如仍有问题请联系管理员。")
+        save_to_log('录入资产:['+sid+']维修信息', '录入', request)
         return HttpResponse("录入成功")
     else:
         provider = Providers.objects.filter(pro_delflag=0)
@@ -475,6 +478,7 @@ def post_assets_accept(request):
             data.save()
         except:
             return HttpResponse("请检查输入格式是否正确！")
+        save_to_log('新增资产:['+sid+']领用信息', '领用', request)
         return HttpResponse("领用成功!")
 
 
@@ -514,6 +518,7 @@ def post_assets_change(request):
             data.save()
         except:
             return HttpResponse("请检查输入格式是否正确！")
+        save_to_log('新增资产:['+sid+']变更信息', '变更', request)
         return HttpResponse("变更成功!")
 
 
@@ -614,6 +619,7 @@ def export_to_xlsx(request):
     workbook.close()
     xlsx_data = output.getvalue()
     response.write(xlsx_data)
+    save_to_log('导出资产信息表', '导出', request)
     return response
 
 
@@ -680,4 +686,5 @@ def export_to_stock(request):
     workbook.close()
     xlsx_data = output.getvalue()
     response.write(xlsx_data)
+    save_to_log('导出资产盘点信息表', '导出', request)
     return response

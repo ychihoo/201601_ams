@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import random
+from AMS import settings
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 _letter_cases = "abcdefghjkmnpqrstuvwxy"  # 小写字母，去除可能干扰的i，l，o，z
@@ -16,7 +17,7 @@ def create_validate_code(size=(80, 30),
                          bg_color=(255, 255, 255),
                          fg_color=(0, 0, 255),
                          font_size=18,
-                         font_type="/static/font/georgia.ttf",
+                         font_type=settings.BASE_DIR + "/static/font/georgia.ttf",
                          length=4,
                          draw_lines=True,
                          n_line=(1, 2),
