@@ -422,7 +422,7 @@ def remove_role(request):
             if r.count() == 1:
                 return HttpResponse("至少要存在一个角色组")
             else:
-                rr = Roles.objects.filter(id=id, r_delflag=0)
+                rr = Roles.objects.get(id=id, r_delflag=0)
                 save_to_log('删除角色:['+rr.r_name+']', '删除角色', request)
                 Roles.objects.filter(id=id, r_delflag=0).update(r_delflag=1)
                 return HttpResponse('删除成功')
