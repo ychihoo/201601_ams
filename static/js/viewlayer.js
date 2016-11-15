@@ -11,6 +11,9 @@ function get_page_height() {
 
 function get_dg_height() {
     var h = document.body.scrollHeight - 180;
+    if (h < 450){
+        h = 450
+    }
     //var h=window.parent.frames["mainFrame"].document.getElementById("dg");
     //h.style.height="500px";
     return h;
