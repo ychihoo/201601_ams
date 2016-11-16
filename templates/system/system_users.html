@@ -244,20 +244,25 @@
             account: $("#account").val(),
             status: $("#status").combobox('getValue'),
         }
-        $.ajax({
-            type: "get",
-            url: "/system/user_man/ajax/",
-            data: str,
-            success: function (data) {
-                $('#user_dg').datagrid('loadData', data);
-                if (data.total == '0') {
-                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-                }
-            },
-            error: function () {
-                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-            }
-        });
+        $('#user_dg').datagrid({
+            url: '/system/user_man/ajax/',
+            method: 'get',
+            queryParams: str,
+        })
+{#        $.ajax({#}
+{#            type: "get",#}
+{#            url: "/system/user_man/ajax/",#}
+{#            data: str,#}
+{#            success: function (data) {#}
+{#                $('#user_dg').datagrid('loadData', data);#}
+{#                if (data.total == '0') {#}
+{#                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');#}
+{#                }#}
+{#            },#}
+{#            error: function () {#}
+{#                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');#}
+{#            }#}
+{#        });#}
     }
 
     function get_checked(dlg_form) {

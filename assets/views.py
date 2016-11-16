@@ -29,11 +29,14 @@ def ajax_assets_mydisplay(request):
     sname = request.GET.get('name')
     smodel = request.GET.get('model')
     brand = request.GET.get('brand')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0).exclude(ass_flag=2)
     data = data.filter(ass_name__icontains=sname, ass_model__icontains=smodel, ass_brand__icontains=brand)
     data = data.filter(
         Q(ass_user=request.session.get('username', '')) | Q(ass_acceptUser=request.session.get('username', '')))
     json_item = {'total': data.count(), "rows": []}
+    data = data[(page-1)*rows:page*rows]
     for d in data:
         print d.ass_operDate
         if d.ass_flag == 0:
@@ -78,6 +81,8 @@ def ajax_assets_repair(request):
     sid = request.GET.get('id')
     sname = request.GET.get('name')
     smodel = request.GET.get('model')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0, ass_name__icontains=sname,
                                  ass_model__icontains=smodel)
     data = data.exclude(ass_flag=2)
@@ -86,6 +91,7 @@ def ajax_assets_repair(request):
         lis.append(l.ass_id)
     da = Repair.objects.filter(ass_id__ass_id__in=lis).order_by('ass_id', 're_date')
     json_item = {'total': da.count(), "rows": []}
+    da = da[(page-1)*rows:page*rows]
     for d in da:
         json_item['rows'].append({
             'sid': d.ass_id.ass_id,
@@ -164,9 +170,12 @@ def ajax_assets_scrap(request):
     sid = request.GET.get('id')
     sname = request.GET.get('name')
     smodel = request.GET.get('model')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0).exclude(ass_flag=2)
     data = data.filter(ass_name__icontains=sname, ass_model__icontains=smodel)
     json_item = {'total': data.count(), "rows": []}
+    data = data[(page-1)*rows:page*rows]
     for d in data:
         if d.ass_flag == 0:
             d.ass_flag = '闲置'
@@ -235,6 +244,8 @@ def ajax_assets_display(request):
     user = request.GET.get('user')
     brand = request.GET.get('brand')
     acceptdate = request.GET.get('acceptdate', '')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     if acceptdate == "":
         acceptdate = "1990-1-1"
     status = request.GET.get('status')
@@ -246,6 +257,7 @@ def ajax_assets_display(request):
     else:
         data = data.filter(ass_flag=status)
     json_item = {'total': data.count(), "rows": []}
+    data = data[(page-1)*rows:page*rows]
     for d in data:
         if d.ass_flag == 0:
             d.ass_flag = '闲置'
@@ -392,9 +404,12 @@ def ajax_assets_accept(request):
     sid = request.GET.get('id')
     sname = request.GET.get('name')
     smodel = request.GET.get('model')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     data = Assets.objects.filter(ass_id__icontains=sid, ass_enabled=0, ass_flag=flag)
     data = data.filter(ass_name__icontains=sname, ass_model__icontains=smodel)
     json_item = {'total': data.count(), "rows": []}
+    data = data[(page-1)*rows:page*rows]
     for d in data:
         if d.ass_flag == 0:
             d.ass_flag = '闲置'
@@ -688,3 +703,9 @@ def export_to_stock(request):
     response.write(xlsx_data)
     save_to_log('导出资产盘点信息表', '导出', request)
     return response
+
+
+# 导入资产信息表
+@login_valid
+def import_to_table(request):
+    pass

@@ -113,21 +113,26 @@
     })
     // 载入数据至datagrid
     function loadData(str) {
-        $.ajax({
-            type: "get",
-            url: "/assets/user/ajax/",
-            data: str,
-            success: function (data) {
-                //var data = $.parseJSON(data);
-                $('#dg').datagrid('loadData', data);
-                if (data.total == '0') {
-                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-                }
-            },
-            error: function () {
-                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-            }
-        });
+        $('#dg').datagrid({
+            url: '/assets/user/ajax/',
+            method: 'get',
+            queryParams: str,
+        })
+{#        $.ajax({#}
+{#            type: "get",#}
+{#            url: "/assets/user/ajax/",#}
+{#            data: str,#}
+{#            success: function (data) {#}
+{#                //var data = $.parseJSON(data);#}
+{#                $('#dg').datagrid('loadData', data);#}
+{#                if (data.total == '0') {#}
+{#                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');#}
+{#                }#}
+{#            },#}
+{#            error: function () {#}
+{#                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');#}
+{#            }#}
+{#        });#}
     }
 </script>
 </body>

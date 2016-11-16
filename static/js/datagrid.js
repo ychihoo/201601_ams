@@ -18,11 +18,8 @@
 })
 
 // 加载assets-datagrid
-function loadtable() {
+function loadtable(str) {
     $('#dg').datagrid({
-        //url: 'url',
-        //method: 'POST',
-        //queryParams: { 'id': id },
         //idField: '产品ID',
         title: '资产信息数据表',
         //striped: true,
@@ -33,8 +30,9 @@ function loadtable() {
         rownumbers: true,
         //nowrap: false,
         pagination: true,
-        //pageSize: 10,
-        pageList: [10, 20, 30, 50, 100],
+        emptyMsg:'没有检索到相关信息',
+        pageSize: 30,
+        pageList: [30,50,100],
         showFooter: true,
         columns: [[
             {field: 'ck', checkbox: true},
@@ -73,21 +71,26 @@ function get_checkedID() {
 
 // 载入display数据至datagrid
 function loadData(str) {
-    $.ajax({
-        type: "get",
-        url: "/assets/query/ajax/",
-        data: str,
-        success: function (data) {
-            //var data = $.parseJSON(data);
-            $('#dg').datagrid('loadData', data);
-            if (data.total == '0') {
-                $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-            }
-        },
-        error: function () {
-            $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-        }
-    });
+    $('#dg').datagrid({
+        url: '/assets/query/ajax/',
+        method: 'get',
+        queryParams: str,
+    })
+    //$.ajax({
+    //    type: "get",
+    //    url: "/assets/query/ajax/",
+    //    data: str,
+    //    success: function (data) {
+    //        //var data = $.parseJSON(data);
+    //        $('#dg').datagrid('loadData', data);
+    //        if (data.total == '0') {
+    //            $.messager.alert('提示', '没有检索到您要的数据！', 'info');
+    //        }
+    //    },
+    //    error: function () {
+    //        $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
+    //    }
+    //});
 }
 
 // 加载display详情数据
@@ -172,8 +175,9 @@ function loadRepairTable() {
         rownumbers: true,
         pagination: true,
         height: get_dg_height(),
-        //pageSize: 10,
-        pageList: [10, 20, 30, 50, 100],
+        pageSize: 30,
+        pageList: [30, 50, 100],
+        emptyMsg: '没有检索到您要的数据',
         showFooter: true,
         frozenColumns: [[
             {field: 'sid', title: '资产编号', width: 100, align: 'left', sortable: true},
@@ -221,9 +225,9 @@ function loadUserTable() {
         singleSelect: true,
         rownumbers: true,
         pagination: true,
-        //pageSize: 10,
-        pageList: [10, 50, 100],
-        emptyMsg: '没有检索到你要的数据',
+        pageSize: 30,
+        pageList: [30, 50, 100],
+        emptyMsg: '没有检索到您要的数据',
         showFooter: true,
         columns: [[
             {field: 'ck', checkbox: true},

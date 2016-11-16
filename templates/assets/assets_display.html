@@ -109,6 +109,25 @@
         <a href="javascript:void(0)" style="width: 80px" class="easyui-linkbutton" onclick="$('#dlg2').window('close')">关闭</a>
     </div>
 </div>
+<div id="import_excel" class="easyui-dialog" data-options="closed:true" title="选择导入数据" style="width: 450px;">
+    <form id="import_form" class="easyui-form" method="post"  style="text-align: right;padding-right: 30px;">
+        {% csrf_token %}
+        <div id="content">
+            <div style="margin-bottom:20px;margin-top: 20px">
+                请选择要导入的excel：<input class="easyui-filebox" id="xls" name="xls" style="width:260px;">
+            </div>
+            <div style="margin-bottom:20px;text-align: center" >
+                <a id="submit_import" class="easyui-linkbutton" style="width: 80px;">导 入</a>
+            </div>
+        </div>
+        <div id="content2" style="display: none;">
+            <div style="margin-bottom:20px;text-align: center;line-height: 112px;" >
+                <label id="showinfo"></label>
+
+            </div>
+        </div>
+    </form>
+</div>
 <script>
     $(function () {
         valid_max_length('id', 15);
@@ -135,6 +154,37 @@
         }
     })
 
+    //// 单击导入
+    $("#importbtn").click(function () {
+        $('#import_excel').dialog('open');
+    })
+
+    $('#submit_import').click(function(){
+        $('#content').css('display','none');
+        $('#content2').css('display','block');
+{#        $('#showinfo').text("正在导入数据......");#}
+        $.ajax({
+            url:'',
+            success:function(data){
+                $('#showinfo').text("");
+                $('#showinfo').text("成功导入10条数据，5条数据系统中已存在");
+                sleep(1000);
+                $('#content').css('display','block');
+                $('#content2').css('display','none');
+                $('#import_form').form('clear');
+{#                $('#import_excel').dialog('close');#}
+
+            },
+            error:function(){
+                alert('error');
+            }
+        })
+    })
+
+function sleep(msec) {
+    msec += new Date().getTime();
+    while(new Date() < msec){}
+}
 </script>
 </body>
 </html>

@@ -167,20 +167,25 @@
             model: $("#model").val(),
             flag: '1',
         }
-        $.ajax({
-            type: "get",
-            url: "/assets/receive/ajax/",
-            data: str,
-            success: function (data) {
-                $('#dg').datagrid('loadData', data);
-                if (data.total == '0') {
-                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-                }
-            },
-            error: function () {
-                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-            }
-        });
+        $('#dg').datagrid({
+            url: '/assets/receive/ajax/',
+            method: 'get',
+            queryParams: str,
+        })
+{#        $.ajax({#}
+{#            type: "get",#}
+{#            url: "/assets/receive/ajax/",#}
+{#            data: str,#}
+{#            success: function (data) {#}
+{#                $('#dg').datagrid('loadData', data);#}
+{#                if (data.total == '0') {#}
+{#                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');#}
+{#                }#}
+{#            },#}
+{#            error: function () {#}
+{#                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');#}
+{#            }#}
+{#        });#}
     }
 
     // 预加载弹窗数据

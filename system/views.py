@@ -34,11 +34,14 @@ def ajax_users(request):
     dept = request.GET.get('dept')
     account = request.GET.get('account')
     status = request.GET.get('status')
+    page = int(request.GET.get('page'))
+    rows = int(request.GET.get('rows'))
     u = Users.objects.filter(u_account__icontains=account, u_dept__icontains=dept).exclude(u_delflag=1)
     if status != '-1':
         u = Users.objects.filter(u_account__icontains=account, u_dept__icontains=dept, u_enabled=int(status)).exclude(
             u_delflag=1)
     json_item = {'total': u.count(), "rows": []}
+    u = u[(page-1)*rows:rows*page]
     for d in u:
         if d.u_enabled == 0:
             d.u_enabled = '启用'

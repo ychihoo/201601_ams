@@ -143,20 +143,25 @@
             name: $("#name").val(),
             model: $("#model").val(),
         }
-        $.ajax({
-            type: "get",
-            url: "/assets/repair/ajax/",
-            data: str,
-            success: function (data) {
-                $('#repair_dg').datagrid('loadData', data);
-                if (data.total == '0') {
-                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');
-                }
-            },
-            error: function () {
-                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');
-            }
-        });
+        $('#repair_dg').datagrid({
+            url: '/assets/repair/ajax/',
+            method: 'get',
+            queryParams: str,
+        })
+{#        $.ajax({#}
+{#            type: "get",#}
+{#            url: "/assets/repair/ajax/",#}
+{#            data: str,#}
+{#            success: function (data) {#}
+{#                $('#repair_dg').datagrid('loadData', data);#}
+{#                if (data.total == '0') {#}
+{#                    $.messager.alert('提示', '没有检索到您要的数据！', 'info');#}
+{#                }#}
+{#            },#}
+{#            error: function () {#}
+{#                $.messager.alert('error', '加载错误，请重新尝试！', 'warning');#}
+{#            }#}
+{#        });#}
     }
 
     // 预加载combogrid数据
